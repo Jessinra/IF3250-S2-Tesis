@@ -9,6 +9,23 @@
 @import '~bootstrap/scss/bootstrap';
 
 .navbar-laravel {
-  background-color: #fff;
+  background-color: #383838;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  color: $white;
+}
+
+.navbar .navbar-brand {
+  color: $white;
+}
+
+.navbar .navbar-brand:hover {
+  color: $white;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(250, 250, 250, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")!important;
+}
+
+.navbar-nav li a {
+  color: $white !important;
 }
