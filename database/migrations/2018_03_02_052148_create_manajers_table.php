@@ -14,7 +14,7 @@ class CreateManajersTable extends Migration
     public function up()
     {
         Schema::create('manajers', function (Blueprint $table) {
-            $table->increments('user_id');
+            $table->increments('id');
             $table->timestamps();
         });
     }

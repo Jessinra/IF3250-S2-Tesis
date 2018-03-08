@@ -18,6 +18,7 @@ class Mahasiswa extends Model
         "Menunggu Topik","Siap Seminar Topik", "Menunggu Proposal", "Siap Seminar Proposal", "Masa Bimbingan",
         "Siap Seminar Tesis", "Siap Sidang Tesis", "Lulus"
     ];
+    protected $fillable= ['id'];
     public function getStatus($status) {
         return Mahasiswa::STATUS_STRINGS[$status];
     }

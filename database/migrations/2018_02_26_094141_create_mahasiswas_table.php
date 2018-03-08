@@ -14,9 +14,9 @@ class CreateMahasiswasTable extends Migration
     public function up()
     {
         Schema::create('mahasiswas', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-//            $table->integer('status');
-            $table->integer('tesis_id');
+            $table->unsignedInteger('id');
+            $table->integer('status')->default(0);
+            $table->integer('tesis_id')->default(0);
             $table->timestamps();
         });
     }

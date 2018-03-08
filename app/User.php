@@ -7,6 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    const ROLE_MAHASISWA = "Mahasiswa";
+    const ROLE_DOSEN = "Dosen";
+    const ROLE_MANAJER= "Manajer";
+
     use Notifiable;
 
     /**
@@ -15,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'username','password',
     ];
 
     /**
@@ -26,4 +30,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isManajer() {
+        return Manajer::find($this->id);
+    }
 }
