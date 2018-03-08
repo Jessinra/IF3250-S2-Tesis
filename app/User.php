@@ -34,4 +34,11 @@ class User extends Authenticatable
     public function isManajer() {
         return Manajer::find($this->id);
     }
+    public function isDosen() {
+        return Dosen::find($this->id);
+    }
+
+    public function isMahasiswa() {
+        return Mahasiswa::find($this->id);
+    }
 }
