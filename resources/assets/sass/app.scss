@@ -8,6 +8,7 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import "component/mahasiswa";
 .navbar-laravel {
   background-color: #383838;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -34,4 +35,25 @@
 
 .text-color-primary:active, .text-color-primary:focus, .text-color-primary:active:focus, .text-color-primary:focus:active {
   color: $white !important;
+}
+
+.error-container {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  margin-top: 150px;
+  flex-direction:column;
+  border: 1px solid $primary;
+  padding: 15px;
+  button {
+    width: 150px;
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.title-big {
+  font-size: 42pt;
+  font-weight: 800;
 }

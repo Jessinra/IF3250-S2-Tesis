@@ -31,6 +31,7 @@ Route::post('register','Auth\RegisterController@registerUser')->name('registerPo
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/generate/admin', 'Auth\RegisterController@generateAdmin');
 
+Route::get('/dashboard', 'HomeController@index');
 Route::get('/dashboard/mahasiswa', 'MahasiswaController@index');
 Route::get('/dashboard/dosen', 'DosenController@index');
 Route::get('/dashboard/manajer', 'ManajerController@index');
