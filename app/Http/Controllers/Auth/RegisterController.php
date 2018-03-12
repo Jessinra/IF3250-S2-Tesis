@@ -75,16 +75,15 @@ class RegisterController extends Controller
      * @param $password password admin
      */
     public function generateAdmin() {
-        if(!User::where('username','superadmin')->count()) {
-            $data = ['name' => "Admin Tesis IF", 'username' => 'superadmin', 'password' => 'admin123', 'email' => 'adminif@if.org'];
-            $user = $this->create($data);
-            echo "User Created";
-            $manajer = Manajer::create(['id'=>$user->id]);
-            echo json_encode($user);
-        }
-        else {
-            echo "User already Exist";
-        }
+            if (!User::where('username', 'superadmin')->count()) {
+                $data = ['name' => "Admin Tesis IF", 'username' => 'superadmin', 'password' => 'admin123', 'email' => 'adminif@if.org'];
+                $user = $this->create($data);
+                echo "User Created";
+                $manajer = Manajer::create(['id' => $user->id]);
+//                echo json_encode($user);
+            } else {
+                echo "User already Exist";
+            }
 
     }
     public function showForm() {

@@ -66,6 +66,12 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        function backpage() {
+            window.history.back();
+        }
+    </script>
     <script src="{{ asset('js/app.js') }}"></script>
+    @yield('bottomjs')
 </body>
 </html>

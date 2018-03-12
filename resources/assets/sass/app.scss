@@ -14,6 +14,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   color: $white;
 }
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
 
 .navbar .navbar-brand {
   color: $white;
@@ -56,4 +60,34 @@
 .title-big {
   font-size: 42pt;
   font-weight: 800;
+}
+
+.btn-blue {
+  background: $blue;
+  color: white;
+}
+.btn-red {
+  background: $red;
+  color: white;
+}
+
+.btn-green {
+  background: $green;
+  color: white;
+}
+
+.text-color-blue {
+  color: $blue !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.text-color-red {
+  color: $red !important;
+}
+
+.display-flex {
+  display: flex !important;
 }

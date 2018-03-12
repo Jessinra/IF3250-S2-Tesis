@@ -41,4 +41,5 @@ class User extends Authenticatable
     public function isMahasiswa() {
         return Mahasiswa::find($this->id);
     }
+
 }

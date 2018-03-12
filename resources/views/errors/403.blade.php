@@ -14,9 +14,5 @@
             Back
         </button>
     </div>
-    <script>
-        function backpage() {
-            window.history.back();
-        }
-    </script>
+
 @endsection

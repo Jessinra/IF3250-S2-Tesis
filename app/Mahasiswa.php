@@ -3,8 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
-class Mahasiswa extends Model
+
+class Mahasiswa extends User
 {
     const STATUS_MENUNGGU_TOPIK = 0;
     const STATUS_SIAP_SEMINAR_TOPIK = 1;
@@ -23,5 +25,9 @@ class Mahasiswa extends Model
         return Mahasiswa::STATUS_STRINGS[$status];
     }
 
+    public function getTopiks() {
+        $topics =  Topik::where('mahasiswa_id',Auth::user()->id)->get();
+        return $topics;
+    }
     //
 }
