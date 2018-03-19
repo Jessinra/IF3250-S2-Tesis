@@ -20,8 +20,8 @@ class CreateTopiksTable extends Migration
             $table->unsignedInteger('prioritas');
             $table->string('judul');
             $table->string('keilmuan');
-            $table->string('calon_pembimbing1');
-            $table->string('calon_pembimbing2')->nullable();
+            $table->unsignedInteger('calon_pembimbing1');
+            $table->unsignedInteger('calon_pembimbing2')->nullable();
             $table->timestamps();
         });
     }

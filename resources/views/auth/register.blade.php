@@ -54,6 +54,15 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">Phone Number</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" >
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                             <div class="col-md-6">

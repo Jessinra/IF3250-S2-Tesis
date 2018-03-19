@@ -23,11 +23,23 @@
                             </div>
                             <div class="form-group row col-md-12">
                                 <label for="cdb1" class="col-md-4 col-form-label text-md-right text-center ">Calon Dosen Pembimbing 1<sup>*</sup></label>
-                                <input type="text" id="cdb1" class="form-control col-md-8" v-model="topics[i].calon_pembimbing1" name="calon_pembimbing1" required>
+                                <select type="text" id="cdb1" class="form-control col-md-8" v-model="topics[i].calon_pembimbing1" name="calon_pembimbing1" required>
+                                    <option value="" disabled>Pilih Dosen</option>
+                                    @foreach($list_pembimbing1 as $item)
+                                        @php($user_item = $item->user())
+                                        <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group row col-md-12">
                                 <label for="cdb2" class="col-md-4 col-form-label text-md-right text-center ">Calon Dosen Pembimbing 2</label>
-                                <input type="text" id="cdb2" class="form-control col-md-8" name="calon_pemimbing2"  v-model="topics[i].calon_pembimbing2" >
+                                <select type="text" id="cdb2" class="form-control col-md-8" name="calon_pemimbing2"  v-model="topics[i].calon_pembimbing2" >
+                                    <option value="" disabled>Pilih Dosen</option>
+                                    @foreach($list_pembimbing2 as $item)
+                                        @php($user_item = $item->user())
+                                        <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                    @endforeach
+                                </select>
                         </div>
                     </div>
                 </div>
