@@ -39,6 +39,8 @@ Route::post('/topik/pengajuan', 'TopikController@pengajuan');
 Route::get('/topik/pengajuan', 'TopikController@showFormPengajuan');
 Route::get('/topik/control','TopikController@showControlMahasiswa');
 Route::get('/topik/get','TopikController@getTopik');
-Route::get('/topik/kontrol','TopikController@topikList');
+Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
+Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
+
 Route::get('/proposal/upload', 'ProposalController@showUploadForm');
 Route::post('/proposal/upload','ProposalController@upload');

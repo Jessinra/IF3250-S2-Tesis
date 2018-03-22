@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     const ROLE_MAHASISWA = "Mahasiswa";
     const ROLE_DOSEN = "Dosen";
-    const ROLE_MANAJER= "Manajer";
+    const ROLE_MANAJER = "Manajer";
 
     use Notifiable;
 
@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'username','password',
+        'name', 'email', 'username', 'password',
     ];
 
     /**
@@ -31,14 +31,18 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function isManajer() {
+    public function isManajer()
+    {
         return Manajer::find($this->id);
     }
-    public function isDosen() {
+
+    public function isDosen()
+    {
         return Dosen::find($this->id);
     }
 
-    public function isMahasiswa() {
+    public function isMahasiswa()
+    {
         return Mahasiswa::find($this->id);
     }
 

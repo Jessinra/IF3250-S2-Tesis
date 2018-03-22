@@ -1,0 +1,43 @@
+.mahasiswa-control-table {
+  width: 800px;
+
+}
+
+.font-size-18-px {
+  font-size: 18px !important;
+}
+
+
+.detail-mahasiswa-control-page {
+  .status-table{
+    font-size: 0.8rem;
+    border: 1px solid $primary;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3px;
+    >div {
+      padding: 5px;
+    }
+    .header {
+      background: $primary;
+      color: $white;
+      text-align: center;
+      justify-content: center;
+    }
+    .content-wrapper {
+      div {
+        margin: 5px;
+        display: flex;
+        span:first-child {
+          width: 23.333%;
+        }
+      }
+    }
+  }
+  .topik-wrapper {
+    border: 1px solid $primary;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 3px;
+  }
+}

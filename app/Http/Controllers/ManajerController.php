@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mahasiswa;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,17 +19,49 @@ class ManajerController extends Controller
         $this->middleware('auth');
     }
 
-
+    public function getManajer() {
+        return Auth::user()->isManajer();
+    }
     public function index()
     {
         //
-        if(Auth::user()->isManajer()) {
+        if($this->getManajer()) {
             return view('manajer.index');
         } else {
             return abort(403);
         }
     }
 
+    public function controlMahasiswa() {
+        $manajer = $this->getManajer();
+        if($manajer) {
+            $mahasiswa = Mahasiswa::where('status', '!=', Mahasiswa::STATUS_NOT_ACTIVE)->get();
+            return view('manajer.mahasiswa_control', ['mahasiswa' => $mahasiswa]);
+        } else {
+            abort(403);
+        }
+    }
+
+    public function detailControlMahasiswa($username) {
+        if($this->getManajer()) {
+            $user = User::where('username', $username)->get()->first();
+            $mahasiswa = $user->isMahasiswa();
+            if ($mahasiswa) {
+                $topik = $mahasiswa->getTopiks();
+                return view('manajer.detail_mahasiswa_control',
+                    [
+                        'mahasiswa' => $mahasiswa,
+                        'user' => $user,
+                        'topik'=> $topik,
+                    ]
+                );
+            } else {
+                return abort(404);
+            }
+        } else {
+            return abort(403);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

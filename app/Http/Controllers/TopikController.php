@@ -102,8 +102,8 @@ class TopikController extends Controller
             'prioritas' => 'required|integer',
             'judul' => 'required|string|max:255',
             'keilmuan' => 'required|string|max:255',
-            'calon_pembimbing1' => 'required|string|max:255',
-            'calon_pembimbing2' => 'nullable|string|max:255',
+            'calon_pembimbing1' => 'required|integer',
+            'calon_pembimbing2' => 'nullable|integer',
         ]);
     }
 

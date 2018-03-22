@@ -8,7 +8,7 @@
         <div id="form-app">
         <form action="" method="post" id="form-pengajuan" >
             {{csrf_field()}}
-            <input type="hidden" v-model="JSON.stringify(topics)" name="topics">
+            <input type="hidden" v-model="JSON.stringify(topics)" class="form-control" name="topics">
                 <div v-for="(n, i) in count">
                     <div class="form-group">
                         <h3 class="row align-items-center">Prioritas @{{i+1}} <sup v-if="i==0">*</sup></h3>
@@ -35,6 +35,7 @@
                                 <label for="cdb2" class="col-md-4 col-form-label text-md-right text-center ">Calon Dosen Pembimbing 2</label>
                                 <select type="text" id="cdb2" class="form-control col-md-8" name="calon_pemimbing2"  v-model="topics[i].calon_pembimbing2" >
                                     <option value="" disabled>Pilih Dosen</option>
+                                    <option value=""></option>
                                     @foreach($list_pembimbing2 as $item)
                                         @php($user_item = $item->user())
                                         <option value="{{$user_item->id}}">{{$user_item->name}}</option>
