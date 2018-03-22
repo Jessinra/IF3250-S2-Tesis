@@ -8,10 +8,16 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import "component/mahasiswa";
+@import "component/mahasiswa-control";
 .navbar-laravel {
   background-color: #383838;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
   color: $white;
+}
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .navbar .navbar-brand {
@@ -23,9 +29,78 @@
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(250, 250, 250, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")!important;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(250, 250, 250, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+.text-color-white{
+  color: $white !important;
+}
+.text-color-primary, .text-color-primary:visited, .text-color-primary:active {
+  color: $primary !important;
 }
 
-.navbar-nav li a {
+.text-color-primary:active, .text-color-primary:focus, .text-color-primary:active:focus, .text-color-primary:focus:active {
   color: $white !important;
+}
+
+.error-container {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  margin-top: 150px;
+  flex-direction:column;
+  border: 1px solid $primary;
+  padding: 15px;
+  button {
+    width: 150px;
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.title-big {
+  font-size: 42pt;
+  font-weight: 800;
+}
+
+.btn-blue {
+  background: $blue;
+  color: white;
+}
+.btn-red {
+  background: $red;
+  color: white;
+}
+
+.btn-green {
+  background: $green;
+  color: white;
+}
+
+.text-color-blue {
+  color: $blue !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.text-color-red {
+  color: $red !important;
+}
+
+.display-flex {
+  display: flex !important;
+}
+
+.uploader-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $blue;
+  color: $white;
+  padding: 10px;
+  width: 200px;
+  border-radius: 3px;
+  cursor: pointer;
 }

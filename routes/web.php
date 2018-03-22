@@ -11,10 +11,36 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
-Auth::routes();
+// Authentication Routes...
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+Route::get('register','Auth\RegisterController@showForm')->name('register');
+Route::post('register','Auth\RegisterController@registerUser')->name('registerPost');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/generate/admin', 'Auth\RegisterController@generateAdmin');
+
+Route::get('/dashboard', 'HomeController@index');
+Route::get('/dashboard/mahasiswa', 'MahasiswaController@index');
+Route::get('/dashboard/dosen', 'DosenController@index');
+Route::get('/dashboard/manajer', 'ManajerController@index');
+Route::post('/topik/pengajuan', 'TopikController@pengajuan');
+Route::get('/topik/pengajuan', 'TopikController@showFormPengajuan');
+Route::get('/topik/control','TopikController@showControlMahasiswa');
+Route::get('/topik/get','TopikController@getTopik');
+Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
+Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
+
+Route::get('/proposal/upload', 'ProposalController@showUploadForm');
+Route::post('/proposal/upload','ProposalController@upload');

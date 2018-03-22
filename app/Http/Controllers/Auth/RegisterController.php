@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Manajer;
+use App\Dosen;
+use App\Mahasiswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -24,20 +29,13 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest');
+
     }
 
     /**
@@ -50,6 +48,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:4',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -65,8 +64,59 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    /**
+     * Debug Only will be disabled, to generate admin user
+     * @param $password password admin
+     */
+    public function generateAdmin() {
+            if (!User::where('username', 'superadmin')->count()) {
+                $data = ['name' => "Admin Tesis IF", 'username' => 'superadmin', 'password' => 'admin123', 'email' => 'adminif@if.org'];
+                $user = $this->create($data);
+                echo "User Created";
+                $manajer = Manajer::create(['id' => $user->id]);
+//                echo json_encode($user);
+            } else {
+                echo "User already Exist";
+            }
+
+    }
+    public function showForm() {
+        if(Auth::user() && Auth::user()->isManajer()) {
+            return view('auth.register');
+        } else {
+            return abort(403);
+        }
+    }
+
+    public function registerUser(Request $request) {
+        $data = $request->all();
+        $username = $data['username'];
+        if(User::where('username',$username)->count()>0) {
+            echo "User already exist";
+        } else {
+            echo "Creating user...<br>";
+           $user = $this->create($data);
+           echo "User: ".$user->username." created...<br>";
+           echo "Creating Model";
+           $role = $data['role'];
+           if($role == User::ROLE_DOSEN) {
+               Dosen::create(['id'=>$user->id]);
+           }else if($role == User::ROLE_MAHASISWA) {
+               Mahasiswa::create(['id'=>$user->id]);
+           } else if($role == User::ROLE_MANAJER) {
+               Manajer::create(['id'=>$user->id]);
+           }
+        }
+//        echo $id;
+
+
+    }
+
 }

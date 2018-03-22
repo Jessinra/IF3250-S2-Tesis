@@ -14,8 +14,8 @@ class CreateDosensTable extends Migration
     public function up()
     {
         Schema::create('dosens', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-            $table->integer('status');
+            $table->unsignedInteger('id');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
