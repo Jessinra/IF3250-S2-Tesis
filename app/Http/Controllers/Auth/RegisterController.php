@@ -77,7 +77,7 @@ class RegisterController extends Controller
      */
     public function generateAdmin() {
             if (!User::where('username', 'superadmin')->count()) {
-                $data = ['name' => "Admin Tesis IF", 'username' => 'superadmin', 'password' => 'admin123', 'email' => 'adminif@if.org'];
+                $data = ['name' => "Admin Tesis IF", 'username' => 'superadmin', 'password' => 'admin123', 'phone'=>'123','email' => 'adminif@if.org'];
                 $user = $this->create($data);
                 echo "User Created";
                 $manajer = Manajer::create(['id' => $user->id]);
