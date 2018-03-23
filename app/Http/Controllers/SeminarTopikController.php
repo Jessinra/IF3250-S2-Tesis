@@ -17,12 +17,13 @@ class SeminarTopikController extends Controller
                 SeminarTopik::create(
                     [
                         "mahasiswa_id" => $mhs_id,
-                        "schedule" => $request->get("date")
+                        "schedule" => $request->get("date"),
+                        "creator_id" => $manajer->id
                     ]
-                )
+                );
                 $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK;
                 $mahasiswa->save();
-
+                return redirect('/mahasiswa/control/'.$mahasiswa->user()->username);
             } else {
                 return abort(400);
             }
@@ -30,5 +31,15 @@ class SeminarTopikController extends Controller
        } else {
            return abort(403);
        }
+   }
+
+   public function penilaian(Request $request) {
+       $manajer= Auth::user()->isManajer();
+        if($manajer) {
+
+        } else {
+            return abort(403);
+        }
+
    }
 }

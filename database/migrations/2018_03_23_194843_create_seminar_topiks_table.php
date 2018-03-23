@@ -14,7 +14,11 @@ class CreateSeminarTopiksTable extends Migration
     public function up()
     {
         Schema::create('seminar_topiks', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('mahasiswa_id');
+            $table->timestamp('schedule');
+            $table->boolean('passed')->nullable();
+            $table->integer('creator_id');
+            $table->integer('evaluator_id')->nullable();
             $table->timestamps();
         });
     }

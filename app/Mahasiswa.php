@@ -55,6 +55,10 @@ class Mahasiswa extends Model
     public function user() {
         return User::find($this->id);
     }
+
+    public function seminarTopik() {
+        return $this->hasMany('App\SeminarTopik')->orderBy('created_at',"DESC")->first();
+    }
     //
     public function getStatusString() {
         return $this->statusString[$this->status];
