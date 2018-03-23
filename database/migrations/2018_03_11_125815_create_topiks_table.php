@@ -22,6 +22,7 @@ class CreateTopiksTable extends Migration
             $table->string('keilmuan');
             $table->unsignedInteger('calon_pembimbing1');
             $table->unsignedInteger('calon_pembimbing2')->nullable();
+            $table->integer("editor");
             $table->timestamps();
         });
     }

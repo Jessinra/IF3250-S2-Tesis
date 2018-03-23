@@ -35,6 +35,14 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if($mahasiswa->status > 1)
+                    <div class="control-jadwal">
+                        <h3>
+                            Penetapan Jadwal Seminar Topik
+                        </h3>
+
+                    </div>
+                @endif
                 @if($mahasiswa->status > 0)
                     @if($mahasiswa->status > 1)
                         <fieldset disabled="disabled">
