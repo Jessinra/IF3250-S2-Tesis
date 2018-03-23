@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Formulir Pengajuan Topik')
+@section('title','Topic')
 
 @section('content')
     <div class="container">

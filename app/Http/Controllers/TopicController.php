@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 use App\Mahasiswa;
+use App\TopicApproval;
 use Illuminate\Support\Facades\Auth;
-use App\Topik;
+use App\Topic;
 use App\Dosen;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use function MongoDB\BSON\toJSON;
 
-class TopikController extends Controller
+class TopicController extends Controller
 {
     public function __construct()
     {
@@ -19,7 +21,7 @@ class TopikController extends Controller
     public function showFormPengajuan() {
         $mhs = Auth::user()->isMahasiswa();
         if($mhs) {
-            $topics = $mhs->getTopiks();
+            $topics = $mhs->getTopics();
             $dosen1 = Dosen::all();
             $dosen2 = Dosen::all();
             return view('mahasiswa.form_pengajuan_topik',['topics'=>$topics, 'list_pembimbing1'=>$dosen1, 'list_pembimbing2'=>$dosen2]);
@@ -34,7 +36,7 @@ class TopikController extends Controller
             $data =$request->all();
             $topics = json_decode($data['topics']);
             $ok_count = 0;
-            $db_topics = Topik::where('mahasiswa_id',$user->id)->get();
+            $db_topics = Topic::where('mahasiswa_id',$user->id)->get();
             echo json_encode($topics);
 
             foreach( $topics as $item) {
@@ -50,12 +52,12 @@ class TopikController extends Controller
                         $cur->judul= $item->judul;
                         $cur->calon_pembimbing1 = $item->calon_pembimbing1;
                         $cur->keilmuan = $item->keilmuan;
-                        if(isset($item->calon_pembimbing2)) {
+                        if(isset($item->calon_pembimbing2) && $item->calon_pembimbing2 != "") {
                             $cur->calon_pembimbing2 = $item->calon_pembimbing2;
                         }
                         $cur->save();
                     } else {
-                        $topik = Topik::create([
+                        $topik = Topic::create([
                             'mahasiswa_id' => $user->id,
                             'status' => 0,
                             'prioritas' => $item->prioritas,
@@ -64,7 +66,7 @@ class TopikController extends Controller
                             'keilmuan' => $item->keilmuan
 
                         ]);
-                        if(isset($item->calon_pembimbing2)) {
+                        if(isset($item->calon_pembimbing2) && $item->calon_pembimbing2 != "") {
                             $topik->calon_pembimbing2 = $item->calon_pembimbing2;
                             $topik->save();
                         }
@@ -84,6 +86,60 @@ class TopikController extends Controller
             }
         } else{
             return abort (403);
+        }
+    }
+
+    public function approval(Request $request) {
+        $manajer = Auth::user()->isManajer();
+        if($manajer) {
+            $id = $request->get('id');
+            $uname = $request->get('mahasiswa');
+            $user = User::where('username',$uname)->first();
+            $mhs = $user->isMahasiswa();
+            if($mhs) {
+                if ($id == -1) {
+                    $mhs->status = Mahasiswa::STATUS_TOPIK_DITOLAK;
+                    $mhs->save();
+                    foreach ($mhs->getTopics() as $item) {
+                        $item->status = Topic::STATUS_DITOLAK;
+                        $item->save();
+                    }
+                    TopicApproval::create(
+                        [
+                            "mahasiswa_id"=> $user->id,
+                            "manajer_id" => $manajer->id,
+                            "topic_id" => $id,
+                            "action" => TopicApproval::ACTION_TOLAK
+                        ]
+                    );
+
+                } else {
+                        $topik = Topic::find($id);
+                        if ($topik->mahasiswa_id != $user->id) {
+                            return abort(400);
+                        } else {
+                            $topik->status = Topic::STATUS_DITERIMA;
+                            $topik->save();
+                        }
+                        TopicApproval::create(
+                            [
+                                "mahasiswa_id"=> $user->id,
+                                "manajer_id" => $manajer->id,
+                                "topic_id" => $id,
+                                "action" => TopicApproval::ACTION_TERIMA
+                            ]
+                        );
+
+                        $mhs->status = Mahasiswa::STATUS_TOPIK_DITERIMA;
+                        $mhs->save();
+                }
+                return redirect('/mahasiswa/control/'.$uname);
+
+            } else {
+                return abort(400);
+            }
+        } else {
+            return abort(403);
         }
     }
 
@@ -112,7 +168,7 @@ class TopikController extends Controller
 //        echo "obselette route";
         $mahasiswa = Auth::user()->isMahasiswa();
         if ($mahasiswa) {
-            $topics =  $mahasiswa->getTopiks();
+            $topics =  $mahasiswa->getTopics();
             return $topics;
         }
     }

@@ -71,22 +71,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Debug Only will be disabled, to generate admin user
-     * @param $password password admin
-     */
-    public function generateAdmin() {
-            if (!User::where('username', 'superadmin')->count()) {
-                $data = ['name' => "Admin Tesis IF", 'username' => 'superadmin', 'password' => 'admin123', 'phone'=>'123','email' => 'adminif@if.org'];
-                $user = $this->create($data);
-                echo "User Created";
-                $manajer = Manajer::create(['id' => $user->id]);
-//                echo json_encode($user);
-            } else {
-                echo "User already Exist";
-            }
 
-    }
     public function showForm() {
         if(Auth::user() && Auth::user()->isManajer()) {
             return view('auth.register');

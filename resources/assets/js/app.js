@@ -19,3 +19,5 @@ window.Vue = require('vue');
 function backpage() {
     window.history.back();
 }
+
+

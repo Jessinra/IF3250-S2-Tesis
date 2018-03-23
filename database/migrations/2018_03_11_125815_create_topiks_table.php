@@ -13,15 +13,16 @@ class CreateTopiksTable extends Migration
      */
     public function up()
     {
-        Schema::create('topiks', function (Blueprint $table) {
+        Schema::create('topics', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('mahasiswa_id');
-            $table->unsignedInteger('status_id')->default(0);
+            $table->integer('status')->default(0);
             $table->unsignedInteger('prioritas');
             $table->string('judul');
             $table->string('keilmuan');
             $table->unsignedInteger('calon_pembimbing1');
             $table->unsignedInteger('calon_pembimbing2')->nullable();
+            $table->integer("editor")->nullable();
             $table->timestamps();
         });
     }

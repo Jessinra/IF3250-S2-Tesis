@@ -47,12 +47,10 @@ class ManajerController extends Controller
             $user = User::where('username', $username)->get()->first();
             $mahasiswa = $user->isMahasiswa();
             if ($mahasiswa) {
-                $topik = $mahasiswa->getTopiks();
                 return view('manajer.detail_mahasiswa_control',
                     [
                         'mahasiswa' => $mahasiswa,
                         'user' => $user,
-                        'topik'=> $topik,
                     ]
                 );
             } else {
