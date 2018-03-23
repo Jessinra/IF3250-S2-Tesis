@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\User;
 use App\Manajer;
+use Illuminate\Support\Facades\Hash;
+
 class GenerateAdmin extends Command
 {
     /**
@@ -30,6 +32,18 @@ class GenerateAdmin extends Command
     {
         parent::__construct();
     }
+    protected function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'password' => Hash::make($data['password']),
+        ]);
+    }
+
+
 
     /**
      * Execute the console command.
@@ -73,7 +87,7 @@ class GenerateAdmin extends Command
         }
 
         if (!User::where('username', $data['username'])->count()) {
-            $user = User::create($data);
+            $user = $this->create($data);
             echo "Admin Created\n";
             $manajer = Manajer::create(['id' => $user->id]);
         } else {

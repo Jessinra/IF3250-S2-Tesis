@@ -35,12 +35,14 @@ Route::get('/dashboard', 'HomeController@index');
 Route::get('/dashboard/mahasiswa', 'MahasiswaController@index');
 Route::get('/dashboard/dosen', 'DosenController@index');
 Route::get('/dashboard/manajer', 'ManajerController@index');
-Route::post('/topik/pengajuan', 'TopikController@pengajuan');
-Route::get('/topik/pengajuan', 'TopikController@showFormPengajuan');
-Route::get('/topik/control','TopikController@showControlMahasiswa');
-Route::get('/topik/get','TopikController@getTopik');
+Route::post('/topik/pengajuan', 'TopicController@pengajuan');
+Route::get('/topik/pengajuan', 'TopicController@showFormPengajuan');
+Route::get('/topik/control','TopicController@showControlMahasiswa');
+Route::get('/topik/get','TopicController@getTopik');
 Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
 Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
-
+Route::post('/topik/approval', 'TopicController@approval')->name('topicapproval');
 Route::get('/proposal/upload', 'ProposalController@showUploadForm');
 Route::post('/proposal/upload','ProposalController@upload');
+
+Route::post('/seminartopik/penetapan','SeminarTopikController@penetapanJadwal')->name('seminartopik-penetapan');

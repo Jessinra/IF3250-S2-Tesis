@@ -11,7 +11,9 @@ class Mahasiswa extends Model
     const STATUS_MENUNGGU_TOPIK = 0;
     const STATUS_TOPIK_TELAH_DIAJUKAN = 1;
     const STATUS_NOT_ACTIVE = -999;
-//    const STATUS_SIAP_SEMINAR_TOPIK = 1;
+    const STATUS_TOPIK_DITERIMA=2;
+    const STATUS_TOPIK_DITOLAK = -1;
+    const STATUS_SIAP_SEMINAR_TOPIK = 3;
 //    const STATUS_MENUNGGU_PROPOSAL = 2;
 //    const STATUS_SIAP_SEMINAR_PROPOSAL = 3;
 //    const STATUS_MASA_BIMBINGAN = 4;
@@ -36,18 +38,20 @@ class Mahasiswa extends Model
         "14" => "Siap Sidang Tesis",
         "15" => "Lulus",
         "-999" => "Akun tidak aktif",
-        "-1" => "Semua Topik ditolak",
+        "-1" => "Semua Topic ditolak",
     ];
     protected $fillable= ['id'];
     public function getStatus($status) {
         return Mahasiswa::STATUS_STRINGS[$status];
     }
 
-    public function getTopiks() {
-        $topics =  Topik::where('mahasiswa_id',$this->id)->orderBy('prioritas','asc')->get();
+    public function getTopics() {
+        $topics =  Topic::where('mahasiswa_id',$this->id)->orderBy('prioritas','asc')->get();
         return $topics;
     }
-
+    public function getTopicApproval() {
+        return $this->hasMany('App\TopicApproval','mahasiswa_id','id')->orderBy('created_at','DESC')->first();
+    }
     public function user() {
         return User::find($this->id);
     }

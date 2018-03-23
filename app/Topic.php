@@ -4,12 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Topik extends Model
+class Topic extends Model
 {
-    public $status = [
+    const STATUS_DIAJUKAN = 0;
+    const STATUS_DITERIMA = 1;
+    const STATUS_DITOLAK = -1;
+    public $statusString = [
         "0" => "Diajukan",
         "1" => "<font color=green>Diterima</font>",
-        "2" => "<font color=red>Ditolak</font>"
+        "-1" => "<font color=red>Ditolak</font>"
     ];
     protected $fillable = [
         'mahasiswa_id','prioritas','judul','keilmuan','calon_pembimbing1','calon_pembimbing2'
@@ -23,6 +26,6 @@ class Topik extends Model
             return $this->belongsTo('App\Dosen', 'calon_pembimbing2', 'id');
     }
     public function getStatusString() {
-        return $this->status[$this->status_id];
+        return $this->statusString[$this->status];
     }
 }
