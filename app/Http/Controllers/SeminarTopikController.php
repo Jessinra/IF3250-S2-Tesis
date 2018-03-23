@@ -36,6 +36,24 @@ class SeminarTopikController extends Controller
    public function penilaian(Request $request) {
        $manajer= Auth::user()->isManajer();
         if($manajer) {
+            echo json_encode($request->all());
+            $mahasiswa_id = $request->get('mahasiswa');
+            $mhs = Mahasiswa::find($mahasiswa_id);
+
+            $action = $request->get('action');
+            $st = $mhs->seminarTopik();
+            $st->passed = $action;
+            $st->evaluator_id = $manajer->id;
+            if($action) {
+                $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK;
+            } else {
+                $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK;
+
+            }
+
+            $mhs->save();
+            $st->save();
+            return redirect('/mahasiswa/control/'.$mhs->user()->username);
 
         } else {
             return abort(403);

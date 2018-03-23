@@ -14,6 +14,8 @@ class Mahasiswa extends Model
     const STATUS_TOPIK_DITERIMA=2;
     const STATUS_TOPIK_DITOLAK = -1;
     const STATUS_SIAP_SEMINAR_TOPIK = 3;
+    const STATUS_LULUS_SEMINAR_TOPIK = 4;
+    const STATUS_GAGAL_SEMINAR_TOPIK = -4;
 //    const STATUS_MENUNGGU_PROPOSAL = 2;
 //    const STATUS_SIAP_SEMINAR_PROPOSAL = 3;
 //    const STATUS_MASA_BIMBINGAN = 4;
@@ -38,7 +40,8 @@ class Mahasiswa extends Model
         "14" => "Siap Sidang Tesis",
         "15" => "Lulus",
         "-999" => "Akun tidak aktif",
-        "-1" => "Semua Topic ditolak",
+        "-1" => "Semua Topik ditolak",
+        "-4" => "Gagal Seminar Topik",
     ];
     protected $fillable= ['id'];
     public function getStatus($status) {

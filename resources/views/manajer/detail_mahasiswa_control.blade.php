@@ -40,23 +40,28 @@
             </div>
             <div class="col-md-8">
                 @if($mahasiswa->status > 2 )
-                <div class="control-seminar-topik">
+                <div class="control-seminar-topik mb-4">
                     <h3>
                         Penilaian Seminar Topik
                     </h3>
                     <div class="row justify-content-center">
-                        <button class="btn btn-red mr-4">
-                            Tidak Lulus
-                        </button>
-                        <button class="btn btn-blue ml-4">
-                            Lulus
-                        </button>
+                        <form action=" {{route('seminartopik-penilaian')}}" method="post">
+                            {{csrf_field()}}
+                            <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
+                            <input type="hidden" value="{{$seminarTopik->id}}" name="seminartopik">
+                            <button class="btn btn-red mr-4" name="action" value="0">
+                                Tidak Lulus
+                            </button>
+                            <button class="btn btn-blue ml-4" name="action" value="1">
+                                Lulus
+                            </button>
+                        </form>
                     </div>
                 </div>
                 @endif
                 @if($mahasiswa->status > 1)
 
-                    <div class="control-jadwal">
+                    <div class="control-jadwal mb-4">
                         <h3>
                             Penetapan Jadwal Seminar Topik
                         </h3>
@@ -95,7 +100,7 @@
                 @endif
                 @if($mahasiswa->status > 0 || $mahasiswa->status==-1)
 
-                    <div class="section" id="pengajuan-topik">
+                    <div class="section" id="pengajuan-topik mb-4">
                         <h3>Pengajuan Topik</h3>
                         @if($mahasiswa->status > 1 || $mahasiswa->status==-1)
                             @php($approval = $mahasiswa->getTopicApproval())
