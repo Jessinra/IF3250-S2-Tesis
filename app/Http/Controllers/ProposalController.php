@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mahasiswa;
 use App\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
 
 
 class ProposalController extends Controller
@@ -27,7 +28,14 @@ class ProposalController extends Controller
 //                echo $proposal->getClientSize();
 //                echo "<br>";
 //
-                $proposal->storeAs($user->username,$proposal->getClientOriginalName());
+                $path = $proposal->storeAs($user->username,$proposal->getClientOriginalName());
+                Proposal::create([
+                    "mahasiswa_id"=> $mhs->id,
+                    "filesize"=>$proposal->getSize(),
+                    "filename"=>$proposal->getClientOriginalName(),
+                    "path" => $path
+                ]);
+
             } else {
                 return abort(400);
             }
@@ -35,4 +43,13 @@ class ProposalController extends Controller
             return abort(403);
         }
     }
+    public function download(Request $request) {
+        $usr = Auth::user();
+        $mhs_id = $request->get('mahasiswa');
+        $mhs  = Mahasiswa::find($mhs_id);
+        if($usr->isManajer() || $usr->id == $mhs_id) {
+            return Storage::download($mhs->proposal()->path);
+        }
+    }
+
 }

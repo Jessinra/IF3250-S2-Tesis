@@ -16,6 +16,9 @@ class Mahasiswa extends Model
     const STATUS_SIAP_SEMINAR_TOPIK = 3;
     const STATUS_LULUS_SEMINAR_TOPIK = 4;
     const STATUS_GAGAL_SEMINAR_TOPIK = -4;
+    const STATUS_PROPOSAL_TELAH_DIAJUKAN = 6;
+    const STATUS_PROPOSAL_DITERIMA = 7;
+    const STATUS_PROPOSAL_DITOLAK = -7;
 //    const STATUS_MENUNGGU_PROPOSAL = 2;
 //    const STATUS_SIAP_SEMINAR_PROPOSAL = 3;
 //    const STATUS_MASA_BIMBINGAN = 4;
@@ -42,6 +45,7 @@ class Mahasiswa extends Model
         "-999" => "Akun tidak aktif",
         "-1" => "Semua Topik ditolak",
         "-4" => "Gagal Seminar Topik",
+        "-7" => "Proposal Ditolak"
     ];
     protected $fillable= ['id'];
     public function getStatus($status) {
@@ -65,5 +69,9 @@ class Mahasiswa extends Model
     //
     public function getStatusString() {
         return $this->statusString[$this->status];
+    }
+
+    public function proposal() {
+        return $this->hasOne('App\Proposal')->orderBy('created_at',"DESC")->first();
     }
 }

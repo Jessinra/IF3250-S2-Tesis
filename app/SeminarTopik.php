@@ -16,4 +16,8 @@ class SeminarTopik extends Model
     public function creator() {
         return $this->belongsTo('App\User','creator_id','id');
     }
+
+    public function evaluator() {
+        return $this->belongsTo('App\User','evaluator_id','id');
+    }
 }

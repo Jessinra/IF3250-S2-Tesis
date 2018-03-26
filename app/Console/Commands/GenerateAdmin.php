@@ -21,7 +21,7 @@ class GenerateAdmin extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = "Seeder Manager Account";
 
     /**
      * Create a new command instance.

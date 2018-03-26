@@ -40,9 +40,15 @@
     margin: 10px;
     border-radius: 3px;
   }
-  .control-seminar-topik {
-    .btn {
+    .width-100 {
       width: 100px;
+    }
+  .proposal-container {
+    padding: 15px;
+    border: 1px solid $primary;
+    text-decoration: none !important;
+    .file-name{
+      color: $blue;
     }
   }
 }

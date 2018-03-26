@@ -6,7 +6,7 @@
 
     @php (date_default_timezone_set('Asia/Jakarta'))
     @php($seminarTopik=$mahasiswa->seminarTopik())
-
+    @php($proposal= $mahasiswa->proposal())
     <div class="container detail-mahasiswa-control-page">
         <div class="row">
             <div class="col-md-4">
@@ -39,34 +39,78 @@
                 </div>
             </div>
             <div class="col-md-8">
-                @if($mahasiswa->status > 2 )
+                @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                    @php($proposal = $mahasiswa->proposal())
+                    <h3>
+                        Pengajuan Proposal
+                    </h3>
+                    <div class="row col-md-12 flex-wrap-nowrap proposal-container">
+                        <div class="row align-items-center justify-content-start file-name  width-full">
+                            <i class="material-icons">insert_drive_file</i>
+                            <a href="/download/{{$proposal->path}}">{{$proposal->filename}} ({{$proposal->human_filesize()}})</a>
+                            <br>
+                        </div>
+                        <form action="{{route('seminartopik-penilaian')}}" method="post" class="width-full">
+                            <div class=" width-full text-right flex-wrap-nowrap">
+                                {{csrf_field()}}
+                                <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
+                                <input type="hidden" value="{{$seminarTopik->id}}" name="seminartopik">
+                                <button class="btn btn-red mr-1" name="action" value="0">
+                                    Tolak
+                                </button>
+                                <button class="btn btn-blue ml-1" name="action" value="1">
+                                    Terima
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                @endif
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK )
                 <div class="control-seminar-topik mb-4">
                     <h3>
                         Penilaian Seminar Topik
                     </h3>
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                        <div class="alert alert-success row align-items-center">
+                            <i class="material-icons font-size-18-px">check_circle</i>
+                            &nbsp Kelulusan seminar topik ditetapkan oleh {{$seminarTopik->evaluator->name}}
+                            pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
+
+                        </div>
+                        <fieldset disabled="disabled">
+                    @elseif($mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
+                    @endif
                     <div class="row justify-content-center">
+
                         <form action=" {{route('seminartopik-penilaian')}}" method="post">
                             {{csrf_field()}}
                             <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
                             <input type="hidden" value="{{$seminarTopik->id}}" name="seminartopik">
-                            <button class="btn btn-red mr-4" name="action" value="0">
+                            <button class="btn btn-red mr-4 width-100" name="action" value="0">
                                 Tidak Lulus
                             </button>
-                            <button class="btn btn-blue ml-4" name="action" value="1">
+                            <button class="btn btn-blue ml-4 width-100" name="action" value="1">
                                 Lulus
                             </button>
                         </form>
+
                     </div>
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                        </fieldset>
+                    @endif
                 </div>
                 @endif
-                @if($mahasiswa->status > 1)
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA)
 
                     <div class="control-jadwal mb-4">
                         <h3>
                             Penetapan Jadwal Seminar Topik
                         </h3>
                         <div>
-                        @if($mahasiswa->status > 2)
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK)
                                 <div class="alert alert-success row align-items-center">
                                     <i class="material-icons font-size-18-px">check_circle</i>
                                     &nbsp Jadwal seminar topik ditetapkan oleh {{$seminarTopik->creator->name}}
@@ -92,7 +136,7 @@
                                 </button>
                                 </div>
                             </form>
-                            @if($mahasiswa->status == 2)
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK)
                                 </fieldset>
                             @endif
                         </div>
