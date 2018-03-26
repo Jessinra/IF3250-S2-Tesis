@@ -1,9 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Topic')
+@section('title', 'List Pengajuan Topik')
 
 
 @section('content')
-
     @php (date_default_timezone_set('Asia/Jakarta'))
     @php($seminarTopik=$mahasiswa->seminarTopik())
     @php($proposal= $mahasiswa->proposal())
@@ -182,8 +181,8 @@
 
                                         </div>
 
-                                        <div class="row mt-1">
-                                            <span class="status-label">
+                                        <div class="row">
+                                            <span>
                                                 Bidang Keilmuan:&nbsp
                                             </span>
                                             <span>
