@@ -35,7 +35,7 @@ class ProposalController extends Controller
                     "filename"=>$proposal->getClientOriginalName(),
                     "path" => $path
                 ]);
-
+                $mhs->status = Mahasiswa::STATUS_PROPOSAL_TELAH_DIAJUKAN;
             } else {
                 return abort(400);
             }
