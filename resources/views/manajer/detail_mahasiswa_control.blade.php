@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                @if($mahasiswa->status >  \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
                     @php($proposal = $mahasiswa->proposal())
                     <h3>
                         Pengajuan Proposal
