@@ -36,6 +36,8 @@ class ProposalController extends Controller
                     "path" => $path
                 ]);
                 $mhs->status = Mahasiswa::STATUS_PROPOSAL_TELAH_DIAJUKAN;
+                $mhs->save();
+                return redirect("/");
             } else {
                 return abort(400);
             }
