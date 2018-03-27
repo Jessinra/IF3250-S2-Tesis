@@ -46,7 +46,7 @@
                     <div class="row col-md-12 flex-wrap-nowrap proposal-container">
                         <div class="row align-items-center justify-content-start file-name  width-full">
                             <i class="material-icons">insert_drive_file</i>
-                            <a href="/download/{{$proposal->path}}">{{$proposal->filename}} ({{$proposal->human_filesize()}})</a>
+                            <a href="/proposal/download/{{$proposal->path}}">{{$proposal->filename}} ({{$proposal->human_filesize()}})</a>
                             <br>
                         </div>
                         <form action="{{route('seminartopik-penilaian')}}" method="post" class="width-full">

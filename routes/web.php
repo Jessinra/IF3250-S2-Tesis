@@ -44,7 +44,6 @@ Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa')
 Route::post('/topik/approval', 'TopicController@approval')->name('topicapproval');
 Route::get('/proposal/upload', 'ProposalController@showUploadForm');
 Route::post('/proposal/upload','ProposalController@upload');
-Route::get('/proposal/download','ProposalController@download');
-
+Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
 Route::post('/seminartopik/penetapan','SeminarTopikController@penetapanJadwal')->name('seminartopik-penetapan');
 Route::post('/seminartopik/penilaian','SeminarTopikController@penilaian')->name('seminartopik-penilaian');
