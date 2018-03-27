@@ -49,7 +49,7 @@
                             <a href="/proposal/download/{{$proposal->path}}">{{$proposal->filename}} ({{$proposal->human_filesize()}})</a>
                             <br>
                         </div>
-                        <form action="{{route('seminartopik-penilaian')}}" method="post" class="width-full">
+                        <form action="{{route('proposal-penerimaan')}}" method="post" class="width-full">
                             <div class=" width-full text-right flex-wrap-nowrap">
                                 {{csrf_field()}}
                                 <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">

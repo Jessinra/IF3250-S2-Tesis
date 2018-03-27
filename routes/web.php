@@ -31,19 +31,24 @@ Route::post('register','Auth\RegisterController@registerUser')->name('registerPo
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/generate/admin', 'Auth\RegisterController@generateAdmin');
 
+Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
+Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
+
 Route::get('/dashboard', 'HomeController@index');
 Route::get('/dashboard/mahasiswa', 'MahasiswaController@index');
 Route::get('/dashboard/dosen', 'DosenController@index');
 Route::get('/dashboard/manajer', 'ManajerController@index');
+
 Route::post('/topik/pengajuan', 'TopicController@pengajuan');
 Route::get('/topik/pengajuan', 'TopicController@showFormPengajuan');
 Route::get('/topik/control','TopicController@showControlMahasiswa');
 Route::get('/topik/get','TopicController@getTopik');
-Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
-Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
 Route::post('/topik/approval', 'TopicController@approval')->name('topicapproval');
+
+Route::post('/seminartopik/penetapan','SeminarTopikController@penetapanJadwal')->name('seminartopik-penetapan');
+Route::post('/seminartopik/penilaian','SeminarTopikController@penilaian')->name('seminartopik-penilaian');
+
 Route::get('/proposal/upload', 'ProposalController@showUploadForm');
 Route::post('/proposal/upload','ProposalController@upload');
 Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
-Route::post('/seminartopik/penetapan','SeminarTopikController@penetapanJadwal')->name('seminartopik-penetapan');
-Route::post('/seminartopik/penilaian','SeminarTopikController@penilaian')->name('seminartopik-penilaian');
+Route::post('/proposal/penerimaan','ProposalController@approval')->name('proposal-penerimaan');

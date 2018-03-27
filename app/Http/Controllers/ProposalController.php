@@ -23,13 +23,6 @@ class ProposalController extends Controller
         if ($mhs) {
             $proposal = $request->file('proposal');
             if ($proposal) {
-//                echo $proposal->getClientOriginalName();
-//                echo "<br>";
-//                echo $proposal->getSize();
-//                echo "<br>";
-//                echo $proposal->getClientSize();
-//                echo "<br>";
-//
                 $path = $proposal->storeAs($user->username, $proposal->getClientOriginalName());
                 Proposal::create([
                     "mahasiswa_id" => $mhs->id,
@@ -54,10 +47,15 @@ class ProposalController extends Controller
         $mhs_usr  = User::where('username',$mhs_id)->first();
         $mhs_mhs = $mhs_usr->isMahasiswa();
         if($usr->isManajer() || $usr->username == $mhs_id) {
-            return Storage::download($mhs_mhs->proposal()->path);
+            return Storage::download($id.'/'.$filename, "", [""]);
         } else {
-            abort(403);
+            return abort(403);
         }
     }
+
+    public function approval(Request $request) {
+        echo json_encode($request->all());
+    }
+
 
 }
