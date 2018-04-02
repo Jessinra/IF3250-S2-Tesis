@@ -93,4 +93,18 @@ class DosenController extends Controller
     {
         //
     }
+
+
+    /**
+     * Show all mahasiswa that related with dosen
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showMahasiswa() {
+        if(Auth::user()->isDosen()) {
+            return view('dosen.listmahasiswa');
+        } else {
+            return abort(403);
+        }
+    }
 }
