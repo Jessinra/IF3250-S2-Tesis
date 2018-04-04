@@ -11,7 +11,7 @@ class Mahasiswa extends Model
     const STATUS_MENUNGGU_TOPIK = 0;
     const STATUS_TOPIK_TELAH_DIAJUKAN = 1;
     const STATUS_NOT_ACTIVE = -999;
-    const STATUS_TOPIK_DITERIMA=2;
+    const STATUS_TOPIK_DITERIMA = 2;
     const STATUS_TOPIK_DITOLAK = -1;
     const STATUS_SIAP_SEMINAR_TOPIK = 3;
     const STATUS_LULUS_SEMINAR_TOPIK = 4;

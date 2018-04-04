@@ -10,15 +10,20 @@
 
         <div class="progress_containter">
             <div class="level_progress">
-                @if($mahasiswa->status >= 4)
+                @if($mahasiswa->status >= 4 ||
+                    $mahasiswa->status == -7 ||
+                    $mahasiswa->status == -9 ||
+                    $mahasiswa->status == -12)
                     <div class="progress progress_1">
                         <div class="bar done"></div>
                     </div>
-                @elseif($mahasiswa->status >=2)
+                @elseif($mahasiswa->status >=2 ||
+                    $mahasiswa->status == -4)
                     <div class="progress progress_1">
                         <div class="bar prog60"></div>
                     </div>
-                @elseif($mahasiswa->status >=1)
+                @elseif($mahasiswa->status >=1 ||
+                    $mahasiswa->status == -1)
                     <div class="progress progress_1">
                         <div class="bar prog30"></div>
                     </div>
@@ -28,15 +33,18 @@
                     </div>
                 @endif
 
-                @if($mahasiswa->status >= 9)
+                @if($mahasiswa->status >= 9 ||
+                    $mahasiswa->status == -12)
                     <div class="progress progress_2">
                         <div class="bar done"></div>
                     </div>
-                @elseif($mahasiswa->status >=7)
+                @elseif($mahasiswa->status >=7 ||
+                    $mahasiswa->status == -9)
                     <div class="progress progress_2">
                         <div class="bar prog60"></div>
                     </div>
-                @elseif($mahasiswa->status >= 6)
+                @elseif($mahasiswa->status >= 6 ||
+                    $mahasiswa->status == -7 )
                     <div class="progress progress_2">
                         <div class="bar prog30"></div>
                     </div>
@@ -45,27 +53,46 @@
                         <div class="bar"></div>
                     </div>
                 @endif
-                <div class="progress progress_3">
-                    <div class="bar"></div>
-                </div>
 
+                @if($mahasiswa->status >= 13 )
+                    <div class="progress progress_3">
+                        <div class="bar done"></div>
+                    </div>
+                @elseif($mahasiswa->status >= 12)
+                    <div class="progress progress_3">
+                        <div class="bar prog60"></div>
+                    </div>
+                @elseif($mahasiswa->status >= 11 ||
+                    $mahasiswa->status == -12 )
+                    <div class="progress progress_3">
+                        <div class="bar prog30"></div>
+                    </div>
+                @else
+                    <div class="progress progress_3">
+                        <div class="bar"></div>
+                    </div>
+                @endif
 
                 <div class="level level_1 level_reached"><p>1</p></div>
 
-                @if($mahasiswa->status >= 5)
-                    <div class="level level_2 reached"><p>2</p></div>
+                @if($mahasiswa->status >= 5 ||
+                    $mahasiswa->status == -7 ||
+                    $mahasiswa->status == -9 ||
+                    $mahasiswa->status == -12)
+                    <div class="level level_2 level_reached"><p>2</p></div>
                 @else
                     <div class="level level_2"><p>2</p></div>
                 @endif
 
-                @if($mahasiswa->status >= 10)
-                    <div class="level level_3 reached"><p>2</p></div>
+                @if($mahasiswa->status >= 10 ||
+                    $mahasiswa->status == -12)
+                    <div class="level level_3 level_reached"><p>2</p></div>
                 @else
                     <div class="level level_3"><p>2</p></div>
                 @endif
 
                 @if($mahasiswa->status >= 14)
-                    <div class="level level_4 reached"><p>2</p></div>
+                    <div class="level level_4 level_reached"><p>2</p></div>
                 @else
                     <div class="level level_4"><p>2</p></div>
                 @endif
@@ -76,21 +103,51 @@
                             <p>Seminar Topik</p>
                         </div>
                     </a>
-                    <a class="nav-link" data-toggle="tab" href="#step2">
-                        <div class="level_text level2_text">
-                            <p>Seminar Proposal</p>
-                        </div>
-                    </a>
-                    <a class="nav-link" data-toggle="tab" href="#step3">
-                        <div class="level_text level3_text">
-                            <p>Seminar Tesis</p>
-                        </div>
-                    </a>
-                    <a class="nav-link" data-toggle="tab" href="#step4">
-                        <div class="level_text level4_text">
-                            <p>Sidang Tesis</p>
-                        </div>
-                    </a>
+                    @if($mahasiswa->status >= 5 ||
+                        $mahasiswa->status == -7 ||
+                        $mahasiswa->status == -9 ||
+                        $mahasiswa->status == -12)
+                        <a class="nav-link" data-toggle="tab" href="#step2">
+                            <div class="level_text level2_text">
+                                <p>Seminar Proposal</p>
+                            </div>
+                        </a>
+                    @else
+                        <a class="nav-link disabled" data-toggle="tab" href="#step2">
+                            <div class="level_text level2_text">
+                                <p>Seminar Proposal</p>
+                            </div>
+                        </a>
+                    @endif
+
+                    @if($mahasiswa->status >= 10 ||
+                        $mahasiswa->status == -12)
+                        <a class="nav-link" data-toggle="tab" href="#step3">
+                            <div class="level_text level3_text">
+                                <p>Seminar Tesis</p>
+                            </div>
+                        </a>
+                    @else
+                        <a class="nav-link disabled" data-toggle="tab" href="#step3">
+                            <div class="level_text level3_text">
+                                <p>Seminar Tesis</p>
+                            </div>
+                        </a>
+                    @endif
+
+                    @if($mahasiswa->status >= 14)
+                        <a class="nav-link" data-toggle="tab" href="#step4">
+                            <div class="level_text level4_text">
+                                <p>Sidang Tesis</p>
+                            </div>
+                        </a>
+                    @else
+                        <a class="nav-link disabled" data-toggle="tab" href="#step4">
+                            <div class="level_text level4_text">
+                                <p>Sidang Tesis</p>
+                            </div>
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -98,8 +155,9 @@
         <div class="tab-content">
             <div id="step1" class="container tab-pane fade active show">
                 <h3 class="header">Seminar Topik</h3>
-                
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                @if($mahasiswa->status >= 0)
+                    <p>Anda dapat mengajukan topik tesis.</p>
+                @endif
             </div>
             <div id="step2" class="container tab-pane fade">
                 <h3 class="header">Seminar Proposal</h3>
