@@ -17,7 +17,8 @@
                     <div class="progress progress_1">
                         <div class="bar done"></div>
                     </div>
-                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA)
+                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA ||
+                    $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
                     <div class="progress progress_1">
                         <div class="bar prog60"></div>
                     </div>
@@ -74,7 +75,7 @@
 
                 <div class="level level_1 level_reached"><p>1</p></div>
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MENUNGGU_PROPOSAL ||
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
@@ -102,7 +103,7 @@
                             <p>Seminar Topik</p>
                         </div>
                     </a>
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MENUNGGU_PROPOSAL ||
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
@@ -160,7 +161,7 @@
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
-
+                    <br>
                     @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL ||
@@ -168,11 +169,10 @@
                         <p>Lulus seminar topik.</p>
                     @elseif($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
                         <p>Tidak lulus seminar topik.</p>
-                        <a class="btn btn-blue" href="/topik/pengajuan" role="button">Ajukan Topik</a>
                     @endif
-                    <br>
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA)
-                        <p>Topik Anda telah disetujui.</p>
+
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA ||
+                        $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
                         @foreach($mahasiswa->getTopics() as $item)
                             @if($item->getStatusString() == $item->statusString[1])
                                 <div class="topik-wrapper">
