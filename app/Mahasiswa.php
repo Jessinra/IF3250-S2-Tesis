@@ -25,13 +25,14 @@ class Mahasiswa extends Model
     const STATUS_LULUS_SEMINAR_PROPOSAL = 9;
     const STATUS_GAGAL_SEMINAR_PROPOSAL = -9;
 
-    const STATUS_MASA_BIMBINGAN = 10;
-    const STATUS_SIAP_SEMINAR_TESIS = 11;
-    const STATUS_LULUS_SEMINAR_TESIS = 12;
-    const STATUS_GAGAL_SEMINAR_TESIS = -12;
+    const STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH = 10;
+    const STATUS_MASA_BIMBINGAN = 11;
+    const STATUS_SIAP_SEMINAR_TESIS = 12;
+    const STATUS_LULUS_SEMINAR_TESIS = 13;
+    const STATUS_GAGAL_SEMINAR_TESIS = -13;
 
-    const STATUS_SIAP_SIDANG_TESIS = 13;
-    const STATUS_LULUS = 14;
+    const STATUS_SIAP_SIDANG_TESIS = 14;
+    const STATUS_LULUS = 15;
 
     protected $statusString = [
         "0" => "Menunggu topik",
@@ -53,7 +54,9 @@ class Mahasiswa extends Model
         "-999" => "Akun tidak aktif",
         "-1" => "Semua Topik ditolak",
         "-4" => "Gagal Seminar Topik",
-        "-7" => "Proposal Ditolak"
+        "-7" => "Proposal Ditolak",
+        "-9" => "Gagal Seminar Proposal",
+        "-13" => "Gagal Seminar Tesis"
     ];
     protected $fillable= ['id'];
     public function getStatus($status) {
