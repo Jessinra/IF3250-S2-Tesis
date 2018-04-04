@@ -16,16 +16,23 @@ class Mahasiswa extends Model
     const STATUS_SIAP_SEMINAR_TOPIK = 3;
     const STATUS_LULUS_SEMINAR_TOPIK = 4;
     const STATUS_GAGAL_SEMINAR_TOPIK = -4;
+
     const STATUS_MENUNGGU_PROPOSAL = 5;
     const STATUS_PROPOSAL_TELAH_DIAJUKAN = 6;
     const STATUS_PROPOSAL_DITERIMA = 7;
     const STATUS_PROPOSAL_DITOLAK = -7;
-//    const STATUS_MENUNGGU_PROPOSAL = 2;
-//    const STATUS_SIAP_SEMINAR_PROPOSAL = 3;
-//    const STATUS_MASA_BIMBINGAN = 4;
-//    const STATUS_SIAP_SEMINAR_TESIS = 5;
-//    const STATUS_SIAP_SIDANG_TESIS = 6;
-//    const STATUS_LULUS = 7;
+    const STATUS_SIAP_SEMINAR_PROPOSAL = 8;
+    const STATUS_LULUS_SEMINAR_PROPOSAL = 9;
+    const STATUS_GAGAL_SEMINAR_PROPOSAL = -9;
+
+    const STATUS_MASA_BIMBINGAN = 10;
+    const STATUS_SIAP_SEMINAR_TESIS = 11;
+    const STATUS_LULUS_SEMINAR_TESIS = 12;
+    const STATUS_GAGAL_SEMINAR_TESIS = -12;
+
+    const STATUS_SIAP_SIDANG_TESIS = 13;
+    const STATUS_LULUS = 14;
+
     protected $statusString = [
         "0" => "Menunggu topik",
         "1" => "Topik telah diajukan",
