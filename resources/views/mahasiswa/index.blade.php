@@ -312,9 +312,20 @@
         @endif
                 <h3 class="header">Seminar Proposal</h3>
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                    <p>Proposal sudah diajukan.</p>
+                    @php($proposal = $mahasiswa->proposal())
+                    <div class="row col-md-12 flex-wrap-nowrap proposal-container">
+                        <div class="row align-items-center justify-content-start file-name  width-full">
+                            <i class="material-icons">insert_drive_file</i>
+                            <a href="/proposal/download/{{$proposal->path}}">{{$proposal->filename}} ({{$proposal->human_filesize()}})</a>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+                    <a class="btn btn-blue" href="/proposal/upload" role="button">Edit Proposal</a>
+                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
                     <p>Anda dapat mengunggah proposal topik tesis.</p>
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Unggah Proposal</a>
-                @else
                 @endif
             </div>
 
