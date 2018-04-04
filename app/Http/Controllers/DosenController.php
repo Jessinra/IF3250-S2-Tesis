@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mahasiswa;
+use App\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 class DosenController extends Controller
 {
     /**
@@ -20,12 +22,20 @@ class DosenController extends Controller
 
     public function index()
     {
-        //
+        
         if(Auth::user()->isDosen()) {
             return view('dosen.index');
         } else {
             return abort(403);
         }
+    }
+
+    /**
+     * Check is this dosen or not
+     * @return boolean
+     */
+    public function getDosen() {
+        return Auth::user()->isDosen();
     }
 
     /**
@@ -101,8 +111,11 @@ class DosenController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showMahasiswa() {
-        if(Auth::user()->isDosen()) {
-            return view('dosen.listmahasiswa');
+        $iddosen = Auth::user()->id;
+        if($this->getDosen()) {
+            $idmahasiswa = Topic::with('mahasiswa_id')->where('calon_pembimbing1', $iddosen)->pluck('mahasiswa_id');
+            $mahasiswa = Mahasiswa::whereIn('id',$idmahasiswa)->get();
+         return view('dosen.listmahasiswa',['mahasiswa' => $mahasiswa]);
         } else {
             return abort(403);
         }
