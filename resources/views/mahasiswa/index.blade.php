@@ -84,14 +84,14 @@
                     <div class="level level_2"><p>2</p></div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN ||
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                     <div class="level level_3 level_reached"><p>2</p></div>
                 @else
                     <div class="level level_3"><p>2</p></div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                     <div class="level level_4 level_reached"><p>2</p></div>
                 @else
                     <div class="level level_4"><p>2</p></div>
@@ -153,7 +153,11 @@
         </div>
 
         <div class="tab-content">
+        @if($mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
             <div id="step1" class="container tab-pane fade active show">
+        @else
+            <div id="step1" class="container tab-pane fade">
+        @endif
                 <h3 class="header">Seminar Topik</h3>
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_TELAH_DIAJUKAN ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_TOPIK_DITOLAK ||
@@ -295,22 +299,39 @@
                         <a class="btn btn-blue" href="/topik/pengajuan" role="button">Ajukan Topik</a>
                         <br>
                     @endif
-
-
                 @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_MENUNGGU_TOPIK)
                     <p>Anda dapat mengajukan topik tesis.</p>
                     <a class="btn btn-blue" href="/topik/pengajuan" role="button">Ajukan Topik</a>
                 @endif
             </div>
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK &&
+            $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)
+            <div id="step2" class="container tab-pane fade active show">
+        @else
             <div id="step2" class="container tab-pane fade">
+        @endif
                 <h3 class="header">Seminar Proposal</h3>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                    <p>Anda dapat mengunggah proposal topik tesis.</p>
+                    <a class="btn btn-blue" href="/proposal/upload" role="button">Unggah Proposal</a>
+                @else
+                @endif
             </div>
+
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL &&
+            $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+            <div id="step3" class="container tab-pane fade active show">
+        @else
             <div id="step3" class="container tab-pane fade">
+        @endif
                 <h3 class="header">Seminar Tesis</h3>
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
             </div>
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+            <div id="step4" class="container tab-pane fade active show">
+        @else
             <div id="step4" class="container tab-pane fade">
+        @endif
                 <h3 class="header">Sidang Tesis</h3>
                 <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
             </div>
