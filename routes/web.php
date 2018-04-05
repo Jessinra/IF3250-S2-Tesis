@@ -52,3 +52,6 @@ Route::get('/proposal/upload', 'ProposalController@showUploadForm');
 Route::post('/proposal/upload','ProposalController@upload');
 Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
 Route::post('/proposal/penerimaan','ProposalController@approval')->name('proposal-penerimaan');
+
+Route::get('/hasilbimbingan','HasilBimbinganController@showListHasilBimbingan');
+Route::get('/hasilbimbingan/{id}','HasilBimbinganController@showListHasilBimbingan');
