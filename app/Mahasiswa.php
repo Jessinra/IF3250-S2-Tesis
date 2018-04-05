@@ -76,6 +76,11 @@ class Mahasiswa extends Model
         return $hsl_bimbingan;
     }
 
+    public function getHasilBimbinganBelumDisetujui(){
+        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->where('status',0)->get();
+        return $hsl_bimbingan;
+    }
+
     public function user() {
         return User::find($this->id);
     }
