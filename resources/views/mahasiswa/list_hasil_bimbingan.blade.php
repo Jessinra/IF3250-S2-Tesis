@@ -34,16 +34,18 @@
                         <td>
                             {{$item->getStatusString()}}
                         </td>
-                        <td class="row justify-content-center ">
-                            <a href="/hasilbimbingan/{{$item->id}}">
-                                <button class="btn btn-primary display-flex justify-content-center align-items-center">
-                                    <i class="material-icons font-size-18-px">
-                                        edit
-                                    </i>
-                                    <span class="ml-1">Edit</span>
-                                </button>
-                            </a>
-                        </td>
+                        @if($item->status == 0)
+                            <td class="row justify-content-center ">
+                                <a href="/hasilbimbingan/tambah">
+                                    <button class="btn btn-primary display-flex justify-content-center align-items-center">
+                                        <i class="material-icons font-size-18-px">
+                                            edit
+                                        </i>
+                                        <span class="ml-1">Edit</span>
+                                    </button>
+                                </a>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
             </table>
