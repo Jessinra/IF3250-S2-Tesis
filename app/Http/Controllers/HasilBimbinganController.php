@@ -4,38 +4,23 @@ namespace App\Http\Controllers;
 
 use App\HasilBimbingan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HasilBimbinganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function showListHasilBimbingan() {
+        $mhs = Auth::user()->isMahasiswa();
+        if($mhs) {
+            $hsl_bimbingan = $mhs->getHasilBimbingan();
+            return view('mahasiswa.list_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan]);
+        } else {
+            return abort(403);
+        }
     }
 
     /**

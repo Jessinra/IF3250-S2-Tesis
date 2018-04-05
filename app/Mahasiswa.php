@@ -70,6 +70,12 @@ class Mahasiswa extends Model
     public function getTopicApproval() {
         return $this->hasMany('App\TopicApproval','mahasiswa_id','id')->orderBy('created_at','DESC')->first();
     }
+
+    public function getHasilBimbingan(){
+        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->orderBy('tanggal_waktu','desc')->get();
+        return $hsl_bimbingan;
+    }
+
     public function user() {
         return User::find($this->id);
     }
