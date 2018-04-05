@@ -54,4 +54,5 @@ Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
 Route::post('/proposal/penerimaan','ProposalController@approval')->name('proposal-penerimaan');
 
 Route::get('/hasilbimbingan','HasilBimbinganController@showListHasilBimbingan');
-Route::get('/hasilbimbingan/{id}','HasilBimbinganController@showListHasilBimbingan');
+Route::get('/hasilbimbingan/tambah','HasilBimbinganController@showFormHasilBimbingan');
+Route::post('/hasilbimbingan/tambah','HasilBimbinganController@uploadHasilBimbingan');
