@@ -38,11 +38,72 @@
                 </div>
             </div>
             <div class="col-md-8">
+
+                <div class="control-pengajuan-proposal mb-4">
+                    @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL)
+                        @php($seminarProposal = $mahasiswa->proposal())
+                        <h3>
+                            Penetapan Seminar Proposal
+                        </h3>
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
+                            <div class="alert alert-success row align-items-center">
+                                <i class="material-icons font-size-18-px">check_circle</i>
+                                Proposal {{$proposal->filename}} diterima oleh {{$proposal->evaluator->name}} pada
+                                {{date("d M Y H:i:s", strtotime($proposal->updated_at.'UTC'))}}
+                            </div>
+                            <fieldset disabled="disabled">
+                                @elseif($mahasiswa->status <= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                                    <div class="alert alert-danger row align-items-center">
+                                        <i class="material-icons font-size-18-px">cancel</i>
+                                        Proposal {{$proposal->filename}} ditolak oleh {{$proposal->evaluator->name}} pada
+                                        {{date("d M Y H:i:s", strtotime($proposal->updated_at.'UTC'))}}
+                                    </div>
+                                @endif
+                                <div class="row col-md-12 flex-wrap-nowrap justify-content-center">
+                                    <form action="{{route('seminartopik-penetapan')}}" method="post">
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="mahasiswa" value="{{$mahasiswa->id}}">
+                                        <div class="row justify-content-center">
+                                            <div>
+                                                <input type="datetime-local" class="form-control" name="date"
+                                                       @if($seminarTopik)
+                                                       value="{{date("Y-m-d\TH:i:s", strtotime($seminarTopik->schedule))}}"
+                                                        @endif
+                                                >
+                                            </div>
+                                            <button class="btn btn-blue ml-4">
+                                                Tetapkan
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                @if($proposal->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
+                                    </fieldset>
+                                @endif
+                        @endif
+
+                </div>
+
+                <div class="control-pengajuan-proposal mb-4">
                 @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_PROPOSAL_TELAH_DIAJUKAN)
                     @php($proposal = $mahasiswa->proposal())
                     <h3>
                         Pengajuan Proposal
                     </h3>
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
+                        <div class="alert alert-success row align-items-center">
+                            <i class="material-icons font-size-18-px">check_circle</i>
+                            Proposal {{$proposal->filename}} diterima oleh {{$proposal->evaluator->name}} pada
+                            {{date("d M Y H:i:s", strtotime($proposal->updated_at.'UTC'))}}
+                        </div>
+                        <fieldset disabled="disabled">
+                            @elseif($mahasiswa->status <= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                                <div class="alert alert-danger row align-items-center">
+                                    <i class="material-icons font-size-18-px">cancel</i>
+                                    Proposal {{$proposal->filename}} ditolak oleh {{$proposal->evaluator->name}} pada
+                                    {{date("d M Y H:i:s", strtotime($proposal->updated_at.'UTC'))}}
+                                </div>
+                            @endif
                     <div class="row col-md-12 flex-wrap-nowrap proposal-container">
                         <div class="row align-items-center justify-content-start file-name  width-full">
                             <i class="material-icons">insert_drive_file</i>
@@ -53,7 +114,7 @@
                             <div class=" width-full text-right flex-wrap-nowrap">
                                 {{csrf_field()}}
                                 <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
-                                <input type="hidden" value="{{$seminarTopik->id}}" name="seminartopik">
+                                <input type="hidden" value="{{$proposal->id}}" name="proposal">
                                 <button class="btn btn-red mr-1" name="action" value="0">
                                     Tolak
                                 </button>
@@ -64,6 +125,10 @@
                         </form>
 
                     </div>
+                    @if($proposal->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
+                        </fieldset>
+                    @endif
+                </div>
 
 
                 @endif
@@ -80,7 +145,12 @@
 
                         </div>
                         <fieldset disabled="disabled">
-                    @elseif($mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
+                    @elseif($mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
+                        <div class="alert alert-danger row align-items-center">
+                            <i class="material-icons font-size-18-px">cancel</i>
+                            Seminar Topik dinyatakan tidak lulus oleh {{$seminarTopik->evaluator->name}}
+                            pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
+                        </div>
                     @endif
                     <div class="row justify-content-center">
 
@@ -142,7 +212,6 @@
                     </div>
                 @endif
                 @if($mahasiswa->status > 0 || $mahasiswa->status==-1)
-
                     <div class="section" id="pengajuan-topik mb-4">
                         <h3>Pengajuan Topik</h3>
                         @if($mahasiswa->status > 1 || $mahasiswa->status==-1)
@@ -157,7 +226,7 @@
                             @elseif($approval->action == App\TopicApproval::ACTION_TOLAK)
                                 <div class="alert alert-danger row align-items-center">
                                     <i class="material-icons font-size-18-px">cancel</i>
-                                    Semua Topic ditolak oleh {{$approval->manajer->user()->name}}
+                                    Semua Topik ditolak oleh {{$approval->manajer->user()->name}}
                                     pada {{date("d M Y H:i:s", strtotime($approval->created_at.'UTC'))}}
                                 </div>
                             @endif
