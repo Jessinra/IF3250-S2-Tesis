@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Proposal extends Model
 {
     //
+    const STATUS_PROPOSAL_DIAJUKAN = 0;
+    const STATUS_PROPOSAL_DITERIMA = 1;
+    const STATUS_PROPOSAL_DITOLAK = -1;
+
+    const ACTION_PROPOSAL_DITERIMA = 1;
+    const ACTION_PROPOSAL_DITOLAK = 0;
     protected $fillable=[
         "mahasiswa_id","path","filesize","filename"
     ];
@@ -21,5 +27,9 @@ class Proposal extends Model
             $i++;
         }
         return round($size, $precision).$units[$i];
+    }
+
+    function evaluator() {
+        return $this->belongsTo('App\User', 'evaluator_id', 'id');
     }
 }
