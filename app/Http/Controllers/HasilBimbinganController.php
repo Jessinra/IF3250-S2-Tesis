@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dosen;
 use App\HasilBimbingan;
+use App\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -20,6 +21,16 @@ class HasilBimbinganController extends Controller
         if($mhs) {
             $hsl_bimbingan = $mhs->getHasilBimbingan();
             return view('mahasiswa.list_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan]);
+        } else {
+            return abort(403);
+        }
+    }
+
+    public function showListPersetujuanBimbingan() {
+        $dosen = Auth::user()->isDosen();
+        if($dosen) {
+            $hsl_bimbingan = $dosen->getHasilBimbingan();
+            return view('dosen.list_hasil_bimbingan_dosen',['hsl_bimbingan' => $hsl_bimbingan]);
         } else {
             return abort(403);
         }
@@ -77,6 +88,22 @@ class HasilBimbinganController extends Controller
             } else {
                 return redirect('/hasilbimbingan');
             }
+        } else{
+            return abort (403);
+        }
+    }
+
+    public function persetujuan(Request $request) {
+        $dosen = Auth::user()->isDosen();
+        if($dosen) {
+            $data = $request->all();
+            $db_hsl_bimbingan = HasilBimbingan::where('id',$data['id'])->get();
+
+            $cur = $db_hsl_bimbingan[0];
+            $cur->status = $data['action'];
+            $cur->save();
+
+            return redirect('/hasilbimbingan');
         } else{
             return abort (403);
         }
