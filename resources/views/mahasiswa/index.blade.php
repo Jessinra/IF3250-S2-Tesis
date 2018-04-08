@@ -120,7 +120,7 @@
                         </a>
                     @endif
 
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN ||
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                         <a class="nav-link" data-toggle="tab" href="#step3">
                             <div class="level_text level3_text">
