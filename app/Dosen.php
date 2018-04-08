@@ -13,4 +13,14 @@ class Dosen extends Model
     public function user() {
         return User::find($this->id);
     }
+
+    public function getHasilBimbinganBelumDisetujui(){
+        $hsl_bimbingan = HasilBimbingan::where('dosen_id',$this->id)->where('status',0)->get();
+        return $hsl_bimbingan;
+    }
+
+    public function getHasilBimbingan(){
+        $hsl_bimbingan = HasilBimbingan::where('dosen_id',$this->id)->get();
+        return $hsl_bimbingan;
+    }
 }
