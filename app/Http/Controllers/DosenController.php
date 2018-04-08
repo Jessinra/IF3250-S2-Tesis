@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mahasiswa;
+use App\Thesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 class DosenController extends Controller
 {
     /**
@@ -20,12 +22,20 @@ class DosenController extends Controller
 
     public function index()
     {
-        //
+        
         if(Auth::user()->isDosen()) {
             return view('dosen.index');
         } else {
             return abort(403);
         }
+    }
+
+    /**
+     * Check is this dosen or not
+     * @return boolean
+     */
+    public function getDosen() {
+        return Auth::user()->isDosen();
     }
 
     /**
@@ -92,5 +102,24 @@ class DosenController extends Controller
     public function destroy(Mahasiswa $mahasiswa)
     {
         //
+    }
+
+
+    /**
+     * Show all mahasiswa that related with dosen
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showMahasiswa() {
+        $iddosen = Auth::user()->id;
+        if($this->getDosen()) {
+            $idmahasiswabimbingan = Thesis::where('dosen_pembimbing1', $iddosen)->orWhere('dosen_pembimbing2', $iddosen)->pluck('mahasiswa_id');
+            $mahasiswabimbingan = Mahasiswa::whereIn('id',$idmahasiswabimbingan)->get();
+            $idmahasiswauji = Thesis::where('dosen_penguji', $iddosen)->pluck('mahasiswa_id');
+            $mahasiswauji = Mahasiswa::whereIn('id',$idmahasiswauji)->get();
+         return view('dosen.listmahasiswa',['mahasiswabimbingan' => $mahasiswabimbingan, 'mahasiswauji' => $mahasiswauji]);
+        } else {
+            return abort(403);
+        }
     }
 }
