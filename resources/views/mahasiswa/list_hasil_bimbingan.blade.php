@@ -34,7 +34,7 @@
                         <td>
                             {{$item->getStatusString()}}
                         </td>
-                        @if($item->status == 0)
+                        @if($item->status <= 0)
                             <td class="row justify-content-center ">
                                 <a href="/hasilbimbingan/tambah">
                                     <button class="btn btn-primary display-flex justify-content-center align-items-center">
