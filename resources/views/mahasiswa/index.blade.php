@@ -338,7 +338,7 @@
                 <h3 class="header">Seminar Tesis</h3>
                 <p>Anda dapat mengunggah hasil bimbingan setiap kali selesai bimbingan.</p>
                 <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">Entri Hasil Bimbingan</a>
-                <a class="btn btn-outline-dark" href="/hasilbimbingan" role="button">Lihat Hasil Bimbingan</a>
+                <a class="btn btn-outline-dark" href="/hasilbimbingan/mahasiswa" role="button">Lihat Hasil Bimbingan</a>
 
             </div>
         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
