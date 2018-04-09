@@ -68,11 +68,11 @@
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="hasil_dan_diskusi" class="col-md-4 col-form-label text-md-right text-center ">Hasil dan Diskusi<sup>*</sup></label>
-                        <input type="text" id="hasil_dan_diskusi" name="hasil_dan_diskusi" class="form-control col-md-8 " value="{{$diskusi}}" required>
+                        <textarea class="form-control col-md-8" name="hasil_dan_diskusi" form="form-hsl-bimbingan" required>{{$diskusi}}</textarea>
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="rencana_tindak_lanjut" class="col-md-4 col-form-label text-md-right text-center ">Rencana Tindak Lanjut<sup>*</sup></label>
-                        <input type="text" id="rencana_tindak_lanjut" name="rencana_tindak_lanjut" class="form-control col-md-8 " value="{{$rencana}}" required>
+                        <textarea class="form-control col-md-8" name="rencana_tindak_lanjut" form="form-hsl-bimbingan" required>{{$rencana}}</textarea>
                     </div>
                 </div>
 
