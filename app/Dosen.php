@@ -23,7 +23,7 @@ class Dosen extends Model
         //$hsl_bimbingan = HasilBimbingan::where('dosen_id',$this->id)->get();
         $hsl_bimbingan = HasilBimbingan::join('users', 'mahasiswa_id', '=', 'users.id')
                             ->where('dosen_id',$this->id)
-                            ->orderBy('tanggal_waktu','desc')->orderBy('status','asc')
+                            ->orderBy('status','asc')->orderBy('tanggal_waktu','desc')
                             ->select('hasil_bimbingans.id', 'mahasiswa_id', 'dosen_id', 'status', 'tanggal_waktu', 'topik', 'hasil_dan_diskusi', 'rencana_tindak_lanjut', 'users.name', 'users.username')
                             ->get();
         return $hsl_bimbingan;
