@@ -42,10 +42,19 @@ class HasilBimbinganController extends Controller
     public function showFormTambahHasilBimbingan() {
         $mhs = Auth::user()->isMahasiswa();
         if($mhs) {
+            $user = $mhs->user();
             $hsl_bimbingan = HasilBimbingan::where('status',-2)->get();
             //nanti diubah dosennya
-            $dosen = Dosen::all();
-            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen' => $dosen]);
+            $dosen1 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing1')
+                        ->where('thesis.mahasiswa_id', $user->id)
+                        ->select('dosens.*')
+                        ->get();
+            $dosen2 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing2')
+                        ->where('thesis.mahasiswa_id', $user->id)
+                        ->select('dosens.*')
+                        ->get();
+
+            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen1' => $dosen1, 'dosen2' => $dosen2]);
         } else {
             return abort(403);
         }
@@ -58,8 +67,15 @@ class HasilBimbinganController extends Controller
             //$data = $request->all();
             $hsl_bimbingan = HasilBimbingan::where('id',Session::get('edit_id'))->where('mahasiswa_id',$user->id)->get();
             //nanti diubah dosennya
-            $dosen = Dosen::all();
-            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen' => $dosen]);
+            $dosen1 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing1')
+                ->where('thesis.mahasiswa_id', $user->id)
+                ->select('dosens.*')
+                ->get();
+            $dosen2 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing2')
+                ->where('thesis.mahasiswa_id', $user->id)
+                ->select('dosens.*')
+                ->get();
+            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen1' => $dosen1, 'dosen2' => $dosen2]);
         } else {
             return abort(403);
         }

@@ -36,7 +36,19 @@
                         <select type="text" id="dosen_id" class="form-control col-md-8" name="dosen_id">
                             <option value="" disabled>Pilih Dosen</option>
                             <option value=""></option>
-                            @foreach($dosen as $item)
+                            @foreach($dosen1 as $item)
+                                @php($user_item = $item->user())
+                                @if(count($hsl_bimbingan) > 0)
+                                    @if($hsl_bimbingan[0]->dosen_id == $user_item->id)
+                                        <option value="{{$user_item->id}}" selected="selected">{{$user_item->name}}</option>
+                                    @else
+                                        <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                    @endif
+                                @else
+                                    <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                @endif
+                            @endforeach
+                            @foreach($dosen2 as $item)
                                 @php($user_item = $item->user())
                                 @if(count($hsl_bimbingan) > 0)
                                     @if($hsl_bimbingan[0]->dosen_id == $user_item->id)
