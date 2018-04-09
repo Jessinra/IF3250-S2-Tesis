@@ -52,3 +52,10 @@ Route::get('/proposal/upload', 'ProposalController@showUploadForm');
 Route::post('/proposal/upload','ProposalController@upload');
 Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
 Route::post('/proposal/penerimaan','ProposalController@approval')->name('proposal-penerimaan');
+
+Route::get('/dosen/listmahasiswa','DosenController@showMahasiswa');
+Route::get('/hasilbimbingan/mahasiswa','HasilBimbinganController@showListHasilBimbingan');
+Route::get('/hasilbimbingan/tambah','HasilBimbinganController@showFormHasilBimbingan');
+Route::post('/hasilbimbingan/tambah','HasilBimbinganController@uploadHasilBimbingan');
+Route::get('/hasilbimbingan','HasilBimbinganController@showListPersetujuanBimbingan');
+Route::post('/hasilbimbingan/persetujuan','HasilBimbinganController@persetujuan')->name('bimbingan-persetujuan');

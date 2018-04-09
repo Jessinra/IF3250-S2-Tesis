@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="container">
-       DASHBOARD MANAJER
+        <h1>Dashboard</h1>
+        <a href="/mahasiswa/control">Kontrol Mahasiswa</a>
+        <br>
+        <a href="/register">Register</a>
     </div>
 @endsection

@@ -11,21 +11,29 @@ class Mahasiswa extends Model
     const STATUS_MENUNGGU_TOPIK = 0;
     const STATUS_TOPIK_TELAH_DIAJUKAN = 1;
     const STATUS_NOT_ACTIVE = -999;
-    const STATUS_TOPIK_DITERIMA=2;
+    const STATUS_TOPIK_DITERIMA = 2;
     const STATUS_TOPIK_DITOLAK = -1;
     const STATUS_SIAP_SEMINAR_TOPIK = 3;
     const STATUS_LULUS_SEMINAR_TOPIK = 4;
     const STATUS_GAGAL_SEMINAR_TOPIK = -4;
+
     const STATUS_MENUNGGU_PROPOSAL = 5;
     const STATUS_PROPOSAL_TELAH_DIAJUKAN = 6;
     const STATUS_PROPOSAL_DITERIMA = 7;
     const STATUS_PROPOSAL_DITOLAK = -7;
-//    const STATUS_MENUNGGU_PROPOSAL = 2;
-//    const STATUS_SIAP_SEMINAR_PROPOSAL = 3;
-//    const STATUS_MASA_BIMBINGAN = 4;
-//    const STATUS_SIAP_SEMINAR_TESIS = 5;
-//    const STATUS_SIAP_SIDANG_TESIS = 6;
-//    const STATUS_LULUS = 7;
+    const STATUS_SIAP_SEMINAR_PROPOSAL = 8;
+    const STATUS_LULUS_SEMINAR_PROPOSAL = 9;
+    const STATUS_GAGAL_SEMINAR_PROPOSAL = -9;
+
+    const STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH = 10;
+    const STATUS_MASA_BIMBINGAN = 11;
+    const STATUS_SIAP_SEMINAR_TESIS = 12;
+    const STATUS_LULUS_SEMINAR_TESIS = 13;
+    const STATUS_GAGAL_SEMINAR_TESIS = -13;
+
+    const STATUS_SIAP_SIDANG_TESIS = 14;
+    const STATUS_LULUS = 15;
+
     protected $statusString = [
         "0" => "Menunggu topik",
         "1" => "Topik telah diajukan",
@@ -46,7 +54,9 @@ class Mahasiswa extends Model
         "-999" => "Akun tidak aktif",
         "-1" => "Semua Topik ditolak",
         "-4" => "Gagal Seminar Topik",
-        "-7" => "Proposal Ditolak"
+        "-7" => "Proposal Ditolak",
+        "-9" => "Gagal Seminar Proposal",
+        "-13" => "Gagal Seminar Tesis"
     ];
     protected $fillable= ['id'];
     public function getStatus($status) {
@@ -60,6 +70,17 @@ class Mahasiswa extends Model
     public function getTopicApproval() {
         return $this->hasMany('App\TopicApproval','mahasiswa_id','id')->orderBy('created_at','DESC')->first();
     }
+
+    public function getHasilBimbingan(){
+        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->orderBy('status','asc')->orderBy('tanggal_waktu','desc')->get();
+        return $hsl_bimbingan;
+    }
+
+    public function getHasilBimbinganBelumDisetujui(){
+        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->where('status',0)->orWhere('status',-1)->get();
+        return $hsl_bimbingan;
+    }
+
     public function user() {
         return User::find($this->id);
     }
