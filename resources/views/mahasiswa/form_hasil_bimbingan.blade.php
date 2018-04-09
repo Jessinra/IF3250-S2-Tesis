@@ -3,12 +3,14 @@
 
 @php
     if(count($hsl_bimbingan) > 0){
+        $id = $hsl_bimbingan[0]->id;
         $tgl = $hsl_bimbingan[0]->tanggal_waktu;
         $tgl = substr(str_replace(" ","T",$tgl),0,16);
         $topik = $hsl_bimbingan[0]->topik;
         $diskusi = $hsl_bimbingan[0]->hasil_dan_diskusi;
         $rencana = $hsl_bimbingan[0]->rencana_tindak_lanjut;
     }else{
+        $id = 0;
         $tgl = "";
         $topik = "";
         $diskusi = "";
@@ -23,6 +25,7 @@
         <div id="form-app">
             <form action="" method="post" id="form-hsl-bimbingan" >
                 {{csrf_field()}}
+                <input type="hidden" id="id" name="id"  value="{{$id}}">
                 <div class="form-group">
                     <div class="form-group row col-md-12">
                         <label for="topik" class="col-md-4 col-form-label text-md-right text-center">Topik Bimbingan<sup>*</sup></label>

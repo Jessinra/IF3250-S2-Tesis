@@ -36,14 +36,18 @@
                         </td>
                         @if($item->status <= 0)
                             <td class="row justify-content-center ">
-                                <a href="/hasilbimbingan/tambah">
-                                    <button class="btn btn-primary display-flex justify-content-center align-items-center">
-                                        <i class="material-icons font-size-18-px">
-                                            edit
-                                        </i>
-                                        <span class="ml-1">Edit</span>
-                                    </button>
-                                </a>
+                                <form action="" method="post" id="form-id-bimbingan{{$item->id}}">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="id" value="{{$item->id}}">
+                                </form>
+
+                                <button type="submit" form="form-id-bimbingan{{$item->id}}" class="btn btn-primary display-flex justify-content-center align-items-center">
+                                    <i class="material-icons font-size-18-px">
+                                        edit
+                                    </i>
+                                    <span class="ml-1">Edit</span>
+                                </button>
+
                             </td>
                         @endif
                     </tr>

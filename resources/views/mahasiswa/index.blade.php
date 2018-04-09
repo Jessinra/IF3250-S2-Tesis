@@ -86,15 +86,15 @@
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
-                    <div class="level level_3 level_reached"><p>2</p></div>
+                    <div class="level level_3 level_reached"><p>3</p></div>
                 @else
-                    <div class="level level_3"><p>2</p></div>
+                    <div class="level level_3"><p>3</p></div>
                 @endif
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
-                    <div class="level level_4 level_reached"><p>2</p></div>
+                    <div class="level level_4 level_reached"><p>4</p></div>
                 @else
-                    <div class="level level_4"><p>2</p></div>
+                    <div class="level level_4"><p>4</p></div>
                 @endif
 
                 <div class="nav" role="tablist">
