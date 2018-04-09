@@ -37,7 +37,7 @@
 
                         <td class="row justify-content-center ">
 
-                            <button class="btn btn-primary display-flex justify-content-center align-items-center" data-toggle="modal" data-target="#mhs{{$item->mahasiswa_id}}">
+                            <button class="btn btn-primary display-flex justify-content-center align-items-center" data-toggle="modal" data-target="#hsl{{$loop->iteration}}">
                                 <i class="material-icons font-size-18-px">
                                     edit
                                 </i>
@@ -45,29 +45,27 @@
                             </button>
 
                             <!-- The Modal -->
-                            <div class="modal fade" id="mhs{{$item->mahasiswa_id}}">
+                            <div class="modal fade" id="hsl{{$loop->iteration}}">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
 
                                         <!-- Modal Header -->
                                         <div class="modal-header">
-                                            <h4 class="modal-title">ID Mhs {{$item->mahasiswa_id}}</h4>
+                                            <h4 class="modal-title">{{$item->name}} - {{$item->username}}</h4>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
 
                                         <!-- Modal body -->
                                         <div class="modal-body">
-                                            <p>
-                                            Topik: {{$item->topik}}
-                                            </p>
-                                            <p>
-                                            Hasil dan diskusi: <br>
-                                            {{$item->hasil_dan_diskusi}}
-                                            </p>
-                                            <p>
-                                            Rencana tindak lanjut: <br>
-                                            {{$item->rencana_tindak_lanjut}}
-                                            </p>
+                                            <h5>Topik: </h5>
+                                            <p>{{$item->topik}}</p>
+                                            <h5>Waktu Bimbingan: </h5>
+                                            <p>{{$item->tanggal_waktu}}</p>
+                                            <h5>Hasil dan diskusi: </h5>
+                                            <p>{{$item->hasil_dan_diskusi}}</p>
+                                            <h5>Rencana tindak lanjut:</h5>
+                                            <p>{{$item->rencana_tindak_lanjut}}</p>
+
                                         </div>
 
                                         <!-- Modal footer -->
