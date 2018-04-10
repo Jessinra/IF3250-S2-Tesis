@@ -7,10 +7,13 @@ use App\HasilBimbingan;
 use App\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class HasilBimbinganController extends Controller
 {
+    public static $edit_id;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -36,25 +39,67 @@ class HasilBimbinganController extends Controller
         }
     }
 
-    public function showFormHasilBimbingan() {
+    public function showFormTambahHasilBimbingan() {
         $mhs = Auth::user()->isMahasiswa();
         if($mhs) {
-            $hsl_bimbingan = $mhs->getHasilBimbinganBelumDisetujui();
+            $user = $mhs->user();
+            $hsl_bimbingan = HasilBimbingan::where('status',-2)->get();
             //nanti diubah dosennya
-            $dosen = Dosen::all();
-            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen' => $dosen]);
+            $dosen1 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing1')
+                        ->where('thesis.mahasiswa_id', $user->id)
+                        ->select('dosens.*')
+                        ->get();
+            $dosen2 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing2')
+                        ->where('thesis.mahasiswa_id', $user->id)
+                        ->select('dosens.*')
+                        ->get();
+
+            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen1' => $dosen1, 'dosen2' => $dosen2]);
         } else {
             return abort(403);
         }
     }
 
-    public function uploadHasilBimbingan(Request $request) {
+    public function showFormEditHasilBimbingan() {
+        $mhs = Auth::user()->isMahasiswa();
+        if($mhs) {
+            $user = Auth::user();
+            //$data = $request->all();
+            $hsl_bimbingan = HasilBimbingan::where('id',Session::get('edit_id'))->where('mahasiswa_id',$user->id)->get();
+            //nanti diubah dosennya
+            $dosen1 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing1')
+                ->where('thesis.mahasiswa_id', $user->id)
+                ->select('dosens.*')
+                ->get();
+            $dosen2 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing2')
+                ->where('thesis.mahasiswa_id', $user->id)
+                ->select('dosens.*')
+                ->get();
+            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen1' => $dosen1, 'dosen2' => $dosen2]);
+        } else {
+            return abort(403);
+        }
+    }
+
+    public function getBimbinganID(Request $request){
+        $mahasiswa = Auth::user()->isMahasiswa();
+        if($mahasiswa) {
+            $data = $request->all();
+            //self::$edit_id = $data['id'];
+            Session::put('edit_id', $data['id']);
+            return redirect('/hasilbimbingan/edit');
+        }else{
+            return abort(403);
+        }
+    }
+
+    public function editHasilBimbingan(Request $request){
         $mahasiswa = Auth::user()->isMahasiswa();
         if($mahasiswa) {
             $user = Auth::user();
             $data = $request->all();
             $ok_count = 0;
-            $db_hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$user->id)->where('status',0)->get();
+            $db_hsl_bimbingan = HasilBimbingan::where('mahasiswa_id', $user->id)->where('id', $data['id'])->get();
 
             $validator = $this->validateHasilBimbingan($data);
             if ($validator->fails()) {
@@ -70,23 +115,45 @@ class HasilBimbinganController extends Controller
                     $cur->hasil_dan_diskusi = $data['hasil_dan_diskusi'];
                     $cur->rencana_tindak_lanjut = $data['rencana_tindak_lanjut'];
                     $cur->save();
-                } else {
-                    $hasil_bimbingan = HasilBimbingan::create([
-                        'mahasiswa_id' => $user->id,
-                        'dosen_id' => $data['dosen_id'],
-                        'status' => 0,
-                        'tanggal_waktu' => $data['tanggal_waktu'],
-                        'topik' => $data['topik'],
-                        'hasil_dan_diskusi' => $data['hasil_dan_diskusi'],
-                        'rencana_tindak_lanjut' => $data['rencana_tindak_lanjut']
-                    ]);
                 }
+            }
+            if($ok_count==0) {
+                return abort(400);
+            } else {
+                return redirect('/hasilbimbingan/mahasiswa');
+            }
+        }else{
+            return abort (403);
+        }
+    }
+
+    public function uploadHasilBimbinganBaru(Request $request) {
+        $mahasiswa = Auth::user()->isMahasiswa();
+        if($mahasiswa) {
+            $user = Auth::user();
+            $data = $request->all();
+            $ok_count = 0;
+
+            $validator = $this->validateHasilBimbingan($data);
+            if ($validator->fails()) {
+                echo json_encode($validator->errors());
+            } else {
+                $ok_count++;
+                $hasil_bimbingan = HasilBimbingan::create([
+                    'mahasiswa_id' => $user->id,
+                    'dosen_id' => $data['dosen_id'],
+                    'status' => 0,
+                    'tanggal_waktu' => $data['tanggal_waktu'],
+                    'topik' => $data['topik'],
+                    'hasil_dan_diskusi' => $data['hasil_dan_diskusi'],
+                    'rencana_tindak_lanjut' => $data['rencana_tindak_lanjut']
+                ]);
             }
 
             if($ok_count==0) {
                 return abort(400);
             } else {
-                return redirect('/hasilbimbingan');
+                return redirect('/hasilbimbingan/mahasiswa');
             }
         } else{
             return abort (403);
