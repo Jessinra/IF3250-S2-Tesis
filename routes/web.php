@@ -59,3 +59,7 @@ Route::get('/hasilbimbingan/tambah','HasilBimbinganController@showFormHasilBimbi
 Route::post('/hasilbimbingan/tambah','HasilBimbinganController@uploadHasilBimbingan');
 Route::get('/hasilbimbingan','HasilBimbinganController@showListPersetujuanBimbingan');
 Route::post('/hasilbimbingan/persetujuan','HasilBimbinganController@persetujuan')->name('bimbingan-persetujuan');
+
+Route::get('/mahasiswa/dosbing/penetapan', 'ThesisController@handlePenetapanDosbing')->name('dosbing-penetapan');
+Route::post('/seminarproposal/penetapan', 'SeminarProposalController@scheduleEstablishment')->name('seminarproposal-penetapan');
+Route::post('/seminarproposal/penilaian', 'SeminarProposalController@score')->name('seminarproposal-penilaian');
