@@ -23,7 +23,11 @@ class Topic extends Model
     }
 
     public function dosen_pembimbing2() {
-            return $this->belongsTo('App\Dosen', 'calon_pembimbing2', 'id');
+        return $this->belongsTo('App\Dosen', 'calon_pembimbing2', 'id');
+    }
+
+    public function mahasiswa(){
+        return $this->belongsTo('App\Mahasiswa', 'mahasiswa_id', 'id');
     }
     public function getStatusString() {
         return $this->statusString[$this->status];

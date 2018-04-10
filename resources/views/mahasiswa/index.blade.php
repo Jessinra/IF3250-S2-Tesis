@@ -86,15 +86,15 @@
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
-                    <div class="level level_3 level_reached"><p>2</p></div>
+                    <div class="level level_3 level_reached"><p>3</p></div>
                 @else
-                    <div class="level level_3"><p>2</p></div>
+                    <div class="level level_3"><p>3</p></div>
                 @endif
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
-                    <div class="level level_4 level_reached"><p>2</p></div>
+                    <div class="level level_4 level_reached"><p>4</p></div>
                 @else
-                    <div class="level level_4"><p>2</p></div>
+                    <div class="level level_4"><p>4</p></div>
                 @endif
 
                 <div class="nav" role="tablist">
@@ -120,7 +120,7 @@
                         </a>
                     @endif
 
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN ||
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                         <a class="nav-link" data-toggle="tab" href="#step3">
                             <div class="level_text level3_text">
@@ -338,7 +338,7 @@
                 <h3 class="header">Seminar Tesis</h3>
                 <p>Anda dapat mengunggah hasil bimbingan setiap kali selesai bimbingan.</p>
                 <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">Entri Hasil Bimbingan</a>
-                <a class="btn btn-outline-dark" href="/hasilbimbingan" role="button">Lihat Hasil Bimbingan</a>
+                <a class="btn btn-outline-dark" href="/hasilbimbingan/mahasiswa" role="button">Lihat Hasil Bimbingan</a>
 
             </div>
         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)

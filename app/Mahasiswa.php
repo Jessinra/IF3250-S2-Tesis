@@ -72,12 +72,17 @@ class Mahasiswa extends Model
     }
 
     public function getHasilBimbingan(){
-        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->orderBy('tanggal_waktu','desc')->get();
+        //$hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->orderBy('status','asc')->orderBy('tanggal_waktu','desc')->get();
+        $hsl_bimbingan = HasilBimbingan::join('users', 'dosen_id', '=', 'users.id')
+                                    ->where('mahasiswa_id',$this->id)
+                                    ->orderBy('status','asc')->orderBy('tanggal_waktu','desc')
+                                    ->select('hasil_bimbingans.id', 'mahasiswa_id', 'dosen_id', 'status', 'tanggal_waktu', 'topik', 'hasil_dan_diskusi', 'rencana_tindak_lanjut', 'users.name', 'users.username')
+                                    ->get();
         return $hsl_bimbingan;
     }
 
     public function getHasilBimbinganBelumDisetujui(){
-        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->where('status',0)->get();
+        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->where('status',0)->orWhere('status',-1)->get();
         return $hsl_bimbingan;
     }
 
@@ -95,5 +100,12 @@ class Mahasiswa extends Model
 
     public function proposal() {
         return $this->hasOne('App\Proposal')->orderBy('created_at',"DESC")->first();
+    }
+    public function getThesis() {
+        return $this->hasOne('App\Thesis','mahasiswa_id','id');
+    }
+
+    public function seminarProposal() {
+        return $this->hasMany('App\SeminarProposal')->orderBy('created_at',"DESC")->first();
     }
 }
