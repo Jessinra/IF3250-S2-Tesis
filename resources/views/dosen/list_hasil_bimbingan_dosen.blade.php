@@ -38,10 +38,7 @@
                         <td class="row justify-content-center ">
 
                             <button class="btn btn-primary display-flex justify-content-center align-items-center" data-toggle="modal" data-target="#hsl{{$loop->iteration}}">
-                                <i class="material-icons font-size-18-px">
-                                    edit
-                                </i>
-                                <span class="ml-1">Edit</span>
+                                <span class="ml-1">Lihat</span>
                             </button>
 
                             <!-- The Modal -->
@@ -70,12 +67,9 @@
 
                                         <!-- Modal footer -->
                                         <div class="modal-footer">
-                                            <form action="{{route('bimbingan-persetujuan')}}" method="post">
-                                                {{csrf_field()}}
-                                                <input type="hidden" value="{{$item->id}}" name="id">
-                                                <button type="submit" class="btn btn-danger" name=action value="-1">Tolak</button>
-                                                <button type="submit" class="btn btn-blue" name=action value="1">Setujui</button>
-                                            </form>
+                                            <!--form action="{{route('bimbingan-persetujuan')}}" method="post"-->
+                                                <button class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                                            <!--/form-->
                                         </div>
 
                                     </div>
