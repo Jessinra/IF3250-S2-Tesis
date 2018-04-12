@@ -67,6 +67,10 @@ class Mahasiswa extends Model
         $topics =  Topic::where('mahasiswa_id',$this->id)->orderBy('prioritas','asc')->get();
         return $topics;
     }
+
+    public function getApprovedTopic() {
+        return Topic::where('mahasiswa_id',$this->id)->where('status','1')->first();
+    }
     public function getTopicApproval() {
         return $this->hasMany('App\TopicApproval','mahasiswa_id','id')->orderBy('created_at','DESC')->first();
     }
@@ -101,8 +105,8 @@ class Mahasiswa extends Model
     public function proposal() {
         return $this->hasOne('App\Proposal')->orderBy('created_at',"DESC")->first();
     }
-    public function getThesis() {
-        return $this->hasOne('App\Thesis','mahasiswa_id','id');
+    public function tesis() {
+        return $this->hasOne('App\Thesis','mahasiswa_id','id')->orderBy('created_at',"DESC")->first();
     }
 
     public function seminarProposal() {

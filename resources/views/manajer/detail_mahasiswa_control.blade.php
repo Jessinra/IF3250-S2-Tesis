@@ -7,6 +7,8 @@
     @php($seminarTopik=$mahasiswa->seminarTopik())
     @php($seminarProposal = $mahasiswa->seminarProposal())
     @php($proposal= $mahasiswa->proposal())
+    @php($tesis = $mahasiswa->tesis())
+    @php($topik = $mahasiswa->getApprovedTopic())
     <div class="container detail-mahasiswa-control-page">
         <div class="row">
             <div class="col-md-4">
@@ -41,10 +43,78 @@
             <div class="col-md-8">
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
+
                     <div class="control-seminar-topik mb-4">
                         <h3>
                             Penetapan Dosen Pembimbing
                         </h3>
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                            <div class="alert alert-success row align-items-center">
+                                <i class="material-icons font-size-18-px">check_circle</i>
+                                &nbsp Dosen pembimbing telah ditetapkan oleh {{$tesis->creator_admin->name}}
+                                pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
+                            </div>
+                            <fieldset disabled="disabled">
+                        @endif
+                            <div class="row justify-content-center">
+                                <form action="{{route('dosbing-penetapan')}}" method="post">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="mahasiswa_id" value="{{$mahasiswa->id}}">
+                                    <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">Topik</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" value="{{$topik->judul}}" name="judul">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">Keilmuan</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" value="{{$topik->keilmuan}}" name="keilmuan">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 1</label>
+                                        <div class="col-md-6">
+                                            <select name="dosen_pembimbing_1"  class="form-control" id="">
+                                                <option value=""></option>
+                                                @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                    @php($user_item = $item->user())
+                                                    <option value="{{$user_item->id}}"
+                                                        @if($topik->calon_pembimbing1 == $item->id)
+                                                            selected
+                                                        @endif
+                                                    >{{$user_item->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
+                                        <div class="col-md-6">
+                                            <select name="dosen_pembimbing_2"  class="form-control" id="">
+                                                <option value=""></option>
+                                                @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
+                                                    @php($user_item = $item->user())
+                                                    <option value="{{$user_item->id}}"
+                                                            @if($topik->calon_pembimbing2 == $item->id)
+                                                            selected
+                                                            @endif
+                                                    >{{$user_item->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                    <button class="btn btn-blue">
+                                        Tetapkan
+                                    </button>
+                                    </div>
+                                </form>
+                            </div>
+
                     </div>
                 @endif
 
