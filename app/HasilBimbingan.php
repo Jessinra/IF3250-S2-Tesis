@@ -8,12 +8,10 @@ class HasilBimbingan extends Model
 {
     const STATUS_DIAJUKAN = 0;
     const STATUS_DITERIMA = 1;
-    const STATUS_DITOLAK = -1;
 
     public $statusString = [
         "0" => "Diajukan",
-        "1" => "Diterima",
-        "-1" => "Ditolak"
+        "1" => "Diterima"
     ];
 
     protected $fillable = [

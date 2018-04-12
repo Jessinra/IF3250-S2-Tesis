@@ -1,6 +1,35 @@
 .mahasiswa-control-table {
-  width: 800px;
+  margin-top: 20px;
+  width: 1100px;
+}
 
+.add{
+  margin-top: 20px;
+  font-size: 30px;
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px){
+  .add{
+    margin-top: 20px;
+    font-size: 30px;
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}
+
+.table-x{}
+
+@media only screen and (max-width: 400px){
+  .table-x{
+    width: 400px;
+    overflow-x: auto;
+  }
 }
 
 .font-size-18-px {
