@@ -82,9 +82,15 @@
                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                     @php($user_item = $item->user())
                                                     <option value="{{$user_item->id}}"
-                                                        @if($topik->calon_pembimbing1 == $item->id)
-                                                            selected
-                                                        @endif
+                                                            @if(!$tesis)
+                                                                @if($topik->calon_pembimbing1 == $item->id)
+                                                                    selected
+                                                                @endif
+                                                            @else
+                                                                @if($tesis->dosen_pembimbing1 == $item->id)
+                                                                    selected
+                                                                @endif
+                                                            @endif
                                                     >{{$user_item->name}}</option>
                                                 @endforeach
                                             </select>
@@ -99,8 +105,14 @@
                                                 @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
                                                     @php($user_item = $item->user())
                                                     <option value="{{$user_item->id}}"
+                                                            @if(!$tesis)
                                                             @if($topik->calon_pembimbing2 == $item->id)
                                                             selected
+                                                            @endif
+                                                            @else
+                                                            @if($tesis->dosen_pembimbing2 == $item->id)
+                                                            selected
+                                                            @endif
                                                             @endif
                                                     >{{$user_item->name}}</option>
                                                 @endforeach
