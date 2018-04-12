@@ -19,9 +19,8 @@ class ThesisController extends Controller
         return Validator::make($topic, [
             'judul' => 'required|string|max:255',
             'keilmuan' => 'required|string|max:255',
-            'calon_pembimbing1' => 'required|integer',
-            'calon_pembimbing2' => 'nullable|integer',
-            'calon_'
+            'dosen_pembimbing_1' => 'required|integer',
+            'dosen_pembimbing_2' => 'nullable|integer',
         ]);
     }
 }
