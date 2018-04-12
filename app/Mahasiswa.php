@@ -106,7 +106,7 @@ class Mahasiswa extends Model
         return $this->hasOne('App\Proposal')->orderBy('created_at',"DESC")->first();
     }
     public function tesis() {
-        return $this->hasOne('App\Thesis','mahasiswa_id','id');
+        return $this->hasOne('App\Thesis','mahasiswa_id','id')->orderBy('created_at',"DESC")->first();
     }
 
     public function seminarProposal() {

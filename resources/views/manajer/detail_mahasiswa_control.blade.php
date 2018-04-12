@@ -51,7 +51,7 @@
                         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
                             <div class="alert alert-success row align-items-center">
                                 <i class="material-icons font-size-18-px">check_circle</i>
-                                &nbsp Dosen pembimbing telah ditetapkan oleh {{$tesis->creator->name}}
+                                &nbsp Dosen pembimbing telah ditetapkan oleh {{$tesis->creator_admin->name}}
                                 pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
                             </div>
                             <fieldset disabled="disabled">
@@ -59,6 +59,7 @@
                             <div class="row justify-content-center">
                                 <form action="{{route('dosbing-penetapan')}}" method="post">
                                     {{csrf_field()}}
+                                    <input type="hidden" name="mahasiswa_id" value="{{$mahasiswa->id}}">
                                     <div class="form-group row">
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Topik</label>
                                         <div class="col-md-6">
