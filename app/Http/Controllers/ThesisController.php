@@ -11,15 +11,17 @@ class ThesisController extends Controller
         $this->middleware('auth');
     }
 
-    private function setDosenPembimbing1($dosbing1) {
-
-    }
-
-    private function setDosenPembimbing2($dosbing) {
-
-    }
-
     public function handlePenetapanDosbing(Request $request) {
-        echo json_encode($request->all());
+        $request->keys()
+    }
+
+    private function validateTopik(array $topic) {
+        return Validator::make($topic, [
+            'judul' => 'required|string|max:255',
+            'keilmuan' => 'required|string|max:255',
+            'calon_pembimbing1' => 'required|integer',
+            'calon_pembimbing2' => 'nullable|integer',
+            'calon_'
+        ]);
     }
 }

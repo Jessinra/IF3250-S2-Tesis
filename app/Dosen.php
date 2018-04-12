@@ -10,6 +10,12 @@ class Dosen extends Model
     const STATUS_PENGUJI_1 = 2;
     const STATUS_PEMBIMBING = 3;
     protected $fillable= ['id'];
+    public static function getListDosenPembimbing1() {
+        return Dosen::where('status','>=','0')->get();
+    }
+    public static function getListDosenPembimbing2() {
+        return Dosen::where('status','>=','0')->get();
+    }
     public function user() {
         return User::find($this->id);
     }

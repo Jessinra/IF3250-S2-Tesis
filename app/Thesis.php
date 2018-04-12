@@ -20,4 +20,8 @@ class Thesis extends Model
     public function mahasiswa(){
         return $this->belongsTo('App\Mahasiswa', 'mahasiswa_id', 'id');
     }
+
+    public function creator() {
+        return $this->belongsTo('App\User','creator','id');
+    }
 }
