@@ -4,22 +4,34 @@
 @section('content')
     <div class="container">
         <h3>Hasil Bimbingan</h3>
+
         <div class="row justify-content-center">
-            <table class="mahasiswa-control-table">
-                <tr class="text-center">
-                    <th>
-                        No
-                    </th>
-                    <th>
-                        Topik
-                    </th>
-                    <th>
-                        Waktu Bimbingan
-                    </th>
-                    <th>
-                        Status
-                    </th>
-                </tr>
+            <div class="add">
+                <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">
+                    + Tambah
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center table-x">
+            <table class="mahasiswa-control-table table table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>
+                            No
+                        </th>
+                        <th>
+                            Topik
+                        </th>
+                        <th>
+                            Waktu Bimbingan
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+
                 @foreach($hsl_bimbingan as $item)
                     <tr class="text-center">
                         <td>
@@ -35,9 +47,11 @@
                             {{$item->getStatusString()}}
                         </td>
 
-                        <td>
-                            <button class="btn btn-primary display-flex justify-content-center align-items-center" data-toggle="modal" data-target="#hsl{{$loop->iteration}}">
-                                <span class="ml-1">Lihat</span>
+                        <td class="row">
+                            <button class="btn btn-icon display-flex justify-content-center align-items-center" data-toggle="modal" data-target="#hsl{{$loop->iteration}}">
+                                <i class="material-icons font-size-18-px">
+                                    search
+                                </i>
                             </button>
 
                             <div class="modal fade" id="hsl{{$loop->iteration}}">
@@ -71,23 +85,30 @@
                                     </div>
                                 </div>
                             </div>
+                            @if($item->status <= 0)
+
+                            <form action="" method="post" id="form-id-bimbingan{{$item->id}}">
+                                {{csrf_field()}}
+                                <input type="hidden" name="id" value="{{$item->id}}">
+                            </form>
+                            <form action="" method="post" id="form-del-id-bimbingan{{$item->id}}">
+                                {{csrf_field()}}
+                                <input type="hidden" name="id" value="-{{$item->id}}">
+                            </form>
+                            <button type="submit" form="form-id-bimbingan{{$item->id}}" class="btn btn-icon display-flex justify-content-center align-items-center">
+                                <i class="material-icons font-size-18-px">
+                                    edit
+                                </i>
+                            </button>
+                            <button type="submit" form="form-del-id-bimbingan{{$item->id}}" class="btn btn-icon display-flex justify-content-center align-items-center">
+                                <i class="material-icons font-size-18-px">
+                                    delete
+                                </i>
+                            </button>
+
+                            @endif
                         </td>
-                        @if($item->status <= 0)
-                            <td class="row justify-content-center ">
-                                <form action="" method="post" id="form-id-bimbingan{{$item->id}}">
-                                    {{csrf_field()}}
-                                    <input type="hidden" name="id" value="{{$item->id}}">
-                                </form>
 
-                                <button type="submit" form="form-id-bimbingan{{$item->id}}" class="btn btn-primary display-flex justify-content-center align-items-center">
-                                    <i class="material-icons font-size-18-px">
-                                        edit
-                                    </i>
-                                    <span class="ml-1">Edit</span>
-                                </button>
-
-                            </td>
-                        @endif
                     </tr>
                 @endforeach
             </table>
