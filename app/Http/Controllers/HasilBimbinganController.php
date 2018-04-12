@@ -7,6 +7,7 @@ use App\HasilBimbingan;
 use App\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -85,9 +86,16 @@ class HasilBimbinganController extends Controller
         $mahasiswa = Auth::user()->isMahasiswa();
         if($mahasiswa) {
             $data = $request->all();
-            //self::$edit_id = $data['id'];
-            Session::put('edit_id', $data['id']);
-            return redirect('/hasilbimbingan/edit');
+
+            if($data['id'] < 0){
+                $user = Auth::user();
+                $id = -1 * $data['id'];
+                DB::table('hasil_bimbingans')->where('mahasiswa_id',$user->id)->where('id', $id)->delete();
+                return redirect('/hasilbimbingan/mahasiswa');
+            }else{
+                Session::put('edit_id', $data['id']);
+                return redirect('/hasilbimbingan/edit');
+            }
         }else{
             return abort(403);
         }
@@ -99,6 +107,7 @@ class HasilBimbinganController extends Controller
             $user = Auth::user();
             $data = $request->all();
             $ok_count = 0;
+
             $db_hsl_bimbingan = HasilBimbingan::where('mahasiswa_id', $user->id)->where('id', $data['id'])->get();
 
             $validator = $this->validateHasilBimbingan($data);
@@ -117,6 +126,7 @@ class HasilBimbinganController extends Controller
                     $cur->save();
                 }
             }
+
             if($ok_count==0) {
                 return abort(400);
             } else {
