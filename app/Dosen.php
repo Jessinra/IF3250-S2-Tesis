@@ -17,7 +17,7 @@ class Dosen extends Model
         return Dosen::where('status','>=','0')->get();
     }
     public function user() {
-        return User::find($this->id);
+        return $this->belongsTo('\App\User','id','id');
     }
 
     public function getHasilBimbinganBelumDisetujui(){
