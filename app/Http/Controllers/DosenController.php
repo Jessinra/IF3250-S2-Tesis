@@ -115,9 +115,9 @@ class DosenController extends Controller
         if($this->getDosen()) {
             $idmahasiswabimbingan = Thesis::where('dosen_pembimbing1', $iddosen)->orWhere('dosen_pembimbing2', $iddosen)->pluck('mahasiswa_id');
             $mahasiswabimbingan = Mahasiswa::whereIn('id',$idmahasiswabimbingan)->get();
-            $idmahasiswauji = Thesis::where('dosen_penguji', $iddosen)->pluck('mahasiswa_id');
-            $mahasiswauji = Mahasiswa::whereIn('id',$idmahasiswauji)->get();
-         return view('dosen.listmahasiswa',['mahasiswabimbingan' => $mahasiswabimbingan, 'mahasiswauji' => $mahasiswauji]);
+//            $idmahasiswauji = Thesis::where('dosen_penguji', $iddosen)->pluck('mahasiswa_id');
+//            $mahasiswauji = Mahasiswa::whereIn('id',$idmahasiswauji)->get();
+         return view('dosen.listmahasiswa',['mahasiswabimbingan' => $mahasiswabimbingan]);
         } else {
             return abort(403);
         }

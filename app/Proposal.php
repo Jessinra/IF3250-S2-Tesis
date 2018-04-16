@@ -16,7 +16,11 @@ class Proposal extends Model
     protected $fillable=[
         "mahasiswa_id","path","filesize","filename"
     ];
-
+    const STATUS_STRING = [
+        0 => 'Proposal telah diajukan.',
+        1 => 'Proposal  diterima',
+        -1 => 'Proposal ditolak'
+    ];
     function human_filesize( $precision = 2) {
         $units = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
         $step = 1024;
@@ -31,5 +35,9 @@ class Proposal extends Model
 
     function evaluator() {
         return $this->belongsTo('App\User', 'evaluator_id', 'id');
+    }
+
+    function getStatusString() {
+        return Proposal::STATUS_STRING[$this->status];
     }
 }

@@ -82,7 +82,7 @@ class TopicController extends Controller
             } else {
                 $mahasiswa->status = Mahasiswa::STATUS_TOPIK_TELAH_DIAJUKAN;
                 $mahasiswa->save();
-                return redirect('/topik/status');
+                return redirect('/dashboard/mahasiswa');
             }
         } else{
             return abort (403);

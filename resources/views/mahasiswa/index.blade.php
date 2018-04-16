@@ -216,7 +216,7 @@
                                                     Calon Pembimbing 1: &nbsp
                                                 </span>
                                                 <span>
-                                                    {{$item->dosen_pembimbing1->user()->name}}
+                                                    {{$item->dosen_pembimbing1->user->name}}
                                                 </span>
                                             </div>
 
@@ -226,7 +226,7 @@
                                                 </span>
                                                 <span>
                                                     @if($item->calon_pembimbing2)
-                                                        {{$item->dosen_pembimbing2->user()->name}}
+                                                        {{$item->dosen_pembimbing2->user->name}}
                                                     @endif
                                                 </span>
                                             </div>
@@ -275,7 +275,7 @@
                                             Calon Pembimbing 1: &nbsp
                                         </span>
                                             <span>
-                                            {{$item->dosen_pembimbing1->user()->name}}
+                                            {{$item->dosen_pembimbing1->user->name}}
                                         </span>
                                         </div>
 
@@ -285,7 +285,7 @@
                                         </span>
                                             <span>
                                             @if($item->calon_pembimbing2)
-                                                    {{$item->dosen_pembimbing2->user()->name}}
+                                                    {{$item->dosen_pembimbing2->user->name}}
                                                 @endif
                                         </span>
                                         </div>
@@ -323,15 +323,17 @@
                             <br>
                         </div>
                     </div>
-                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
-                    <p>Proposal sudah diajukan.</p>
+
+                @elseif($mahasiswa->status > \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
                     @php($proposal = $mahasiswa->proposal())
+                    <p>{{$proposal->getStatusString()}}</p>
                     <div class="row col-md-12 flex-wrap-nowrap proposal-container">
                         <div class="row align-items-center justify-content-start file-name  width-full">
                             <i class="material-icons">insert_drive_file</i>
                             <a href="/proposal/download/{{$proposal->path}}">{{$proposal->filename}} ({{$proposal->human_filesize()}})</a>
                             <br>
                         </div>
+
                     </div>
                     <br>
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Edit Proposal</a>
@@ -348,6 +350,11 @@
             <div id="step3" class="container tab-pane fade">
         @endif
                 <h3 class="header">Seminar Tesis</h3>
+                @php($tesis = $mahasiswa->tesis())
+                @if($tesis)
+                <div>Dosen Pembimbing 1: {{$tesis->dosen_pembimbing_1->user->name}}</div>
+                <div>Dosen Pembimbing 2: {{$tesis->dosen_pembimbing_2->user->name}}</div>
+                @endif
                 <p>Anda dapat mengunggah hasil bimbingan setiap kali selesai bimbingan.</p>
                 <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">Entri Hasil Bimbingan</a>
                 <a class="btn btn-outline-dark" href="/hasilbimbingan/mahasiswa" role="button">Lihat Hasil Bimbingan</a>

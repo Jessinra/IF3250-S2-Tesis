@@ -90,6 +90,10 @@ class Mahasiswa extends Model
         return $hsl_bimbingan;
     }
 
+    public function getHasilBimbinganAktif() {
+        return $this->hasMany('App\HasilBimbingan')->where('status','!=',-1)->get();
+    }
+
     public function user() {
         return User::find($this->id);
     }

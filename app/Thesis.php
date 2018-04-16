@@ -9,11 +9,11 @@ class Thesis extends Model
     public $table = "thesis";
     protected $fillable= ['id','dosen_pembimbing1','dosen_pembimbing2','mahasiswa_id','topic','keilmuan','creator','opsi'];
 
-    public function dosen_pembimbing1() {
+    public function dosen_pembimbing_1() {
         return $this->belongsTo('App\Dosen', 'dosen_pembimbing1', 'id');
     }
 
-    public function dosen_pembimbing2() {
+    public function dosen_pembimbing_2() {
         return $this->belongsTo('App\Dosen', 'dosen_pembimbing2', 'id');
     }
 
