@@ -1,6 +1,5 @@
 before_script:
-  php artisan migrate
-  
+  - bash .gitlab-ci.sh
 variables:
   MYSQL_DATABASE: tesismanagement
   MYSQL_ROOT_PASSWORD: ppl2018
