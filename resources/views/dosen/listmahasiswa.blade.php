@@ -69,23 +69,23 @@
                             Status
                         </th>
                     </tr>
-                @foreach($mahasiswauji as $item)
-                    @php($user = $item->user())
-                    <tr class="text-center">
-                    <td>
-                        {{$loop->iteration}}
-                    </td>
-                        <td>
-                            {{$user->name}}
-                        </td>
-                        <td>
-                            {{$user->username}}
-                        </td>
-                        <td>
-                            {{$item->getStatusString()}}
-                        </td>
-                    </tr>
-                @endforeach
+                {{--@foreach($mahasiswauji as $item)--}}
+                    {{--@php($user = $item->user())--}}
+                    {{--<tr class="text-center">--}}
+                    {{--<td>--}}
+                        {{--{{$loop->iteration}}--}}
+                    {{--</td>--}}
+                        {{--<td>--}}
+                            {{--{{$user->name}}--}}
+                        {{--</td>--}}
+                        {{--<td>--}}
+                            {{--{{$user->username}}--}}
+                        {{--</td>--}}
+                        {{--<td>--}}
+                            {{--{{$item->getStatusString()}}--}}
+                        {{--</td>--}}
+                    {{--</tr>--}}
+                {{--@endforeach--}}
                 </table>
                 </div>
             </div>

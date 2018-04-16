@@ -26,7 +26,7 @@
                                 <select type="text" id="cdb1" class="form-control col-md-8" v-model="topics[i].calon_pembimbing1" name="calon_pembimbing1" required>
                                     <option value="" disabled>Pilih Dosen</option>
                                     @foreach($list_pembimbing1 as $item)
-                                        @php($user_item = $item->user())
+                                        @php($user_item = $item->user)
                                         <option value="{{$user_item->id}}">{{$user_item->name}}</option>
                                     @endforeach
                                 </select>
@@ -37,7 +37,7 @@
                                     <option value="" disabled>Pilih Dosen</option>
                                     <option value=""></option>
                                     @foreach($list_pembimbing2 as $item)
-                                        @php($user_item = $item->user())
+                                        @php($user_item = $item->user)
                                         <option value="{{$user_item->id}}">{{$user_item->name}}</option>
                                     @endforeach
                                 </select>
