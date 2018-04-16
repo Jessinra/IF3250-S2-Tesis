@@ -216,7 +216,7 @@
                                                     Calon Pembimbing 1: &nbsp
                                                 </span>
                                                 <span>
-                                                    {{$item->dosen_pembimbing1->user()->name}}
+                                                    {{$item->dosen_pembimbing1->user->name}}
                                                 </span>
                                             </div>
 
@@ -226,7 +226,7 @@
                                                 </span>
                                                 <span>
                                                     @if($item->calon_pembimbing2)
-                                                        {{$item->dosen_pembimbing2->user()->name}}
+                                                        {{$item->dosen_pembimbing2->user->name}}
                                                     @endif
                                                 </span>
                                             </div>
@@ -275,7 +275,7 @@
                                             Calon Pembimbing 1: &nbsp
                                         </span>
                                             <span>
-                                            {{$item->dosen_pembimbing1->user()->name}}
+                                            {{$item->dosen_pembimbing1->user->name}}
                                         </span>
                                         </div>
 
@@ -285,7 +285,7 @@
                                         </span>
                                             <span>
                                             @if($item->calon_pembimbing2)
-                                                    {{$item->dosen_pembimbing2->user()->name}}
+                                                    {{$item->dosen_pembimbing2->user->name}}
                                                 @endif
                                         </span>
                                         </div>
