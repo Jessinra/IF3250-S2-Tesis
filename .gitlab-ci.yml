@@ -1,8 +1,8 @@
 before_script:
   - bash .gitlab-ci.sh
 variables:
-  MYSQL_DATABASE: tesismanagement_test
-  MYSQL_ROOT_PASSWORD: tesismanagement_test
+  MYSQL_DATABASE: gitlab_test
+  MYSQL_ROOT_PASSWORD: gitlab_test
 
 phpunit:php7.1:mysql5.6:
   image: php:7.1
