@@ -13,7 +13,7 @@ class Thesis extends Model
         return $this->belongsTo('App\Dosen', 'dosen_pembimbing1', 'id');
     }
 
-    public function dosen_pembimbing2() {
+    public function dosen_pembimbing_2() {
         return $this->belongsTo('App\Dosen', 'dosen_pembimbing2', 'id');
     }
 

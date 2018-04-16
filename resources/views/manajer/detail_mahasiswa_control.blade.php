@@ -42,12 +42,13 @@
             </div>
             <div class="col-md-8">
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
+                    @php($hasilBimbinganAktif = $mahasiswa->getHasilBimbinganAktif())
                     <div class="control-masa-bimbingan mb-4">
                         <h3>
                             Masa Bimbingan
                         </h3>
-                        {{json_encode($tesis->dosen_pembimbing_1->user)}}
                     </div>
+                    {{$hasilBimbinganAktif}}
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
 
@@ -85,15 +86,21 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 1</label>
                                         <div class="col-md-6">
                                             <select name="dosen_pembimbing_1"  class="form-control" id="">
-                                                <option value=""></option>
-                                                @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
-                                                    @php($user_item = $item->user)
-                                                    <option value="{{$user_item->id}}"
-                                                        @if($topik->calon_pembimbing1 == $item->id)
-                                                            selected
-                                                        @endif
-                                                    >{{$user_item->name}}</option>
-                                                @endforeach
+                                                @if($tesis)
+                                                     <option value="{{$tesis->dosen_pembimbing1}}" selected>
+                                                         {{$tesis->dosen_pembimbing_1->user->name}}
+                                                     </option>
+                                                @else
+                                                    <option value=""></option>
+                                                    @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                        @php($user_item = $item->user)
+                                                        <option value="{{$user_item->id}}"
+                                                                @if($topik->calon_pembimbing1 == $item->id)
+                                                                selected
+                                                                @endif
+                                                        >{{$user_item->name}}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
@@ -102,15 +109,21 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
                                         <div class="col-md-6">
                                             <select name="dosen_pembimbing_2"  class="form-control" id="">
-                                                <option value=""></option>
-                                                @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
-                                                    @php($user_item = $item->user)
-                                                    <option value="{{$user_item->id}}"
-                                                            @if($topik->calon_pembimbing2 == $item->id)
-                                                            selected
-                                                            @endif
-                                                    >{{$user_item->name}}</option>
-                                                @endforeach
+                                                @if($tesis)
+                                                    <option value="{{$tesis->dosen_pembimbing2}}" selected>
+                                                        {{$tesis->dosen_pembimbing_2->user->name}}
+                                                    </option>
+                                                @else
+                                                    <option value=""></option>
+                                                    @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                        @php($user_item = $item->user)
+                                                        <option value="{{$user_item->id}}"
+                                                                @if($topik->calon_pembimbing2 == $item->id)
+                                                                selected
+                                                                @endif
+                                                        >{{$user_item->name}}</option>
+                                                    @endforeach
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
