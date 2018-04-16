@@ -12,6 +12,8 @@ phpunit:php7.1:mysql5.6:
     - php vendor/bin/phpunit --colors
     - npm test
   after_script:
-  - git push production master
+    - sudo cp ./ /var/www
+    - cd /var/www
+    - php artisan migrate
   only:
   - master
