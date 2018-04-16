@@ -123,3 +123,7 @@ body {
 .width-full {
   width: 100%;
 }
+
+.text-decoration-none, .text-decoration-none:hover, .text-decoration-none:active, .text-decoration-none:focus, .text-decoration-none:active:focus, .text-decoration-none:focus:active {
+  text-decoration: none !important;
+}

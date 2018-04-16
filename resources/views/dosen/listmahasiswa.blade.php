@@ -16,7 +16,7 @@
             <div class="tab-pane fade show active" id="mahasiswabimbingan" role="tabpanel" aria-labelledby="mahasiswa-bimbingan-tab">
                 <h3>Daftar Mahasiswa Bimbingan</h3>
                 <div class="row justify-content-center">
-                <table class="mahasiswa-control-table">
+                <table class="mahasiswa-control-table width-full">
                     <tr class="text-center">
                         <th>
                             No
@@ -46,29 +46,37 @@
                         <td>
                             {{$item->getStatusString()}}
                         </td>
+                        <td>
+                            <a href="/dosen/mahasiswa-control/{{$user->username}}" class="text-decoration-none">
+                                <button class="btn btn-blue justify-content-center align-items-center display-flex text-decoration-none">
+                                    <i class="text-decoration-none material-icons mr-2">remove_red_eye</i>
+                                    Detail Mahasiswa
+                                </button>
+                            </a>
+                        </td>
                     </tr>
                 @endforeach
                 </table>
                 </div>
             </div>
-            <div class="tab-pane fade" id="mahasiswauji" role="tabpanel" aria-labelledby="mahasiswa-uji-tab">
-            <h3>Daftar Mahasiswa Uji</h3>
-                <div class="row justify-content-center">
-                <table class="mahasiswa-control-table">
-                    <tr class="text-center">
-                        <th>
-                            No
-                        </th>
-                        <th>
-                            Nama
-                        </th>
-                        <th>
-                            NIM
-                        </th>
-                        <th>
-                            Status
-                        </th>
-                    </tr>
+            {{--<div class="tab-pane fade" id="mahasiswauji" role="tabpanel" aria-labelledby="mahasiswa-uji-tab">--}}
+            {{--<h3>Daftar Mahasiswa Uji</h3>--}}
+                {{--<div class="row justify-content-center">--}}
+                {{--<table class="mahasiswa-control-table">--}}
+                    {{--<tr class="text-center">--}}
+                        {{--<th>--}}
+                            {{--No--}}
+                        {{--</th>--}}
+                        {{--<th>--}}
+                            {{--Nama--}}
+                        {{--</th>--}}
+                        {{--<th>--}}
+                            {{--NIM--}}
+                        {{--</th>--}}
+                        {{--<th>--}}
+                            {{--Status--}}
+                        {{--</th>--}}
+                    {{--</tr>--}}
                 {{--@foreach($mahasiswauji as $item)--}}
                     {{--@php($user = $item->user())--}}
                     {{--<tr class="text-center">--}}
@@ -86,9 +94,9 @@
                         {{--</td>--}}
                     {{--</tr>--}}
                 {{--@endforeach--}}
-                </table>
-                </div>
-            </div>
+                {{--</table>--}}
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
     </div>
 @endsection

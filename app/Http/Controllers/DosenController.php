@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mahasiswa;
+use App\User;
 use App\Thesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -118,6 +119,19 @@ class DosenController extends Controller
 //            $idmahasiswauji = Thesis::where('dosen_penguji', $iddosen)->pluck('mahasiswa_id');
 //            $mahasiswauji = Mahasiswa::whereIn('id',$idmahasiswauji)->get();
          return view('dosen.listmahasiswa',['mahasiswabimbingan' => $mahasiswabimbingan]);
+        } else {
+            return abort(403);
+        }
+    }
+
+    public function detailMahasiswa($id) {
+        $dosen = Auth::user()->isDosen();
+        $user = User::where('username',$id)->get()->first();
+        if(!$user) return abort(400);
+        $mhs = $user->isMahasiswa();
+        if(!$mhs) return abort(400);
+        if($mhs->tesis() && ($mhs->tesis()->dosen_pembimbing1 == $dosen->id || $mhs->tesis()->dosen_pembimbing2 == $dosen->id)) {
+            return view('dosen.detail_mahasiswa',['mahasiswa'=>$mhs, 'user'=>$user]);
         } else {
             return abort(403);
         }
