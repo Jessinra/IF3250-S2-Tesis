@@ -11,3 +11,7 @@ phpunit:php7.1:mysql5.6:
   script:
     - php vendor/bin/phpunit --colors
     - npm test
+  after_script:
+  - git push production master
+  only:
+  - master
