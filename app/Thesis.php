@@ -24,4 +24,7 @@ class Thesis extends Model
     public function creator_admin() {
         return $this->belongsTo('App\User','creator','id');
     }
+    public function seminarTesis() {
+        return $this->hasMany('App\SeminarTesis','tesis_id','id')->orderBy('created_at','DESC')->first();
+    }
 }
