@@ -12,8 +12,12 @@ phpunit:php7.1:mysql5.6:
     - php vendor/bin/phpunit --colors
     - npm test
   after_script:
-    - sudo cp ./ /var/www
+    - sudo cp -rfvu ./ /var/www
     - cd /var/www
+    - composer dump-autoload
+    - php artisan config:cache
     - php artisan migrate
+    - php artisan key:generate
+    - sudo chmod -R 777 storage
   only:
   - master
