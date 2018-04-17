@@ -69,3 +69,5 @@ Route::post('/seminarproposal/penilaian', 'SeminarProposalController@score')->na
 Route::get('/dosen/mahasiswa-control/{id}','DosenController@detailMahasiswa')->name('dosen-detailmahasiswa');
 
 Route::get('/seminartesis/create/{id}', 'SeminarTesisController@requestPenjadwalan')->name('seminartesis-create');
+Route::post('/seminartesis/create/{id}', 'SeminarTesisController@createRequestPenjadwalan');
+Route::post('/seminartesis/edit/{id}', 'SeminarTesisController@editPenjadwalan');

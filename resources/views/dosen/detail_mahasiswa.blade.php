@@ -39,12 +39,87 @@
                 <div class="row mt-3 justify-content-center ">
                     <a href="/seminartesis/create/{{$mahasiswa->user()->username}}">
                     <button class="btn btn-blue">
-                        Seminar Tesis
+                        Buat Pengajuan Seminar Tesis
                     </button>
                     </a>
                 </div>
             </div>
             <div class="col-md-8">
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)
+                    @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
+                    <div class="control-seminar-tesis mb-2">
+                        <h3>
+                            Seminar Tesis
+                        </h3>
+                        <div>
+                            <form action="/seminartesis/edit/{{$user->username}}" method="post">
+                                {{csrf_field()}}
+                            <div class="form-group row col-md-12">
+                                <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
+                                    Tanggal
+                                </label>
+                                <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$seminarTesis->hari}}" >
+                            </div>
+
+                            <div class="form-group row col-md-12">
+                                <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
+                                    Waktu
+                                </label>
+                                <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$seminarTesis->waktu}}">
+                            </div>
+
+                            <div class="form-group row col-md-12">
+                                <label for="tempat" class="col-md-4 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                    Tempat
+                                </label>
+                                <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$seminarTesis->tempat}}">
+                            </div>
+                                <div class="form-group row col-md-12">
+                                    @php($db1 = $seminarTesis->tesis->dosen_pembimbing_1)
+                                    <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        {{$db1->user->name}}
+                                    </label>
+                                    @if($db1->id == Auth::user()->id && !$seminarTesis->approval_pembimbing1)
+                                        <button class="btn btn-blue" name="approval_db1" value="1">
+                                            Setujui
+                                        </button>
+                                    @else
+                                        <div class="align-items-center text-md-left text-center col-md-6 display-flex">
+                                            {!!$seminarTesis->getApprovalStringPembimbing1()!!}
+                                        </div>
+                                    @endif
+
+                                </div>
+
+                                <div class="form-group row col-md-12">
+                                    @php($db2 = $seminarTesis->tesis->dosen_pembimbing_2)
+                                    <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        {{$db2->user->name}}
+                                    </label>
+                                    @if($db2->id == Auth::user()->id && !$seminarTesis->approval_pembimbing2)
+                                        <button class="btn btn-blue" name="approval_db2" value="1">
+                                            Setujui
+                                        </button>
+                                    @else
+                                        <div class="align-items-center text-md-left text-center col-md-6 display-flex">
+                                            {!!$seminarTesis->getApprovalStringPembimbing2()!!}
+                                        </div>
+                                    @endif
+
+                                </div>
+
+
+
+                                <div class="justify-content-center row">
+                                <button class="btn btn-primary align-items-center display-flex">
+                                    <i class="material-icons pencil md-12 font-size-18-px">mode_edit</i>
+                                    Edit
+                                </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
                     @php($hasilBimbinganAktif = $mahasiswa->getHasilBimbinganAktif())
                     <div class="control-masa-bimbingan mb-4">
