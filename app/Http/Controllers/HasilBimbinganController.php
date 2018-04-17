@@ -58,7 +58,7 @@ class HasilBimbinganController extends Controller
         $mhs = Auth::user()->isMahasiswa();
         if($mhs) {
             $user = Auth::user();
-            $hsl_bimbingan = HasilBimbingan::where('id',Session::get('edit_id'))->where('mahasiswa_id',$user->id)->get();
+            $hsl_bimbingan = HasilBimbingan::where('id',Session::get('edit_id'))->get();
             $thesis = Thesis::where('mahasiswa_id',$user->id)->get();
 
             return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'thesis' => $thesis]);
@@ -93,7 +93,7 @@ class HasilBimbinganController extends Controller
             $data = $request->all();
             $ok_count = 0;
 
-            $db_hsl_bimbingan = HasilBimbingan::where('mahasiswa_id', $user->id)->where('id', $data['id'])->get();
+            $db_hsl_bimbingan = HasilBimbingan::where('id', $data['id'])->get();
 
             $validator = $this->validateHasilBimbingan($data);
             if ($validator->fails()) {
@@ -102,7 +102,6 @@ class HasilBimbinganController extends Controller
                 $ok_count++;
                 if ($db_hsl_bimbingan->count() >= $ok_count) {
                     $cur = $db_hsl_bimbingan[$ok_count - 1];
-                    $cur->mahasiswa_id = $user->id;
                     $cur->dosen_id = $data['dosen_id'];
                     $cur->tanggal_waktu = $data['tanggal_waktu'];
                     $cur->topik = $data['topik'];
@@ -130,6 +129,7 @@ class HasilBimbinganController extends Controller
             $user = Auth::user();
             $data = $request->all();
             $ok_count = 0;
+            $tesis = $mahasiswa->tesis();
 
             $validator = $this->validateHasilBimbingan($data);
             if ($validator->fails()) {
@@ -137,7 +137,6 @@ class HasilBimbinganController extends Controller
             } else {
                 $ok_count++;
                 $hasil_bimbingan = HasilBimbingan::create([
-                    'mahasiswa_id' => $user->id,
                     'dosen_id' => $data['dosen_id'],
                     'status' => 0,
                     'tanggal_waktu' => $data['tanggal_waktu'],
@@ -145,7 +144,8 @@ class HasilBimbinganController extends Controller
                     'hasil_dan_diskusi' => $data['hasil_dan_diskusi'],
                     'rencana_tindak_lanjut' => $data['rencana_tindak_lanjut'],
                     'dosen_id2' => $data['dosen_id2'],
-                    'waktu_bimbingan_selanjutnya' => $data['waktu_bimbingan_selanjutnya']
+                    'waktu_bimbingan_selanjutnya' => $data['waktu_bimbingan_selanjutnya'],
+                    'thesis_id' => $tesis->id
                 ]);
             }
 
@@ -163,12 +163,15 @@ class HasilBimbinganController extends Controller
         $dosen = Auth::user()->isDosen();
         if($dosen) {
             $data = $request->all();
-            $db_hsl_bimbingan = HasilBimbingan::where('id',$data['id'])->get();
+            foreach ($data as $key => $item) {
+                if($key != '_token') {
+                    $db_hsl_bimbingan = HasilBimbingan::where('id', $item)->get();
 
-            $cur = $db_hsl_bimbingan[0];
-            $cur->status = $data['action'];
-            $cur->save();
-
+                    $cur = $db_hsl_bimbingan[0];
+                    $cur->status = 1;
+                    $cur->save();
+                }
+            }
             return redirect('/hasilbimbingan');
         } else{
             return abort (403);
