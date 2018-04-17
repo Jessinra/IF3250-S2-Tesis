@@ -116,4 +116,6 @@ class Mahasiswa extends Model
     public function seminarProposal() {
         return $this->hasMany('App\SeminarProposal')->orderBy('created_at',"DESC")->first();
     }
+
+
 }
