@@ -19,7 +19,7 @@ class CreateSidangTesisTable extends Migration
             $table->unsignedInteger('dosen_pembimbing1');
             $table->unsignedInteger('dosen_pembimbing2')->nullable();
             $table->unsignedInteger('dosen_penguji');
-            $table->timestamps('waktu' );
+            $table->timestamp('waktu' )->nullable();
             $table->char('nilai');
             $table->string('tempat');
         });
