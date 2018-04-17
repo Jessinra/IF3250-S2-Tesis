@@ -67,7 +67,12 @@
                                         <!-- Modal body -->
                                         <div class="modal-body">
                                             <h5>Dosen Pembimbing: </h5>
-                                            <p>{{$item->name}}</p>
+                                            <p>{{$item->dosen_pembimbing->user->name}} <br>
+                                            @php($name = $item->dosen_id2)
+                                            @if($name != NULL)
+                                                {{$item->dosen_pembimbing2->user->name}}
+                                            @endif
+                                            </p>
                                             <h5>Waktu Bimbingan: </h5>
                                             <p>{{$item->tanggal_waktu}}</p>
                                             <h5>Hasil dan diskusi: </h5>

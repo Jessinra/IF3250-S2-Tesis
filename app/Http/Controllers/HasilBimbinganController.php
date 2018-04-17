@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Dosen;
 use App\HasilBimbingan;
 use App\Mahasiswa;
+use App\Thesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -45,17 +46,9 @@ class HasilBimbinganController extends Controller
         if($mhs) {
             $user = $mhs->user();
             $hsl_bimbingan = HasilBimbingan::where('status',-2)->get();
-            //nanti diubah dosennya
-            $dosen1 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing1')
-                        ->where('thesis.mahasiswa_id', $user->id)
-                        ->select('dosens.*')
-                        ->get();
-            $dosen2 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing2')
-                        ->where('thesis.mahasiswa_id', $user->id)
-                        ->select('dosens.*')
-                        ->get();
+            $thesis = Thesis::where('mahasiswa_id',$user->id)->get();
 
-            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen1' => $dosen1, 'dosen2' => $dosen2]);
+            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'thesis' => $thesis]);
         } else {
             return abort(403);
         }
@@ -65,18 +58,10 @@ class HasilBimbinganController extends Controller
         $mhs = Auth::user()->isMahasiswa();
         if($mhs) {
             $user = Auth::user();
-            //$data = $request->all();
             $hsl_bimbingan = HasilBimbingan::where('id',Session::get('edit_id'))->where('mahasiswa_id',$user->id)->get();
-            //nanti diubah dosennya
-            $dosen1 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing1')
-                ->where('thesis.mahasiswa_id', $user->id)
-                ->select('dosens.*')
-                ->get();
-            $dosen2 = Dosen::join('thesis', 'dosens.id', '=', 'thesis.dosen_pembimbing2')
-                ->where('thesis.mahasiswa_id', $user->id)
-                ->select('dosens.*')
-                ->get();
-            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'dosen1' => $dosen1, 'dosen2' => $dosen2]);
+            $thesis = Thesis::where('mahasiswa_id',$user->id)->get();
+
+            return view('mahasiswa.form_hasil_bimbingan',['hsl_bimbingan' => $hsl_bimbingan, 'thesis' => $thesis]);
         } else {
             return abort(403);
         }
@@ -123,6 +108,8 @@ class HasilBimbinganController extends Controller
                     $cur->topik = $data['topik'];
                     $cur->hasil_dan_diskusi = $data['hasil_dan_diskusi'];
                     $cur->rencana_tindak_lanjut = $data['rencana_tindak_lanjut'];
+                    $cur->dosen_id2 = $data['dosen_id2'];
+                    $cur->waktu_bimbingan_selanjutnya = $data['waktu_bimbingan_selanjutnya'];
                     $cur->save();
                 }
             }
@@ -156,7 +143,9 @@ class HasilBimbinganController extends Controller
                     'tanggal_waktu' => $data['tanggal_waktu'],
                     'topik' => $data['topik'],
                     'hasil_dan_diskusi' => $data['hasil_dan_diskusi'],
-                    'rencana_tindak_lanjut' => $data['rencana_tindak_lanjut']
+                    'rencana_tindak_lanjut' => $data['rencana_tindak_lanjut'],
+                    'dosen_id2' => $data['dosen_id2'],
+                    'waktu_bimbingan_selanjutnya' => $data['waktu_bimbingan_selanjutnya']
                 ]);
             }
 
@@ -192,7 +181,9 @@ class HasilBimbinganController extends Controller
             'tanggal_waktu' => 'required|date',
             'topik' => 'required|string|max:255',
             'hasil_dan_diskusi' => 'required|string',
-            'rencana_tindak_lanjut' => 'required|string'
+            'rencana_tindak_lanjut' => 'required|string',
+            'dosen_id2' => 'nullable|integer',
+            'waktu_bimbingan_selanjutnya' => 'required|date'
         ]);
     }
 
