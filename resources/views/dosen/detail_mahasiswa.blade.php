@@ -36,7 +36,13 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row mt-3 justify-content-center ">
+                    <a href="/seminartesis/create/{{$mahasiswa->user()->username}}">
+                    <button class="btn btn-blue">
+                        Seminar Tesis
+                    </button>
+                    </a>
+                </div>
             </div>
             <div class="col-md-8">
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
