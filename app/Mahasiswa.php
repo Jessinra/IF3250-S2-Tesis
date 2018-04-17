@@ -76,13 +76,13 @@ class Mahasiswa extends Model
     }
 
     public function getHasilBimbingan(){
-        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->orderBy('status','asc')->orderBy('tanggal_waktu','desc')->get();
+        $hsl_bimbingan = HasilBimbingan::where('thesis_id',$this->tesis()->id)->orderBy('status','asc')->orderBy('tanggal_waktu','desc')->get();
         //$hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->get();
         return $hsl_bimbingan;
     }
 
     public function getHasilBimbinganBelumDisetujui(){
-        $hsl_bimbingan = HasilBimbingan::where('mahasiswa_id',$this->id)->where('status',0)->orWhere('status',-1)->get();
+        $hsl_bimbingan = HasilBimbingan::where('thesis_id',$this->tesis()->id)->where('status',0)->orWhere('status',-1)->get();
         return $hsl_bimbingan;
     }
 

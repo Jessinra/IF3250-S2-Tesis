@@ -17,7 +17,7 @@ class HasilBimbingan extends Model
     ];
 
     protected $fillable = [
-        'id','mahasiswa_id','dosen_id','status','tanggal_waktu','topik','hasil_dan_diskusi','rencana_tindak_lanjut', 'dosen_id2', 'waktu_bimbingan_selanjutnya'];
+        'id','dosen_id','status','tanggal_waktu','topik','hasil_dan_diskusi','rencana_tindak_lanjut', 'dosen_id2', 'waktu_bimbingan_selanjutnya', 'thesis_id'];
 
     public function dosen_pembimbing() {
         return $this->belongsTo('App\Dosen', 'dosen_id', 'id');
@@ -27,8 +27,8 @@ class HasilBimbingan extends Model
         return $this->belongsTo('App\Dosen', 'dosen_id2', 'id');
     }
 
-    public function mahasiswa() {
-        return $this->belongsTo('App\Thesis', 'mahasiswa_id', 'id');
+    public function thesis() {
+        return $this->belongsTo('App\Thesis', 'thesis_id', 'id');
     }
 
     public function getStatusString() {
