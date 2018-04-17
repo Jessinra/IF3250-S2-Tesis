@@ -67,3 +67,5 @@ Route::post('/mahasiswa/dosbing/penetapan', 'ThesisController@handlePenetapanDos
 Route::post('/seminarproposal/penetapan', 'SeminarProposalController@scheduleEstablishment')->name('seminarproposal-penetapan');
 Route::post('/seminarproposal/penilaian', 'SeminarProposalController@score')->name('seminarproposal-penilaian');
 Route::get('/dosen/mahasiswa-control/{id}','DosenController@detailMahasiswa')->name('dosen-detailmahasiswa');
+
+Route::get('/seminartesis/create/{id}', 'SeminarTesisController@requestPenjadwalan')->name('seminartesis-create');
