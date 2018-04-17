@@ -15,6 +15,7 @@ phpunit:php7.1:mysql5.6:
     - sudo cp -rfvu ./ /var/www
     - cd /var/www
     - composer dump-autoload
+    - cp .env.production .env
     - php artisan config:cache
     - sudo chmod -R 777 storage
     - php artisan migrate
