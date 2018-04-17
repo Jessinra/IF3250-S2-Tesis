@@ -16,8 +16,8 @@ phpunit:php7.1:mysql5.6:
     - cd /var/www
     - composer dump-autoload
     - php artisan config:cache
+    - sudo chmod -R 777 storage
     - php artisan migrate
     - php artisan key:generate
-    - sudo chmod -R 777 storage
   only:
   - master
