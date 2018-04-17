@@ -72,7 +72,7 @@
                         </td>
                         <td >
 
-                            <button class="btn btn-icon display-flex justify-content-center align-items-center" data-toggle="modal" data-target="#hsl{{$loop->iteration}}">
+                            <button type="button" class="btn btn-icon display-flex justify-content-center align-items-center" data-toggle="modal" data-target="#hsl{{$loop->iteration}}">
                                 <i class="material-icons font-size-18-px">
                                     search
                                 </i>
@@ -104,9 +104,7 @@
 
                                         <!-- Modal footer -->
                                         <div class="modal-footer">
-                                            <!--form action="{{route('bimbingan-persetujuan')}}" method="post"-->
-                                                <button class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                                            <!--/form-->
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
                                         </div>
 
                                     </div>
