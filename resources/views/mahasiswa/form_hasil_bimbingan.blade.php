@@ -6,6 +6,8 @@
         $id = $hsl_bimbingan[0]->id;
         $tgl = $hsl_bimbingan[0]->tanggal_waktu;
         $tgl = substr(str_replace(" ","T",$tgl),0,16);
+        $tgl_selanjutnya = $hsl_bimbingan[0]->waktu_bimbingan_selanjutnya;
+        $tgl_selanjutnya = substr(str_replace(" ","T",$tgl),0,16);
         $topik = $hsl_bimbingan[0]->topik;
         $diskusi = $hsl_bimbingan[0]->hasil_dan_diskusi;
         $rencana = $hsl_bimbingan[0]->rencana_tindak_lanjut;
@@ -20,7 +22,7 @@
 
 @section('content')
     <div class="container">
-        <h2  class="text-center">Formulir Hasil Bimbingan</h2>
+        <h2  class="text-center">Formulir Jadwal Bimbingan</h2>
         <br>
         <div id="form-app">
             <form action="" method="post" id="form-hsl-bimbingan" >
@@ -32,32 +34,37 @@
                         <input type="text" id="topik" name="topik" class="form-control col-md-8 " value="{{$topik}}" required>
                     </div>
                     <div class="form-group row col-md-12">
-                        <label for="dosen_id" class="col-md-4 col-form-label text-md-right text-center ">Dosen Pembimbing<sup>*</sup></label>
+                        <label for="dosen_id" class="col-md-4 col-form-label text-md-right text-center ">Dosen Pembimbing 1<sup>*</sup></label>
                         <select type="text" id="dosen_id" class="form-control col-md-8" name="dosen_id">
                             <option value="" disabled>Pilih Dosen</option>
                             <option value=""></option>
-                            @foreach($dosen1 as $item)
-                                @php($user_item = $item->user)
+                            @foreach($thesis as $item)
                                 @if(count($hsl_bimbingan) > 0)
-                                    @if($hsl_bimbingan[0]->dosen_id == $user_item->id)
-                                        <option value="{{$user_item->id}}" selected="selected">{{$user_item->name}}</option>
+                                    @if($hsl_bimbingan[0]->dosen_id == $item->dosen_pembimbing_1->user->id)
+                                        <option value="{{$item->dosen_pembimbing_1->user->id}}" selected="selected">{{$item->dosen_pembimbing_1->user->name}}</option>
                                     @else
-                                        <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                        <option value="{{$item->dosen_pembimbing_1->user->id}}">{{$item->dosen_pembimbing_1->user->name}}</option>
                                     @endif
                                 @else
-                                    <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                    <option value="{{$item->dosen_pembimbing_1->user->id}}">{{$item->dosen_pembimbing_1->user->name}}</option>
                                 @endif
                             @endforeach
-                            @foreach($dosen2 as $item)
-                                @php($user_item = $item->user)
+                        </select>
+                    </div>
+                    <div class="form-group row col-md-12">
+                        <label for="dosen_id2" class="col-md-4 col-form-label text-md-right text-center ">Dosen Pembimbing 2</label>
+                        <select type="text" id="dosen_id2" class="form-control col-md-8" name="dosen_id2">
+                            <option value="" disabled>Pilih Dosen</option>
+                            <option value=""></option>
+                            @foreach($thesis as $item)
                                 @if(count($hsl_bimbingan) > 0)
-                                    @if($hsl_bimbingan[0]->dosen_id == $user_item->id)
-                                        <option value="{{$user_item->id}}" selected="selected">{{$user_item->name}}</option>
+                                    @if($hsl_bimbingan[0]->dosen_id2 == $item->dosen_pembimbing_2->user->id)
+                                        <option value="{{$item->dosen_pembimbing_2->user->id}}" selected="selected">{{$item->dosen_pembimbing_2->user->name}}</option>
                                     @else
-                                        <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                        <option value="{{$item->dosen_pembimbing_2->user->id}}">{{$item->dosen_pembimbing_2->user->name}}</option>
                                     @endif
                                 @else
-                                    <option value="{{$user_item->id}}">{{$user_item->name}}</option>
+                                    <option value="{{$item->dosen_pembimbing_2->user->id}}">{{$item->dosen_pembimbing_2->user->name}}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -73,6 +80,10 @@
                     <div class="form-group row col-md-12">
                         <label for="rencana_tindak_lanjut" class="col-md-4 col-form-label text-md-right text-center ">Rencana Tindak Lanjut<sup>*</sup></label>
                         <textarea class="form-control col-md-8" name="rencana_tindak_lanjut" form="form-hsl-bimbingan" required>{{$rencana}}</textarea>
+                    </div>
+                    <div class="form-group row col-md-12">
+                        <label for="waktu_bimbingan_selanjutnya" class="col-md-4 col-form-label text-md-right text-center">Waktu Bimbingan Selanjutnya<sup>*</sup></label>
+                        <input type="datetime-local" id="waktu_bimbingan_selanjutnya" name="waktu_bimbingan_selanjutnya" class="form-control col-md-8 " value="{{$tgl}}" required>
                     </div>
                 </div>
 
