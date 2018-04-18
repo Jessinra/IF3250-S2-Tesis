@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
 
             <div class="add">
-                <button type="submit" class="btn btn-blue disabled" id="save">Simpan</button>
+                <button type="submit" class="btn btn-blue disabled" id="save" disabled>Simpan</button>
             </div>
 
         </div>
@@ -37,7 +37,15 @@
                     <th>
                         Status
                     </th>
-                    <th>Setujui</th>
+                    <th class="row justify-content-center">
+                        <div class="setujui row justify-content-center">
+                        Setujui
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="selectall" onclick="checkAll(); updateSaveButton();">
+                            <label class="custom-control-label" for="selectall"> </label>
+                        </div>
+                        </div>
+                    </th>
                     <th></th>
                 </tr>
                 @foreach($hsl_bimbingan as $item)
@@ -99,7 +107,8 @@
                                             <p>{{$item->hasil_dan_diskusi}}</p>
                                             <h5>Rencana tindak lanjut:</h5>
                                             <p>{{$item->rencana_tindak_lanjut}}</p>
-
+                                            <h5>Waktu Bimbingan Selanjutnya: </h5>
+                                            <p>{{$item->waktu_bimbingan_selanjutnya}}</p>
                                         </div>
 
                                         <!-- Modal footer -->
@@ -124,8 +133,15 @@
     function updateSaveButton(){
         var chkbox = document.querySelectorAll(".custom-control-input");
         var saveButton = document.getElementById("save");
+        var selectAll = document.getElementById("selectall");
         var counter = 0;
-        for(var i = 0; i < chkbox.length; i++){
+        var start = 0;
+
+        if(selectAll.checked){
+            start = 1;
+        }
+
+        for(var i = start; i < chkbox.length; i++){
             if(chkbox[i].checked == true){
                 counter++;
                 break;
@@ -133,10 +149,25 @@
         }
         if(counter > 0){
             saveButton.classList.remove("disabled");
+            saveButton.disabled = false;
         }else{
             saveButton.classList.add("disabled");
+            saveButton.disabled = true;
         }
 
+    }
+
+    function checkAll(){
+        var chkbox = document.querySelectorAll(".custom-control-input");
+        if(chkbox[0].checked) {
+            for (var i = 1; i < chkbox.length; i++) {
+                chkbox[i].checked = true;
+            }
+        }else{
+            for (var i = 1; i < chkbox.length; i++) {
+                chkbox[i].checked = false;
+            }
+        }
     }
     </script>
 @endsection
