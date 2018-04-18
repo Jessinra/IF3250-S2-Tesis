@@ -71,7 +71,7 @@ class SeminarTesisController extends Controller
             $db1 = $mhs->tesis()->dosen_pembimbing1 == Auth::user()->id;
             $db2 = $mhs->tesis()->dosen_pembimbing2 == Auth::user()->id;
             $st = $mhs->tesis()->seminarTesis();
-            if ($db1 || $db2 || Auth::user()->isManajer)  {
+            if ($db1 || $db2 || Auth::user()->isManajer())  {
                 echo json_encode($request->all());
                 if($request->get('approval_db2') && $db2) {
                     $st->approval_pembimbing2 = true;
@@ -84,10 +84,54 @@ class SeminarTesisController extends Controller
                 $st->tempat = $request->get('tempat');
                 $st->save();
 //                echo json_encode($st);
-                return redirect('/dosen/mahasiswa-control/'.$id);
+                if(Auth::user()->isManajer()) {
+                    $draft = $request->get('check-draft-laporan');
+                    $seminarteman = $request->get('check-seminar-dengan-teman');
+
+                    $st->draft_laporan = isset($draft);
+                    $st->seminar_dengan_teman = isset($seminarteman);
+                    $st->save();
+                }
+                if($db1 || $db2) {
+                    return redirect('/dosen/mahasiswa-control/' . $id);
+                } else {
+                    return redirect('/mahasiswa/control/'.$id);
+                }
             } else {
                 return abort(403);
             }
+        }
+    }
+
+    public function nilaiSeminarTesis(Request $request, $id) {
+        $currentUser = Auth::user();
+        $usr = User::where('username',$id)->first();
+//        echo $usr;
+        if(!$usr)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $st =$tesis->seminarTesis();
+        if(!$st)
+            return abort(400);
+        if($tesis->dosen_pembimbing1 == $currentUser->id) {
+            $action = $request->get('action');
+            $st->verdict = $action;
+            $st->evaluator_id = $currentUser->id;
+            $st->save();
+            if($action == 1) {
+                $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_TESIS;
+            } else {
+                $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS;
+            }
+            $mhs->save();
+            return back();
+        } else {
+            return abort(403);
         }
     }
 }

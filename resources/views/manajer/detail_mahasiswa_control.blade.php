@@ -41,8 +41,103 @@
                 </div>
             </div>
             <div class="col-md-8">
+
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS || $mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
+                    @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
+
+                    <div class="control-seminar-tesis mb-4s">
+
+                        <h3>
+                            Seminar Tesis
+                        </h3>
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                            <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                <i class="material-icons font-size-18-px mr-4">check_circle</i>
+                                <span>
+                                Kelulusan Seminar Tesis telah ditetapkan oleh {{$seminarTesis->evaluator->name}}
+                                    pada {{date("d M Y H:i:s", strtotime($seminarTesis->updated_at.'UTC'))}}
+                                </span>
+                            </div>
+                            <fieldset disabled="disabled">
+                                @endif
+                        <div>
+                            <form action="/seminartesis/edit/{{$user->username}}" method="post">
+                                {{csrf_field()}}
+                                <div class="form-group row col-md-12">
+                                    <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
+                                        Tanggal
+                                    </label>
+                                    <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$seminarTesis->hari}}" >
+                                </div>
+
+                                <div class="form-group row col-md-12">
+                                    <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
+                                        Waktu
+                                    </label>
+                                    <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$seminarTesis->waktu}}">
+                                </div>
+
+                                <div class="form-group row col-md-12">
+                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        Tempat
+                                    </label>
+                                    <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$seminarTesis->tempat}}">
+                                </div>
+                                <div class="form-group row col-md-12">
+                                    @php($db1 = $seminarTesis->tesis->dosen_pembimbing_1)
+                                    <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        {{$db1->user->name}}
+                                    </label>
+
+                                        <div class="align-items-center text-md-left text-center col-md-6 display-flex">
+                                            {!!$seminarTesis->getApprovalStringPembimbing1()!!}
+                                        </div>
+
+                                </div>
+
+                                <div class="form-group row col-md-12">
+                                    @php($db2 = $seminarTesis->tesis->dosen_pembimbing_2)
+                                    <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        {{$db2->user->name}}
+                                    </label>
+
+                                        <div class="align-items-center text-md-left text-center col-md-6 display-flex">
+                                            {!!$seminarTesis->getApprovalStringPembimbing2()!!}
+                                        </div>
+
+                                </div>
+                                <div class="col-md-10 offset-md-1 mb-4">
+                                <div class="form-checkbox">
+                                    <input type="checkbox" class="form-check-input" id="cb1" name="check-draft-laporan"
+                                        @if($seminarTesis->draft_laporan) checked @endif
+                                    >
+                                    <label for="cb1" class="form-check-label">
+                                        Draft Laporan Tesis diserahkan ke TU paling lambat 3 hari sebelum seminar
+                                    </label>
+                                </div>
+
+                                <div class="form-checkbox">
+                                    <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->seminar_dengan_teman) checked @endif>
+                                    <label for="cb2" class="form-check-label"
+
+                                    >
+                                       Bukti (Fotokopi) telah seminar dengan teman diserahkan ke TU
+                                    </label>
+                                </div>
+
+                                </div>
+                                <div class="justify-content-center row">
+                                    <button class="btn btn-primary align-items-center display-flex">
+                                        <i class="material-icons pencil md-12 font-size-18-px">save</i>
+                                        Simpan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
-                    @php($hasilBimbinganAktif = $mahasiswa->getHasilBimbinganAktif())
+                    @php($hasilBimbinganAktif = $mahasiswa->tesis()->getHasilBimbinganAktif())
                     <div class="control-masa-bimbingan mb-4">
                         <h3>
                             Masa Bimbingan
@@ -134,8 +229,8 @@
                             Penetapan Dosen Pembimbing
                         </h3>
                         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
-                            <div class="alert alert-success row align-items-center">
-                                <i class="material-icons font-size-18-px">check_circle</i>
+                            <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                 &nbsp Dosen pembimbing telah ditetapkan oleh {{$tesis->creator_admin->name}}
                                 pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
                             </div>
@@ -222,16 +317,16 @@
                             Penilaian Seminar Proposal
                         </h3>
                         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)
-                            <div class="alert alert-success row align-items-center">
-                                <i class="material-icons font-size-18-px">check_circle</i>
+                            <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                 &nbsp Kelulusan seminar proposal ditetapkan oleh {{$seminarTopik->evaluator->name}}
                                 pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
 
                             </div>
                             <fieldset disabled="disabled">
                                 @elseif($mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
-                                    <div class="alert alert-danger row align-items-center">
-                                        <i class="material-icons font-size-18-px">cancel</i>
+                                    <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                        <i class="material-icons font-size-18-px mr-2">cancel</i>
                                         Seminar Topik dinyatakan tidak lulus oleh {{$seminarTopik->evaluator->name}}
                                         pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
                                     </div>
@@ -314,15 +409,15 @@
                     </h3>
                     @if( $mahasiswa->status != \App\Mahasiswa::STATUS_PROPOSAL_TELAH_DIAJUKAN)
                     @if($mahasiswa->status != \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
-                        <div class="alert alert-success row align-items-center">
-                            <i class="material-icons font-size-18-px">check_circle</i>
+                                <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                            <i class="material-icons font-size-18-px mr-2">check_circle</i>
                             Proposal {{$proposal->filename}} diterima oleh {{$proposal->evaluator->name}} pada
                             {{date("d M Y H:i:s", strtotime($proposal->updated_at.'UTC'))}}
                         </div>
                         <fieldset disabled="disabled">
                             @elseif($mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
-                                <div class="alert alert-danger row align-items-center">
-                                    <i class="material-icons font-size-18-px">cancel</i>
+                                <div class="alert alert-danger row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                    <i class="material-icons font-size-18-px mr-2">cancel</i>
                                     Proposal {{$proposal->filename}} ditolak oleh {{$proposal->evaluator->name}} pada
                                     {{date("d M Y H:i:s", strtotime($proposal->updated_at.'UTC'))}}
                                 </div>
@@ -362,16 +457,16 @@
                         Penilaian Seminar Topik
                     </h3>
                     @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
-                        <div class="alert alert-success row align-items-center">
-                            <i class="material-icons font-size-18-px">check_circle</i>
+                        <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                            <i class="material-icons font-size-18-px mr-2">check_circle</i>
                             &nbsp Kelulusan seminar topik ditetapkan oleh {{$seminarTopik->evaluator->name}}
                             pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
 
                         </div>
                         <fieldset disabled="disabled">
                     @elseif($mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
-                        <div class="alert alert-danger row align-items-center">
-                            <i class="material-icons font-size-18-px">cancel</i>
+                                <div class="alert alert-danger row align-items-center flex-row display-flex flex-wrap-nowrap">
+                            <i class="material-icons font-size-18-px mr-2">cancel</i>
                             Seminar Topik dinyatakan tidak lulus oleh {{$seminarTopik->evaluator->name}}
                             pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
                         </div>
@@ -404,8 +499,8 @@
                         </h3>
                         <div>
                         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK)
-                                <div class="alert alert-success row align-items-center">
-                                    <i class="material-icons font-size-18-px">check_circle</i>
+                                <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                    <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                     &nbsp Jadwal seminar topik ditetapkan oleh {{$seminarTopik->creator->name}}
                                     pada {{date("d M Y H:i:s", strtotime($seminarTopik->created_at.'UTC'))}}
 
@@ -442,14 +537,14 @@
                         @if($mahasiswa->status != \App\Mahasiswa::STATUS_TOPIK_TELAH_DIAJUKAN)
                             @php($approval = $mahasiswa->getTopicApproval())
                             @if($approval->action == App\TopicApproval::ACTION_TERIMA)
-                               <div class="alert alert-success row align-items-center">
-                                   <i class="material-icons font-size-18-px">check_circle</i>
+                                <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                   <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                    &nbsp"{{$approval->topic->judul}}" telah disetujui oleh {{$approval->manajer->user()->name}}
                                    pada {{date("d M Y H:i:s", strtotime($approval->created_at.'UTC'))}}
                                </div>
                                 <fieldset disabled="disabled">
                             @elseif($approval->action == App\TopicApproval::ACTION_TOLAK)
-                                <div class="alert alert-danger row align-items-center">
+                                        <div class="alert alert-danger row align-items-center flex-row display-flex flex-wrap-nowrap">
                                     <i class="material-icons font-size-18-px">cancel</i>
                                     Semua Topik ditolak oleh {{$approval->manajer->user()->name}}
                                     pada {{date("d M Y H:i:s", strtotime($approval->created_at.'UTC'))}}
