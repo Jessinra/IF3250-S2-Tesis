@@ -88,6 +88,9 @@ class SeminarTesisController extends Controller
                     $draft = $request->get('check-draft-laporan');
                     $seminarteman = $request->get('check-seminar-dengan-teman');
 
+                    $st->draft_laporan = isset($draft);
+                    $st->seminar_dengan_teman = isset($seminarteman);
+                    $st->save();
                 }
                 if($db1 || $db2) {
                     return redirect('/dosen/mahasiswa-control/' . $id);

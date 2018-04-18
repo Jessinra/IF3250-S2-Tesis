@@ -95,15 +95,19 @@
                                 </div>
                                 <div class="col-md-10 offset-md-1 mb-4">
                                 <div class="form-checkbox">
-                                    <input type="checkbox" class="form-check-input" id="cb1" name="check-draft-laporan">
+                                    <input type="checkbox" class="form-check-input" id="cb1" name="check-draft-laporan"
+                                        @if($seminarTesis->draft_laporan) checked @endif
+                                    >
                                     <label for="cb1" class="form-check-label">
                                         Draft Laporan Tesis diserahkan ke TU paling lambat 3 hari sebelum seminar
                                     </label>
                                 </div>
 
                                 <div class="form-checkbox">
-                                    <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman">
-                                    <label for="cb2" class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->seminar_dengan_teman) checked @endif>
+                                    <label for="cb2" class="form-check-label"
+
+                                    >
                                        Bukti (Fotokopi) telah seminar dengan teman diserahkan ke TU
                                     </label>
                                 </div>
@@ -111,8 +115,8 @@
                                 </div>
                                 <div class="justify-content-center row">
                                     <button class="btn btn-primary align-items-center display-flex">
-                                        <i class="material-icons pencil md-12 font-size-18-px">mode_edit</i>
-                                        Edit
+                                        <i class="material-icons pencil md-12 font-size-18-px">save</i>
+                                        Simpan
                                     </button>
                                 </div>
                             </form>
