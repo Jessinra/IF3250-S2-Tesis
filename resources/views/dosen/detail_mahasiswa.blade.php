@@ -6,6 +6,8 @@
     @php (date_default_timezone_set('Asia/Jakarta'))
     @php($seminarTopik=$mahasiswa->seminarTopik())
     @php($seminarProposal = $mahasiswa->seminarProposal())
+    @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
+
     <div class="container detail-mahasiswa-control-page">
         <div class="row">
             <div class="col-md-4">
@@ -45,12 +47,45 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && $seminarTesis->approval_pembimbing2)
+                    <div class="mb-2">
+                        <h3>
+                            Penilaian Seminar Tesis
+                        </h3>
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                            <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                <i class="material-icons font-size-18-px mr-4">check_circle</i>
+                                <span>
+                                Kelulusan Seminar Tesis telah ditetapkan oleh {{$seminarTesis->evaluator->name}}
+                                pada {{date("d M Y H:i:s", strtotime($seminarTesis->updated_at.'UTC'))}}
+                                </span>
+                            </div>
+                            <fieldset disabled="disabled">
+                                @endif
+
+                        <div>
+                            <form action="/seminartesis/nilai/{{$user->username}}" method="post" class="width-full justify-content-center display-flex">
+                                {{csrf_field()}}
+                                <input type="hidden" value="{{$user->username}}" name="_mahasiswa_id">
+                                <button class="btn btn-red col-md-3 mr-1" name="action" value="-1">
+                                    Tidak Lulus
+                                </button>
+                                <button class="btn btn-blue col-md-3 ml-1" name="action" value="1">
+                                    Lulus
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)
-                    @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
-                    <div class="control-seminar-tesis mb-2">
+
+                        <div class="control-seminar-tesis mb-2">
                         <h3>
                             Seminar Tesis
                         </h3>
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                                <fieldset disabled="disabled">
+                                @endif
                         <div>
                             <form action="/seminartesis/edit/{{$user->username}}" method="post">
                                 {{csrf_field()}}
@@ -112,8 +147,8 @@
 
                                 <div class="justify-content-center row">
                                 <button class="btn btn-primary align-items-center display-flex">
-                                    <i class="material-icons pencil md-12 font-size-18-px">mode_edit</i>
-                                    Edit
+                                    <i class="material-icons pencil md-12 font-size-18-px">save</i>
+                                    Save
                                 </button>
                                 </div>
                             </form>
@@ -121,7 +156,7 @@
                     </div>
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
-                    @php($hasilBimbinganAktif = $mahasiswa->getHasilBimbinganAktif())
+                    @php($hasilBimbinganAktif = $mahasiswa->tesis()->getHasilBimbinganAktif())
                     <div class="control-masa-bimbingan mb-4">
                         <h3>
                             Bimbingan
