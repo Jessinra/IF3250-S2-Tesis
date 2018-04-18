@@ -30,4 +30,7 @@ class SeminarTesis extends Model
     public function tesis() {
         return $this->belongsTo('App\Thesis', 'tesis_id','id');
     }
+    public function evaluator() {
+        return $this->belongsTo('App\User','evaluator_id','id');
+    }
 }

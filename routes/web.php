@@ -71,3 +71,4 @@ Route::get('/dosen/mahasiswa-control/{id}','DosenController@detailMahasiswa')->n
 Route::get('/seminartesis/create/{id}', 'SeminarTesisController@requestPenjadwalan')->name('seminartesis-create');
 Route::post('/seminartesis/create/{id}', 'SeminarTesisController@createRequestPenjadwalan');
 Route::post('/seminartesis/edit/{id}', 'SeminarTesisController@editPenjadwalan');
+Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesis');

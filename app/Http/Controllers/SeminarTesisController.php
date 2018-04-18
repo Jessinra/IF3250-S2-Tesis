@@ -102,4 +102,36 @@ class SeminarTesisController extends Controller
             }
         }
     }
+
+    public function nilaiSeminarTesis(Request $request, $id) {
+        $currentUser = Auth::user();
+        $usr = User::where('username',$id)->first();
+//        echo $usr;
+        if(!$usr)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $st =$tesis->seminarTesis();
+        if(!$st)
+            return abort(400);
+        if($tesis->dosen_pembimbing1 == $currentUser->id) {
+            $action = $request->get('action');
+            $st->verdict = $action;
+            $st->evaluator_id = $currentUser->id;
+            $st->save();
+            if($action == 1) {
+                $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_TESIS;
+            } else {
+                $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS;
+            }
+            $mhs->save();
+            return back();
+        } else {
+            return abort(403);
+        }
+    }
 }
