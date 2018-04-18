@@ -121,7 +121,7 @@
                     </div>
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
-                    @php($hasilBimbinganAktif = $mahasiswa->getHasilBimbinganAktif())
+                    @php($hasilBimbinganAktif = $mahasiswa->tesis()->getHasilBimbinganAktif())
                     <div class="control-masa-bimbingan mb-4">
                         <h3>
                             Bimbingan

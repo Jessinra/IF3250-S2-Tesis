@@ -71,7 +71,7 @@ class SeminarTesisController extends Controller
             $db1 = $mhs->tesis()->dosen_pembimbing1 == Auth::user()->id;
             $db2 = $mhs->tesis()->dosen_pembimbing2 == Auth::user()->id;
             $st = $mhs->tesis()->seminarTesis();
-            if ($db1 || $db2 || Auth::user()->isManajer)  {
+            if ($db1 || $db2 || Auth::user()->isManajer())  {
                 echo json_encode($request->all());
                 if($request->get('approval_db2') && $db2) {
                     $st->approval_pembimbing2 = true;
@@ -84,7 +84,16 @@ class SeminarTesisController extends Controller
                 $st->tempat = $request->get('tempat');
                 $st->save();
 //                echo json_encode($st);
-                return redirect('/dosen/mahasiswa-control/'.$id);
+                if(Auth::user()->isManajer()) {
+                    $draft = $request->get('check-draft-laporan');
+                    $seminarteman = $request->get('check-seminar-dengan-teman');
+
+                }
+                if($db1 || $db2) {
+                    return redirect('/dosen/mahasiswa-control/' . $id);
+                } else {
+                    return redirect('/mahasiswa/control/'.$id);
+                }
             } else {
                 return abort(403);
             }

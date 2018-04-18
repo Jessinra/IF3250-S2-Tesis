@@ -41,8 +41,86 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS || $mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
+                    @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
+                    <div class="control-seminar-tesis mb-4s">
+                        <h3>
+                            Seminar Tesis
+                        </h3>
+                        <div>
+                            <form action="/seminartesis/edit/{{$user->username}}" method="post">
+                                {{csrf_field()}}
+                                <div class="form-group row col-md-12">
+                                    <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
+                                        Tanggal
+                                    </label>
+                                    <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$seminarTesis->hari}}" >
+                                </div>
+
+                                <div class="form-group row col-md-12">
+                                    <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
+                                        Waktu
+                                    </label>
+                                    <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$seminarTesis->waktu}}">
+                                </div>
+
+                                <div class="form-group row col-md-12">
+                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        Tempat
+                                    </label>
+                                    <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$seminarTesis->tempat}}">
+                                </div>
+                                <div class="form-group row col-md-12">
+                                    @php($db1 = $seminarTesis->tesis->dosen_pembimbing_1)
+                                    <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        {{$db1->user->name}}
+                                    </label>
+
+                                        <div class="align-items-center text-md-left text-center col-md-6 display-flex">
+                                            {!!$seminarTesis->getApprovalStringPembimbing1()!!}
+                                        </div>
+
+                                </div>
+
+                                <div class="form-group row col-md-12">
+                                    @php($db2 = $seminarTesis->tesis->dosen_pembimbing_2)
+                                    <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
+                                        {{$db2->user->name}}
+                                    </label>
+
+                                        <div class="align-items-center text-md-left text-center col-md-6 display-flex">
+                                            {!!$seminarTesis->getApprovalStringPembimbing2()!!}
+                                        </div>
+
+                                </div>
+                                <div class="col-md-10 offset-md-1 mb-4">
+                                <div class="form-checkbox">
+                                    <input type="checkbox" class="form-check-input" id="cb1" name="check-draft-laporan">
+                                    <label for="cb1" class="form-check-label">
+                                        Draft Laporan Tesis diserahkan ke TU paling lambat 3 hari sebelum seminar
+                                    </label>
+                                </div>
+
+                                <div class="form-checkbox">
+                                    <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman">
+                                    <label for="cb2" class="form-check-label">
+                                       Bukti (Fotokopi) telah seminar dengan teman diserahkan ke TU
+                                    </label>
+                                </div>
+
+                                </div>
+                                <div class="justify-content-center row">
+                                    <button class="btn btn-primary align-items-center display-flex">
+                                        <i class="material-icons pencil md-12 font-size-18-px">mode_edit</i>
+                                        Edit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
-                    @php($hasilBimbinganAktif = $mahasiswa->getHasilBimbinganAktif())
+                    @php($hasilBimbinganAktif = $mahasiswa->tesis()->getHasilBimbinganAktif())
                     <div class="control-masa-bimbingan mb-4">
                         <h3>
                             Masa Bimbingan

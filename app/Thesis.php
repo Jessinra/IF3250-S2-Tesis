@@ -27,4 +27,9 @@ class Thesis extends Model
     public function seminarTesis() {
         return $this->hasMany('App\SeminarTesis','tesis_id','id')->orderBy('created_at','DESC')->first();
     }
+
+    public function getHasilBimbinganAktif() {
+        return $this->hasMany('App\HasilBimbingan')->where('status','!=',-1)->get();
+    }
+
 }
