@@ -353,7 +353,9 @@
                 @php($tesis = $mahasiswa->tesis())
                 @if($tesis)
                 <div>Dosen Pembimbing 1: {{$tesis->dosen_pembimbing_1->user->name}}</div>
+                @if($tesis->dosen_pembimbing_2)
                 <div>Dosen Pembimbing 2: {{$tesis->dosen_pembimbing_2->user->name}}</div>
+                    @endif
                 @endif
                 <p>Anda dapat mengunggah hasil bimbingan setiap kali selesai bimbingan.</p>
                 <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">Entri Hasil Bimbingan</a>
