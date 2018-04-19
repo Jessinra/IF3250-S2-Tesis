@@ -47,6 +47,7 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if($seminarTesis)
                 @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2))
                     <div class="mb-2">
                         <h3>
@@ -76,6 +77,7 @@
                             </form>
                         </div>
                     </div>
+                @endif
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)
 

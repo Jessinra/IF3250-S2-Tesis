@@ -263,7 +263,6 @@
                                                          {{$tesis->dosen_pembimbing_1->user->name}}
                                                      </option>
                                                 @else
-                                                    <option value=""></option>
                                                     @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                         @php($user_item = $item->user)
                                                         <option value="{{$user_item->id}}"
@@ -281,13 +280,13 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
                                         <div class="col-md-6">
                                             <select name="dosen_pembimbing_2"  class="form-control" id="">
-                                                @if($tesis->dosen_pembimbing_2)
+                                                @if($tesis && $tesis->dosen_pembimbing_2)
                                                     <option value="{{$tesis->dosen_pembimbing2}}" selected>
                                                         {{$tesis->dosen_pembimbing_2->user->name}}
                                                     </option>
                                                 @else
                                                     <option value=""></option>
-                                                    @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                    @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
                                                         @php($user_item = $item->user)
                                                         <option value="{{$user_item->id}}"
                                                                 @if($topik->calon_pembimbing2 == $item->id)
