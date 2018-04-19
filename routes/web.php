@@ -33,6 +33,7 @@ Route::get('/generate/admin', 'Auth\RegisterController@generateAdmin');
 
 Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
 Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
+Route::get('/mahasiswa/rekap','RekapDataController@showRekapMahasiswa');
 
 Route::get('/dashboard', 'HomeController@index');
 Route::get('/dashboard/mahasiswa', 'MahasiswaController@index');
@@ -73,4 +74,4 @@ Route::post('/seminartesis/create/{id}', 'SeminarTesisController@createRequestPe
 Route::post('/seminartesis/edit/{id}', 'SeminarTesisController@editPenjadwalan');
 Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesis');
 
-Route::get('/mahasiswa/rekap','RekapDataController@showRekapMahasiswa');
+Route::get('/sidangtesis/daftar','SidangTesisController@showFormDaftarSidang');
