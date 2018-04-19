@@ -9,13 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class SidangTesisController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function showFormDaftarSidang(){
         $mhs = Auth::user()->isMahasiswa();
         if($mhs) {
             $user = $mhs->user();
             $thesis = Thesis::where('mahasiswa_id',$user->id)->get();
             $sidang_tesis = SidangTesis::where('thesis_id',$thesis[0]->id)->get();
-
             return view('mahasiswa.daftar_sidang_tesis',['sidang_tesis' => $sidang_tesis]);
         } else {
             return abort(403);
@@ -36,9 +40,8 @@ class SidangTesisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
     }
 
     /**
