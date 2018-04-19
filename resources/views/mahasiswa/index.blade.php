@@ -368,7 +368,8 @@
             <div id="step4" class="container tab-pane fade">
         @endif
                 <h3 class="header">Sidang Tesis</h3>
-                <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                <p>Anda dapat mendaftar sidang tesis.</p>
+                <a class="btn btn-blue" href="/sidangtesis/daftar" role="button">Daftar Sidang Tesis</a>
             </div>
         </div>
 
