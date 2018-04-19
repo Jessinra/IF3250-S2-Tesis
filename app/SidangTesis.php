@@ -10,4 +10,9 @@ class SidangTesis extends Model
     public function tesis() {
         return $this->belongsTo('App\Thesis', 'thesis_id','id');
     }
+
+
+    public function dosen_penguji() {
+        return $this->belongsTo('App\User','dosen_penguji','id');
+    }
 }
