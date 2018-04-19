@@ -125,6 +125,9 @@ class SeminarTesisController extends Controller
             $st->save();
             if($action == 1) {
                 $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_TESIS;
+                SidangTesis::create([
+
+                ]);
             } else {
                 $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS;
             }
