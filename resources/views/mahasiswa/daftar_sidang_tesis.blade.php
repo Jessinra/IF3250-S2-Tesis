@@ -19,6 +19,7 @@
                         <input type="datetime-local" id="tanggal_seminar_tesis" name="tanggal_seminar_tesis" class="form-control col-md-8 " value="" required>
                     </div>
                     <div class="form-group row col-md-12">
+                        <label for="" class="col-md-4 col-form-label text-md-right text-center">Dokumen Evaluasi Diri</label>
                         <!--label for="eval_diri" class="col-md-4 col-form-label text-md-right text-center ">Print Out Evaluasi Diri<sup>*</sup></label-->
                         <input type="file" id="eval_diri" name="eval_diri" class="sr-only">
                         <label for="eval_diri" class="">
@@ -27,6 +28,7 @@
                         </label>
                     </div>
                     <div class="form-group row col-md-12">
+                        <label for="" class="col-md-4 col-form-label text-md-right text-center">Draft Makalah</label>
                         <input type="file" id="draft_makalah" name="draft_makalah" class="sr-only">
                         <label for="eval_diri" class="">
                             <i class="material-icons md-24">insert_drive_file</i>
@@ -34,6 +36,7 @@
                         </label>
                     </div>
                     <div class="form-group row col-md-12">
+                        <label for="" class="col-md-4 col-form-label text-md-right text-center">Laporan Tesis</label>
                         <input type="file" id="laporan_tesis" name="laporan_tesis" class="sr-only">
                         <label for="laporan_tesis" class="">
                             <i class="material-icons md-24">insert_drive_file</i>
@@ -41,6 +44,7 @@
                         </label>
                     </div>
                     <div class="form-group row col-md-12">
+                        <label for="" class="col-md-4 col-form-label text-md-right text-center">KSM Semester Terakhir</label>
                         <input type="file" id="ksm_akhir" name="ksm_akhir" class="sr-only">
                         <label for="ksm_akhir" class="">
                             <i class="material-icons md-24">insert_drive_file</i>
@@ -48,6 +52,7 @@
                         </label>
                     </div>
                     <div class="form-group row col-md-12">
+                        <label for="" class="col-md-4 col-form-label text-md-right text-center">Form Submit Paper</label>
                         <input type="file" id="form_paper" name="form_paper" class="sr-only">
                         <label for="form_paper" class="">
                             <i class="material-icons md-24">insert_drive_file</i>
