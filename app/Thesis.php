@@ -33,7 +33,7 @@ class Thesis extends Model
     }
 
     public function sidangTesis() {
-        return $this->hasMany('App\SidangTesis','tesis_id','id')->orderBy('created_at','DESC')->first();
+        return $this->hasMany('App\SidangTesis','thesis_id','id')->orderBy('created_at','DESC')->first();
     }
 
     

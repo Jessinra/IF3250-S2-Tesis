@@ -6,7 +6,7 @@ use App\SidangTesis;
 use App\Thesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\User;
 class SidangTesisController extends Controller
 {
     public function __construct()
@@ -19,7 +19,7 @@ class SidangTesisController extends Controller
         if($mhs) {
             $user = $mhs->user();
             $thesis = $mhs->tesis();
-            $sidang_tesis = SidangTesis::where('thesis_id',$thesis[0]->id)->get();
+            $sidang_tesis = $thesis->sidangTesis();
             return view('mahasiswa.daftar_sidang_tesis',['sidang_tesis' => $sidang_tesis]);
         } else {
             return abort(403);
@@ -42,7 +42,18 @@ class SidangTesisController extends Controller
      */
     public function create($id)
     {
-        echo $id;
+        $dos =Auth::user()->isDosen();
+        $usr= User::where('username',$id)->first();
+        $mhs = $usr->isMahasiswa();
+        if($dos && $mhs->tesis()->dosen_pembimbing1 == $dos->id) {
+            SidangTesis::create([
+                'thesis_id'=>$mhs->tesis()->id
+            ]);
+
+            return back();
+        } else {
+            return abort(403);
+        }
 
     }
 

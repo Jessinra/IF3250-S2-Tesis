@@ -79,3 +79,5 @@ Route::post('/seminartesis/edit/{id}', 'SeminarTesisController@editPenjadwalan')
 Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesis');
 
 Route::get('/sidangtesis/daftar','SidangTesisController@showFormDaftarSidang');
+Route::get('/sidangtesis/create/{id}','SidangTesisController@create');
+

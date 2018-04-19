@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class SidangTesis extends Model
 {
     protected $table = 'sidang_tesis';
+    protected $fillable =
+        ['thesis_id'];
+
     public function tesis() {
         return $this->belongsTo('App\Thesis', 'thesis_id','id');
     }
