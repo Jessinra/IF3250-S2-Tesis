@@ -94,6 +94,7 @@ class HasilBimbinganController extends Controller
             $ok_count = 0;
 
             $db_hsl_bimbingan = HasilBimbingan::where('id', $data['id'])->get();
+            $item_count = count($data);
 
             $validator = $this->validateHasilBimbingan($data);
             if ($validator->fails()) {
@@ -107,7 +108,9 @@ class HasilBimbinganController extends Controller
                     $cur->topik = $data['topik'];
                     $cur->hasil_dan_diskusi = $data['hasil_dan_diskusi'];
                     $cur->rencana_tindak_lanjut = $data['rencana_tindak_lanjut'];
-                    $cur->dosen_id2 = $data['dosen_id2'];
+                    if($item_count > 7){
+                        $cur->dosen_id2 = $data['dosen_id2'];
+                    }
                     $cur->waktu_bimbingan_selanjutnya = $data['waktu_bimbingan_selanjutnya'];
                     $cur->save();
                 }
@@ -130,12 +133,17 @@ class HasilBimbinganController extends Controller
             $data = $request->all();
             $ok_count = 0;
             $tesis = $mahasiswa->tesis();
+            $item_count = count($data);
 
             $validator = $this->validateHasilBimbingan($data);
             if ($validator->fails()) {
                 echo json_encode($validator->errors());
             } else {
                 $ok_count++;
+                $dosen2 = null;
+                if($item_count > 7){
+                    $dosen2 = $data['dosen_id2'];
+                }
                 $hasil_bimbingan = HasilBimbingan::create([
                     'dosen_id' => $data['dosen_id'],
                     'status' => 0,
@@ -143,7 +151,7 @@ class HasilBimbinganController extends Controller
                     'topik' => $data['topik'],
                     'hasil_dan_diskusi' => $data['hasil_dan_diskusi'],
                     'rencana_tindak_lanjut' => $data['rencana_tindak_lanjut'],
-                    'dosen_id2' => $data['dosen_id2'],
+                    'dosen_id2' => $dosen2,
                     'waktu_bimbingan_selanjutnya' => $data['waktu_bimbingan_selanjutnya'],
                     'thesis_id' => $tesis->id
                 ]);
