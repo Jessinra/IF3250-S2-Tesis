@@ -72,3 +72,5 @@ Route::get('/seminartesis/create/{id}', 'SeminarTesisController@requestPenjadwal
 Route::post('/seminartesis/create/{id}', 'SeminarTesisController@createRequestPenjadwalan');
 Route::post('/seminartesis/edit/{id}', 'SeminarTesisController@editPenjadwalan');
 Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesis');
+
+Route::get('/mahasiswa/rekap','RekapDataController@showRekapMahasiswa');
