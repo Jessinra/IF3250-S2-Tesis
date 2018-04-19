@@ -36,6 +36,9 @@ Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa')
 Route::get('/mahasiswa/rekap','RekapDataController@showRekapMahasiswa');
 Route::get('/mahasiswa/nilaiakhir','RekapDataController@showRekapNilaiAkhir');
 
+Route::get('/kelastesis','KelasTesisController@showKelasTesis');
+Route::post('/kelastesis/tambah','KelasTesisController@tambahKelasTesis');
+
 Route::get('/dashboard', 'HomeController@index');
 Route::get('/dashboard/mahasiswa', 'MahasiswaController@index');
 Route::get('/dashboard/dosen', 'DosenController@index');

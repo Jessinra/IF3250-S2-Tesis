@@ -54,7 +54,7 @@
                         <i class="material-icons icon-style">class</i>
                     </div>
 
-                    Kontrol Panel
+                    Kelas Tesis
                 </a>
             </div>
 
