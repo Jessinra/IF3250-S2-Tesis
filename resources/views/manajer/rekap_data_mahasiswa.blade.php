@@ -12,24 +12,24 @@
                 <table class="rekap-name-table table table-hover">
                     <col width="30">
                     <col width="60">
-                    <col width="210">
+                    <col >
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">NIM</th>
-                        <th scope="col">Nama</th>
+                        <th >Nama</th>
                     </tr>
 
                     <tr>
                         <td class="dummy" scope="col" height="92"></td>
                         <td class="dummy" scope="col" height="92"></td>
-                        <td class="dummy" scope="col" height="92"></td>
+                        <td class="dummy" height="92"></td>
                     </tr>
 
                     @foreach($mahasiswa as $item)
                         <tr>
                             <td scope="col">{{$loop->iteration}}</td>
                             <td scope="col">{{$item->user()->username}}</td>
-                            <td scope="col">{{$item->user()->name}}</td>
+                            <td >{{$item->user()->name}}</td>
                         </tr>
                     @endforeach
                 </table>
