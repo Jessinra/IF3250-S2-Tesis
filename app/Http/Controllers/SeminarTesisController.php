@@ -17,8 +17,11 @@ class SeminarTesisController extends Controller
 
   public function requestPenjadwalan($id) {
       $usr = User::where('username',$id)->first();
-      $mhs = $usr->isMahasiswa();
-      if(!$usr || !$mhs || !$mhs->tesis()) {
+      if(!$usr)
+          return abort(400);
+        $mhs = $usr->isMahasiswa();
+
+      if(!$mhs || !$mhs->tesis()) {
           return abort(400);
       } else {
           if ($mhs->tesis()->dosen_pembimbing1 == Auth::user()->id || $mhs->tesis()->dosen_pembimbing2 == Auth::user()->id) {
@@ -125,9 +128,7 @@ class SeminarTesisController extends Controller
             $st->save();
             if($action == 1) {
                 $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_TESIS;
-                SidangTesis::create([
 
-                ]);
             } else {
                 $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS;
             }

@@ -18,7 +18,7 @@ class SidangTesisController extends Controller
         $mhs = Auth::user()->isMahasiswa();
         if($mhs) {
             $user = $mhs->user();
-            $thesis = Thesis::where('mahasiswa_id',$user->id)->get();
+            $thesis = $mhs->tesis();
             $sidang_tesis = SidangTesis::where('thesis_id',$thesis[0]->id)->get();
             return view('mahasiswa.daftar_sidang_tesis',['sidang_tesis' => $sidang_tesis]);
         } else {
@@ -42,6 +42,8 @@ class SidangTesisController extends Controller
      */
     public function create($id)
     {
+        echo $id;
+
     }
 
     /**

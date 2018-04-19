@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddIdKelasTesisToMahasiswa extends Migration
+class AddNullableSeminar extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddIdKelasTesisToMahasiswa extends Migration
      */
     public function up()
     {
-        Schema::table('mahasiswas', function (Blueprint $table) {
-            $table->unsignedinteger('id_kelas_tesis')->nullable();
+        Schema::table('seminar_teses', function (Blueprint $table) {
+            //
+            $table->boolean('draft_laporan')->nullable();
+            $table->boolean('sidang_dengan_teman')->nullable();
         });
     }
 
@@ -25,7 +27,8 @@ class AddIdKelasTesisToMahasiswa extends Migration
      */
     public function down()
     {
-        Schema::table('mahasiswas', function (Blueprint $table) {
-            $table->dropColumn('id_kelas_tesis')->nullable();
-        });    }
+        Schema::table('seminar_teses', function (Blueprint $table) {
+            //
+        });
+    }
 }
