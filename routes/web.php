@@ -80,4 +80,6 @@ Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesi
 
 Route::get('/sidangtesis/daftar','SidangTesisController@showFormDaftarSidang');
 Route::get('/sidangtesis/create/{id}','SidangTesisController@create');
+Route::post('/sidangtesis/dosen/edit/{id}','SidangTesisController@dosenEdit');
+
 
