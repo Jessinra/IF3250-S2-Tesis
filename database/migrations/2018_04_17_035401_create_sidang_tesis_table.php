@@ -16,12 +16,12 @@ class CreateSidangTesisTable extends Migration
         Schema::create('sidang_tesis', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('mahasiswa_id');
-            $table->unsignedInteger('dosen_pembimbing1');
+            $table->unsignedInteger('dosen_pembimbing1')->nullable();
             $table->unsignedInteger('dosen_pembimbing2')->nullable();
-            $table->unsignedInteger('dosen_penguji');
+            $table->unsignedInteger('dosen_penguji')->nullable();
             $table->timestamp('waktu' )->nullable();
-            $table->char('nilai');
-            $table->string('tempat');
+            $table->char('nilai')->nullable();
+            $table->string('tempat')->nullable();
         });
     }
 

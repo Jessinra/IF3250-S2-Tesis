@@ -61,6 +61,63 @@
                         <h3>
                             Sidang Tesis
                         </h3>
+                        <div>
+                            <form action="/sidangtesis/dosen/edit/{{$user->username}}" method="post" id="form-hsl-bimbingan" >
+                                {{csrf_field()}}
+                                <div class="form-group">
+                                    <div class="form-group row col-md-12">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right text-center ">Nama<sup>*</sup></label>
+                                        <input type="text" name="name" id="name" class="col-md-8 form-control"  value="{{$user->name}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">NIM<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$user->username}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">Opsi<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$tesis->keilmuan}}" required disabled>
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="judul" class="col-md-4 col-form-label text-md-right text-center ">Judul Tesis<sup>*</sup></label>
+                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->topic}}" required disabled>
+                                    </div>
+
+
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tanggal
+                                        </label>
+                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" >
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
+                                            Waktu
+                                        </label>
+                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" >
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tempat
+                                        </label>
+                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" >
+                                    </div>
+
+                                </div>
+
+                                <div class="row justify-content-center">
+                                <button class="btn btn-blue display-flex align-items-center ">
+                                    <i class="material-icons font-size-18-px">
+                                        edit
+                                    </i>
+                                    Edit
+                                </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 @endif
                 @if($seminarTesis)

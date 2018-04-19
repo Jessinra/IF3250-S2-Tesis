@@ -57,6 +57,10 @@ class SidangTesisController extends Controller
 
     }
 
+    public function dosenEdit($id){
+        echo $id;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
