@@ -111,5 +111,7 @@ class Mahasiswa extends Model
         return $this->hasMany('App\SeminarProposal')->orderBy('created_at',"DESC")->first();
     }
 
-
+    public function kelasTesis() {
+        return $this->belongsTo('App\KelasThesis','id_kelas_tesis','id');
+    }
 }
