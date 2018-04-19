@@ -45,8 +45,16 @@
                     </button>
                     </a>
                 </div>
+
             </div>
             <div class="col-md-8">
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+                    <div class="mb-2">
+                        <h3>
+                            Sidang Tesis
+                        </h3>
+                    </div>
+                @endif
                 @if($seminarTesis)
                 @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2))
                     <div class="mb-2">
@@ -62,7 +70,7 @@
                                 </span>
                             </div>
                             <fieldset disabled="disabled">
-                                @endif
+                        @endif
 
                         <div>
                             <form action="/seminartesis/nilai/{{$user->username}}" method="post" class="width-full justify-content-center display-flex">
@@ -85,9 +93,17 @@
                         <h3>
                             Seminar Tesis
                         </h3>
-                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+                                <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                    <i class="material-icons font-size-18-px mr-4">check_circle</i>
+                                    <span>
+                                Kelulusan Seminar Tesis telah ditetapkan oleh {{$seminarTesis->evaluator->name}}
+                                        pada {{date("d M Y H:i:s", strtotime($seminarTesis->updated_at.'UTC'))}}
+                                </span>
+                                </div>
                                 <fieldset disabled="disabled">
-                                @endif
+                                    @endif
+
                         <div>
                             <form action="/seminartesis/edit/{{$user->username}}" method="post">
                                 {{csrf_field()}}
