@@ -33,6 +33,11 @@ Route::get('/generate/admin', 'Auth\RegisterController@generateAdmin');
 
 Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
 Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
+Route::get('/mahasiswa/rekap','RekapDataController@showRekapMahasiswa');
+Route::get('/mahasiswa/nilaiakhir','RekapDataController@showRekapNilaiAkhir');
+
+Route::get('/kelastesis','KelasTesisController@showKelasTesis');
+Route::post('/kelastesis/tambah','KelasTesisController@tambahKelasTesis');
 
 Route::get('/dashboard', 'HomeController@index');
 Route::get('/dashboard/mahasiswa', 'MahasiswaController@index');
@@ -53,7 +58,7 @@ Route::post('/proposal/upload','ProposalController@upload');
 Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
 Route::post('/proposal/penerimaan','ProposalController@approval')->name('proposal-penerimaan');
 
-Route::get('/dosen/listmahasiswa','DosenController@showMahasiswa');
+Route::get('/dashboard/dosen','DosenController@showMahasiswa');
 Route::get('/hasilbimbingan/mahasiswa','HasilBimbinganController@showListHasilBimbingan');
 Route::post('/hasilbimbingan/mahasiswa','HasilBimbinganController@getBimbinganID');
 Route::get('/hasilbimbingan/tambah','HasilBimbinganController@showFormTambahHasilBimbingan');
@@ -72,3 +77,9 @@ Route::get('/seminartesis/create/{id}', 'SeminarTesisController@requestPenjadwal
 Route::post('/seminartesis/create/{id}', 'SeminarTesisController@createRequestPenjadwalan');
 Route::post('/seminartesis/edit/{id}', 'SeminarTesisController@editPenjadwalan');
 Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesis');
+
+Route::get('/sidangtesis/daftar','SidangTesisController@showFormDaftarSidang');
+Route::get('/sidangtesis/create/{id}','SidangTesisController@create');
+Route::post('/sidangtesis/dosen/edit/{id}','SidangTesisController@dosenEdit');
+
+

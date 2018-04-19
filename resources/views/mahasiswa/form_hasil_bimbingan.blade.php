@@ -21,6 +21,7 @@
 @endphp
 
 @section('content')
+    @php($tesis = Auth::user()->isMahasiswa()->tesis())
     <div class="container">
         <h2  class="text-center">Formulir Jadwal Bimbingan</h2>
         <br>
@@ -36,39 +37,32 @@
                     <div class="form-group row col-md-12">
                         <label for="dosen_id" class="col-md-4 col-form-label text-md-right text-center ">Dosen Pembimbing 1<sup>*</sup></label>
                         <select type="text" id="dosen_id" class="form-control col-md-8" name="dosen_id">
-                            <option value="" disabled>Pilih Dosen</option>
-                            <option value=""></option>
-                            @foreach($thesis as $item)
-                                @if(count($hsl_bimbingan) > 0)
-                                    @if($hsl_bimbingan[0]->dosen_id == $item->dosen_pembimbing_1->user->id)
-                                        <option value="{{$item->dosen_pembimbing_1->user->id}}" selected="selected">{{$item->dosen_pembimbing_1->user->name}}</option>
-                                    @else
-                                        <option value="{{$item->dosen_pembimbing_1->user->id}}">{{$item->dosen_pembimbing_1->user->name}}</option>
-                                    @endif
-                                @else
-                                    <option value="{{$item->dosen_pembimbing_1->user->id}}">{{$item->dosen_pembimbing_1->user->name}}</option>
-                                @endif
-                            @endforeach
+                            <option value="{{$tesis->dosen_pembimbing1}}">
+                                {{$tesis->dosen_pembimbing_1->user->name}}
+                            </option>
+                            @if($tesis->dosen_pembimbing2)
+                                <option value="{{$tesis->dosen_pembimbing2}}">
+                                    {{$tesis->dosen_pembimbing_2->user->name}}
+                                </option>
+                            @endif
                         </select>
                     </div>
+                    @if($tesis->dosen_pembimbing2)
                     <div class="form-group row col-md-12">
                         <label for="dosen_id2" class="col-md-4 col-form-label text-md-right text-center ">Dosen Pembimbing 2</label>
                         <select type="text" id="dosen_id2" class="form-control col-md-8" name="dosen_id2">
-                            <option value="" disabled>Pilih Dosen</option>
-                            <option value=""></option>
-                            @foreach($thesis as $item)
-                                @if(count($hsl_bimbingan) > 0)
-                                    @if($hsl_bimbingan[0]->dosen_id2 == $item->dosen_pembimbing_2->user->id)
-                                        <option value="{{$item->dosen_pembimbing_2->user->id}}" selected="selected">{{$item->dosen_pembimbing_2->user->name}}</option>
-                                    @else
-                                        <option value="{{$item->dosen_pembimbing_2->user->id}}">{{$item->dosen_pembimbing_2->user->name}}</option>
-                                    @endif
-                                @else
-                                    <option value="{{$item->dosen_pembimbing_2->user->id}}">{{$item->dosen_pembimbing_2->user->name}}</option>
-                                @endif
-                            @endforeach
+                        <option value="0"></option>
+                        <option value="{{$tesis->dosen_pembimbing1}}">
+                            {{$tesis->dosen_pembimbing_1->user->name}}
+                        </option>
+                        @if($tesis->dosen_pembimbing2)
+                            <option value="{{$tesis->dosen_pembimbing2}}">
+                                {{$tesis->dosen_pembimbing_2->user->name}}
+                            </option>
+                        @endif
                         </select>
                     </div>
+                    @endif
                     <div class="form-group row col-md-12">
                         <label for="tanggal_waktu" class="col-md-4 col-form-label text-md-right text-center">Waktu Bimbingan<sup>*</sup></label>
                         <input type="datetime-local" id="tanggal_waktu" name="tanggal_waktu" class="form-control col-md-8 " value="{{$tgl}}" required>

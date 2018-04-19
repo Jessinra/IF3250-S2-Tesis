@@ -32,4 +32,10 @@ class Thesis extends Model
         return $this->hasMany('App\HasilBimbingan')->where('status','!=',-1)->get();
     }
 
+    public function sidangTesis() {
+        return $this->hasMany('App\SidangTesis','thesis_id','id')->orderBy('created_at','DESC')->first();
+    }
+
+    
+
 }

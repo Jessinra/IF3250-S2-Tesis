@@ -33,4 +33,5 @@ class SeminarTesis extends Model
     public function evaluator() {
         return $this->belongsTo('App\User','evaluator_id','id');
     }
+
 }

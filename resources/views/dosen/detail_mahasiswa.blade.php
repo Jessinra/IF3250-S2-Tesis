@@ -6,7 +6,8 @@
     @php (date_default_timezone_set('Asia/Jakarta'))
     @php($seminarTopik=$mahasiswa->seminarTopik())
     @php($seminarProposal = $mahasiswa->seminarProposal())
-    @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
+    @php($tesis = $mahasiswa->tesis())
+    @php($seminarTesis = $tesis->seminarTesis())
 
     <div class="container detail-mahasiswa-control-page">
         <div class="row">
@@ -39,20 +40,93 @@
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center ">
-                    <a href="/seminartesis/create/{{$mahasiswa->user()->username}}">
+                    <a href="/seminartesis/create/{{$mahasiswa->user()->username}}"class="mb-4">
                     <button class="btn btn-blue">
                         Buat Pengajuan Seminar Tesis
                     </button>
                     </a>
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+                        <a href="/sidangtesis/create/{{$mahasiswa->user()->username}}">
+                            <button class="btn btn-blue">
+                                Buat Pengajuan Sidang Tesis
+                            </button>
+                        </a>
+                    @endif
                 </div>
+
             </div>
             <div class="col-md-8">
-                @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && $seminarTesis->approval_pembimbing2)
+                @if($tesis->sidangTesis())
+                    <div class="mb-2">
+                        <h3>
+                            Sidang Tesis
+                        </h3>
+                        <div>
+                            <form action="/sidangtesis/dosen/edit/{{$user->username}}" method="post" id="form-hsl-bimbingan" >
+                                {{csrf_field()}}
+                                <div class="form-group">
+                                    <div class="form-group row col-md-12">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right text-center ">Nama<sup>*</sup></label>
+                                        <input type="text" name="name" id="name" class="col-md-8 form-control"  value="{{$user->name}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">NIM<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$user->username}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">Opsi<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$tesis->keilmuan}}" required disabled>
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="judul" class="col-md-4 col-form-label text-md-right text-center ">Judul Tesis<sup>*</sup></label>
+                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->topic}}" required disabled>
+                                    </div>
+
+
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tanggal
+                                        </label>
+                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" >
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
+                                            Waktu
+                                        </label>
+                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" >
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tempat
+                                        </label>
+                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" >
+                                    </div>
+
+                                </div>
+
+                                <div class="row justify-content-center">
+                                <button class="btn btn-blue display-flex align-items-center ">
+                                    <i class="material-icons font-size-18-px">
+                                        edit
+                                    </i>
+                                    Edit
+                                </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
+                @if($seminarTesis)
+                @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2))
                     <div class="mb-2">
                         <h3>
                             Penilaian Seminar Tesis
                         </h3>
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                             <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                 <i class="material-icons font-size-18-px mr-4">check_circle</i>
                                 <span>
@@ -61,7 +135,7 @@
                                 </span>
                             </div>
                             <fieldset disabled="disabled">
-                                @endif
+                        @endif
 
                         <div>
                             <form action="/seminartesis/nilai/{{$user->username}}" method="post" class="width-full justify-content-center display-flex">
@@ -77,15 +151,24 @@
                         </div>
                     </div>
                 @endif
+                @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)
 
                         <div class="control-seminar-tesis mb-2">
                         <h3>
                             Seminar Tesis
                         </h3>
-                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+                                <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                    <i class="material-icons font-size-18-px mr-4">check_circle</i>
+                                    <span>
+                                Kelulusan Seminar Tesis telah ditetapkan oleh {{$seminarTesis->evaluator->name}}
+                                        pada {{date("d M Y H:i:s", strtotime($seminarTesis->updated_at.'UTC'))}}
+                                </span>
+                                </div>
                                 <fieldset disabled="disabled">
-                                @endif
+                                    @endif
+
                         <div>
                             <form action="/seminartesis/edit/{{$user->username}}" method="post">
                                 {{csrf_field()}}
@@ -128,6 +211,7 @@
 
                                 <div class="form-group row col-md-12">
                                     @php($db2 = $seminarTesis->tesis->dosen_pembimbing_2)
+                                    @if($db2)
                                     <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
                                         {{$db2->user->name}}
                                     </label>
@@ -140,6 +224,8 @@
                                             {!!$seminarTesis->getApprovalStringPembimbing2()!!}
                                         </div>
                                     @endif
+                                    @endif
+
 
                                 </div>
 

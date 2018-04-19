@@ -50,7 +50,7 @@
                         <h3>
                             Seminar Tesis
                         </h3>
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                             <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                 <i class="material-icons font-size-18-px mr-4">check_circle</i>
                                 <span>
@@ -96,7 +96,9 @@
                                 </div>
 
                                 <div class="form-group row col-md-12">
+
                                     @php($db2 = $seminarTesis->tesis->dosen_pembimbing_2)
+                                    @if($db2)
                                     <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
                                         {{$db2->user->name}}
                                     </label>
@@ -104,6 +106,7 @@
                                         <div class="align-items-center text-md-left text-center col-md-6 display-flex">
                                             {!!$seminarTesis->getApprovalStringPembimbing2()!!}
                                         </div>
+                                    @endif
 
                                 </div>
                                 <div class="col-md-10 offset-md-1 mb-4">
@@ -237,7 +240,7 @@
                             <fieldset disabled="disabled">
                         @endif
                             <div class="row justify-content-center">
-                                <form action="{{route('dosbing-penetapan')}}" method="post">
+                                <form action="{{route('dosbing-penetapan')}}" class="width-full" method="post">
                                     {{csrf_field()}}
                                     <input type="hidden" name="mahasiswa_id" value="{{$mahasiswa->id}}">
                                     <div class="form-group row">
@@ -263,7 +266,6 @@
                                                          {{$tesis->dosen_pembimbing_1->user->name}}
                                                      </option>
                                                 @else
-                                                    <option value=""></option>
                                                     @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                         @php($user_item = $item->user)
                                                         <option value="{{$user_item->id}}"
@@ -281,13 +283,13 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
                                         <div class="col-md-6">
                                             <select name="dosen_pembimbing_2"  class="form-control" id="">
-                                                @if($tesis)
+                                                @if($tesis && $tesis->dosen_pembimbing_2)
                                                     <option value="{{$tesis->dosen_pembimbing2}}" selected>
                                                         {{$tesis->dosen_pembimbing_2->user->name}}
                                                     </option>
                                                 @else
                                                     <option value=""></option>
-                                                    @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                    @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
                                                         @php($user_item = $item->user)
                                                         <option value="{{$user_item->id}}"
                                                                 @if($topik->calon_pembimbing2 == $item->id)
