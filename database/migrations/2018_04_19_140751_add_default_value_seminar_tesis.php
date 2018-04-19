@@ -17,8 +17,6 @@ class AddDefaultValueSeminarTesis extends Migration
             //
             $table->dropColumn('draft_laporan');
             $table->dropColumn('seminar_dengan_teman');
-            $table->string('draft_laporan')->nullable();
-            $table->string('seminar_dengan_teman')->nullable();
         });
     }
 
