@@ -281,7 +281,7 @@
                                         <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
                                         <div class="col-md-6">
                                             <select name="dosen_pembimbing_2"  class="form-control" id="">
-                                                @if($tesis)
+                                                @if($tesis->dosen_pembimbing_2)
                                                     <option value="{{$tesis->dosen_pembimbing2}}" selected>
                                                         {{$tesis->dosen_pembimbing_2->user->name}}
                                                     </option>
