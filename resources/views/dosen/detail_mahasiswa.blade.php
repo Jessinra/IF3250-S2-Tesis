@@ -6,7 +6,8 @@
     @php (date_default_timezone_set('Asia/Jakarta'))
     @php($seminarTopik=$mahasiswa->seminarTopik())
     @php($seminarProposal = $mahasiswa->seminarProposal())
-    @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
+    @php($tesis = $mahasiswa->tesis())
+    @php($seminarTesis = $tesis->seminarTesis())
 
     <div class="container detail-mahasiswa-control-page">
         <div class="row">
@@ -146,6 +147,7 @@
 
                                 <div class="form-group row col-md-12">
                                     @php($db2 = $seminarTesis->tesis->dosen_pembimbing_2)
+                                    @if($db2)
                                     <label for="tempat" class="col-md-6 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
                                         {{$db2->user->name}}
                                     </label>
@@ -158,6 +160,8 @@
                                             {!!$seminarTesis->getApprovalStringPembimbing2()!!}
                                         </div>
                                     @endif
+                                    @endif
+                                    
 
                                 </div>
 
