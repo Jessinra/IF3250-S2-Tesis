@@ -13,13 +13,13 @@ class ChangeSidangTesis extends Migration
      */
     public function up()
     {
-        Schema::table('sidang_teses', function (Blueprint $table) {
+        Schema::table('sidang_tesis', function (Blueprint $table) {
             $table->unsignedinteger('thesis_id');
             $table->dropColumn('mahasiswa_id');
             $table->dropColumn('dosen_pembimbing1');
             $table->dropColumn('dosen_pembimbing2');
-            $table->timestamp();
-        }
+            $table->timestamps();
+        });
     }
 
     /**
