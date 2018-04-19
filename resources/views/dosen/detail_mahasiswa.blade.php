@@ -40,16 +40,23 @@
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center ">
-                    <a href="/seminartesis/create/{{$mahasiswa->user()->username}}">
+                    <a href="/seminartesis/create/{{$mahasiswa->user()->username}}"class="mb-4">
                     <button class="btn btn-blue">
                         Buat Pengajuan Seminar Tesis
                     </button>
                     </a>
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+                        <a href="/sidangtesis/create/{{$mahasiswa->user()->username}}">
+                            <button class="btn btn-blue">
+                                Buat Pengajuan Sidang Tesis
+                            </button>
+                        </a>
+                    @endif
                 </div>
 
             </div>
             <div class="col-md-8">
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+                @if($tesis->sidangTesis())
                     <div class="mb-2">
                         <h3>
                             Sidang Tesis
