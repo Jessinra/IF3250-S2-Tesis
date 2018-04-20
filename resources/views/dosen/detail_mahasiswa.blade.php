@@ -72,10 +72,9 @@
                             @endif
                                 <div class="row justify-content-center">
 
-                                    <form action=" {{route('seminarproposal-penilaian')}}" method="post" class="width-full">
+                                    <form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
                                         {{csrf_field()}}
-                                        <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
-                                        <input type="hidden" value="{{$seminarProposal->id}}" name="seminartopik">
+                                        <input type="hidden" value="{{$user->username}}" name="mahasiswa">
                                         <div class="form-group row width-full justify-content-center">
                                             <label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
                                             <select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama"
