@@ -25,6 +25,53 @@ class SidangTesisController extends Controller
             return abort(403);
         }
     }
+
+    public function nilaiSidangTesis(Request $request, $id) {
+        $currentUser = Auth::user();
+        $usr = User::where('username',$id)->first();
+        echo $usr;
+        if(!$usr)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $sidangtesis = $tesis->sidangTesis();
+        if(!$sidangtesis)
+            return abort(400);
+        else if($tesis->dosen_pembimbing1 == $currentUser->id) {
+            $scoreutama = $request->get('scoreUtama');
+            $scorepenting = $request->get('scorePenting');
+            $scorependukung = $request->get('scorePendukung');
+            $sidangtesis->nilai_dosen_pembimbing_utama = $scoreutama;
+            $sidangtesis->nilai_dosen_pembimbing_pendukung = $scorependukung;
+            $sidangtesis->nilai_dosen_pembimbing_penting = $scorepenting;
+            $sidangtesis->save();
+            return back();
+        } else if($sidangtesis->dosen_penguji_1 == $currentUser->id) {
+            $scoreutama = $request->get('scoreUtama');
+            $scorepenting = $request->get('scorePenting');
+            $scorependukung = $request->get('scorePendukung');
+            $sidangtesis->nilai_dosen_penguji_1_utama = $scoreutama;
+            $sidangtesis->nilai_dosen_penguji_1_pendukung = $scorependukung;
+            $sidangtesis->nilai_dosen_penguji_1_penting = $scorepenting;
+            $sidangtesis->save();
+            return back();
+        } else if($sidangtesis->dosen_penguji_2 == $currentUser->id) {
+            $scoreutama = $request->get('scoreUtama');
+            $scorepenting = $request->get('scorePenting');
+            $scorependukung = $request->get('scorePendukung');
+            $sidangtesis->nilai_dosen_penguji_2_utama = $scoreutama;
+            $sidangtesis->nilai_dosen_penguji_2_pendukung = $scorependukung;
+            $sidangtesis->nilai_dosen_penguji_2_penting = $scorepenting;
+            $sidangtesis->save();
+            return back();
+        } else {
+            return abort(403);
+        }
+    }
     /**
      * Display a listing of the resource.
      *
