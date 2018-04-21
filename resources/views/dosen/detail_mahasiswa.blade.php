@@ -144,21 +144,73 @@
                                         <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
                                             Tanggal
                                         </label>
-                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" >
+                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$sidangTesis->tanggal}}" >
                                     </div>
 
                                     <div class="form-group row col-md-12">
                                         <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
                                             Waktu
                                         </label>
-                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" >
+                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$sidangTesis->jam}}">
                                     </div>
 
                                     <div class="form-group row col-md-12">
                                         <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                             Tempat
                                         </label>
-                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" >
+                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$sidangTesis->tempat}}">
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="usulan_penguji1"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                        @if($sidangTesis->ajuan_penguji1 == $item->id)
+                                                        selected
+                                                        @endif
+                                                >
+                                                    {{$item->user->name}}
+
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+
+                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="usulan_penguji2"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                        @if($sidangTesis->ajuan_penguji2 == $item->id)
+                                                        selected
+                                                        @endif
+                                                >
+                                                    {{$item->user->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+
+                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="usulan_penguji3"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                        @if($sidangTesis->ajuan_penguji3 == $item->id)
+                                                        selected
+                                                        @endif
+                                                >
+                                                    {{$item->user->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                 </div>

@@ -16,7 +16,7 @@ class SidangTesisController extends Controller
 
     public function showFormDaftarSidang(){
         $mhs = Auth::user()->isMahasiswa();
-        if($mhs) {
+        if($mhs && $mhs->tesis() && $mhs->tesis()->sidangTesis()) {
             $user = $mhs->user();
             $thesis = $mhs->tesis();
             $sidang_tesis = $thesis->sidangTesis();
@@ -131,8 +131,25 @@ class SidangTesisController extends Controller
 
     }
 
-    public function dosenEdit($id){
-        echo $id;
+    public function dosenEdit(Request $request, $id){
+        $usr = User::where('username',$id)->first();
+//        echo $usr;
+        $mhs = $usr->isMahasiswa();
+        $tesis = $mhs->tesis();
+        $sidang = $tesis->sidangTesis();
+        if($tesis->dosen_pembimbing1 ==  Auth::user()->id || $tesis->dosen_pembimbing2 == Auth::user()->id) {
+            print_r($request->all());
+            $sidang->tanggal  = $request->get('haritgl');
+            $sidang->jam  = $request->get('waktu');
+            $sidang->tempat = $request->get('tempat');
+            $sidang->ajuan_penguji1 = $request->get('usulan_penguji1');
+            $sidang->ajuan_penguji2 = $request->get('usulan_penguji2');
+            $sidang->ajuan_penguji3 = $request->get('usulan_penguji3');
+            $sidang->save();
+            return back();
+        }  else{
+            return abort(403);
+        }
     }
 
     /**
