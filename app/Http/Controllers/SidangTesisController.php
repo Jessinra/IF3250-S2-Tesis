@@ -125,6 +125,61 @@ class SidangTesisController extends Controller
         }
     }
 
+    public function mahasiswaEdit(Request $request, $id){
+        $user = User::where('username',$id)->first();
+        $mhs = $user->isMahasiswa();
+        if($mhs->id == Auth::user()->id && $mhs->tesis() && $mhs->tesis()->sidangTesis()) {
+            $sidang = $mhs->tesis()->sidangTesis();
+            $eval_diri = $request->file('eval_diri');
+            if($eval_diri) {
+                $path = $eval_diri->storeAs($user->username, $eval_diri->getClientOriginalName());
+//                echo "Evaluasi Diri ".$path;
+
+                $sidang->evaluasi_diri = $path;
+            }
+
+            $draft_makalah = $request->file('draft_makalah');
+            if($draft_makalah) {
+                $path = $draft_makalah->storeAs($user->username, $draft_makalah->getClientOriginalName());
+//                echo "Draft Makalah ".$path;
+
+                $sidang->draft_makalah = $path;
+            }
+
+            $laporan_tesis = $request->file('laporan_tesis');
+            if($laporan_tesis) {
+                $path = $laporan_tesis->storeAs($user->username, $laporan_tesis->getClientOriginalName());
+//                echo "Laporan Tesis ".$path;
+
+                $sidang->laporan_tesis = $path;
+            }
+
+
+            $ksm_akhir = $request->file('ksm_akhir');
+            if($ksm_akhir) {
+                $path = $ksm_akhir->storeAs($user->username, $ksm_akhir->getClientOriginalName());
+//                echo "Ksm Akhir ".$path;
+                $sidang->ksm_terakhir = $path;
+            }
+
+            $form_paper = $request->file('form_paper');
+            if($form_paper) {
+
+                $path = $form_paper->storeAs($user->username, $form_paper->getClientOriginalName());
+//                echo "Form Paper ".$path;
+                $sidang->submit_paper = $path;
+            }
+
+            $sidang->semester_terdaftar = $request->get('semester_daftar');
+
+            $sidang->jadwal_seminar = $request->get('tanggal_seminar_tesis');
+
+            $sidang->save();
+            return view('mahasiswa.daftar_sidang_tesis',['success'=>true]);
+        } else {
+            return abort(403);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
