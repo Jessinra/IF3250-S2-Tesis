@@ -54,9 +54,10 @@ class SidangTesisController extends Controller
                 $cek_nilai_pembimbing = !is_null($sidangtesis->nilai_dosen_pembimbing_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_penting) && !is_null($sidangtesis->nilai_dosen_pembimbing_pendukung);
                 $all_score_filled = $cek_nilai_pembimbing && $cek_nilai_penguji_1 && $cek_nilai_penguji_2;
                 if ($all_score_filled) {
-                    $sidangtesis->nilai = "B";
+                    $sidangtesis->nilai = "TEST";
                 }
                 $sidangtesis->save();
+                return back();
             } else if($sidangtesis->dosen_penguji_1 == $currentUser->id) {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
@@ -64,7 +65,15 @@ class SidangTesisController extends Controller
                 $sidangtesis->nilai_dosen_penguji_1_utama = $scoreutama;
                 $sidangtesis->nilai_dosen_penguji_1_pendukung = $scorependukung;
                 $sidangtesis->nilai_dosen_penguji_1_penting = $scorepenting;
+                $cek_nilai_penguji_1 = !is_null($sidangtesis->nilai_dosen_penguji_1_utama) && !is_null($sidangtesis->nilai_dosen_penguji_1_penting) && !is_null($sidangtesis->nilai_dosen_penguji_1_pendukung);
+                $cek_nilai_penguji_2 = !is_null($sidangtesis->nilai_dosen_penguji_2_utama) && !is_null($sidangtesis->nilai_dosen_penguji_2_penting) && !is_null($sidangtesis->nilai_dosen_penguji_2_pendukung);
+                $cek_nilai_pembimbing = !is_null($sidangtesis->nilai_dosen_pembimbing_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_penting) && !is_null($sidangtesis->nilai_dosen_pembimbing_pendukung);
+                $all_score_filled = $cek_nilai_pembimbing && $cek_nilai_penguji_1 && $cek_nilai_penguji_2;
+                if ($all_score_filled) {
+                    $sidangtesis->nilai = "TEST";
+                }
                 $sidangtesis->save();
+                return back();
             } else if($sidangtesis->dosen_penguji_2 == $currentUser->id) {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
@@ -72,6 +81,13 @@ class SidangTesisController extends Controller
                 $sidangtesis->nilai_dosen_penguji_2_utama = $scoreutama;
                 $sidangtesis->nilai_dosen_penguji_2_pendukung = $scorependukung;
                 $sidangtesis->nilai_dosen_penguji_2_penting = $scorepenting;
+                $cek_nilai_penguji_1 = !is_null($sidangtesis->nilai_dosen_penguji_1_utama) && !is_null($sidangtesis->nilai_dosen_penguji_1_penting) && !is_null($sidangtesis->nilai_dosen_penguji_1_pendukung);
+                $cek_nilai_penguji_2 = !is_null($sidangtesis->nilai_dosen_penguji_2_utama) && !is_null($sidangtesis->nilai_dosen_penguji_2_penting) && !is_null($sidangtesis->nilai_dosen_penguji_2_pendukung);
+                $cek_nilai_pembimbing = !is_null($sidangtesis->nilai_dosen_pembimbing_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_penting) && !is_null($sidangtesis->nilai_dosen_pembimbing_pendukung);
+                $all_score_filled = $cek_nilai_pembimbing && $cek_nilai_penguji_1 && $cek_nilai_penguji_2;
+                if ($all_score_filled) {
+                    $sidangtesis->nilai = "TEST";
+                }
                 $sidangtesis->save();
             } else {
                 return abort(403);
