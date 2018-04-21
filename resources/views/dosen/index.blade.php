@@ -14,6 +14,7 @@
 </script>
     <div class="container"> 
       	<h2>Dashboard</h2>
+
 	  	<br>
 	  	<!-- Nav tabs -->
 	  	<ul class="nav nav-tabs" role="tablist">
@@ -195,6 +196,7 @@
 
 					<div class="col-sm-7">
 						<h2>Jadwal Dosen</h2>
+                        <a class="btn btn-outline-dark" href="/hasilbimbingan" role="button">Lihat Seluruh Jadwal Bimbingan</a>
 					  	<!-- <?php if($state == 1) : ?>
 						    <a href="#">This will only display if $condition is true</a>
 						<?php else : ?>
