@@ -91,7 +91,7 @@
                     <div class="level level_3"><p>3</p></div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
                     <div class="level level_4 level_reached"><p>4</p></div>
                 @else
                     <div class="level level_4"><p>4</p></div>
@@ -362,10 +362,10 @@
                 <a class="btn btn-outline-dark" href="/hasilbimbingan/mahasiswa" role="button">Lihat Hasil Bimbingan</a>
 
             </div>
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
-            <div id="step4" class="container tab-pane fade active show">
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+            <div id="step4" class="container tab-pane fade active show mt-4">
         @else
-            <div id="step4" class="container tab-pane fade">
+            <div id="step4" class="container tab-pane fade mt-4">
         @endif
                 <h3 class="header">Sidang Tesis</h3>
                 <p>Anda dapat mendaftar sidang tesis.</p>
