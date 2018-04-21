@@ -25,31 +25,7 @@ class SidangTesisController extends Controller
             return abort(403);
         }
     }
-
-    public function showFormPenilaianSidang(Request $request, $id) {
-        $currentUser = Auth::user();
-        $usr = User::where('username',$id)->first();
-        echo $usr;
-        if(!$usr)
-            return abort(400);
-        $mhs = $usr->isMahasiswa();
-        if(!$mhs)
-            return abort(400);
-        $tesis = $mhs->tesis();
-        if(!$tesis)
-            return abort(400);
-        $sidangtesis = $tesis->sidangTesis();
-        if(!$sidangtesis)
-            return abort(400);
-        else {
-            if (($tesis->dosen_pembimbing1 == $currentUser->id) || ($sidangtesis->dosen_penguji_1 == $currentUser->id) || ($sidangtesis->dosen_penguji_2 == $currentUser->id)) {
-              return view('dosen.penilaian_sidang', ['mahasiswa' => $mhs]);  
-            } else {
-                return abort(403);
-            }
-        }
-    }
-
+    
     public function nilaiSidangTesis(Request $request, $id) {
         $currentUser = Auth::user();
         $usr = User::where('username',$id)->first();
