@@ -7,6 +7,8 @@ use App\Thesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+
 class SidangTesisController extends Controller
 {
     public function __construct()
@@ -234,5 +236,14 @@ class SidangTesisController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function downloadFile($id,$filename){
+        $usr = User::where('username',$id)->first();
+        $cusr = Auth::user();
+        if($cusr->username == $id || $usr->isMahasiswa()->tesis()->dosen_pembimbing1 == $cusr->id || $usr->isMahasiswa()->tesis()->dosen_pembimbing2 == $cusr->id || $cusr->isManajer())
+        {
+            return Storage::download($id.'/'.$filename);
+        }
     }
 }
