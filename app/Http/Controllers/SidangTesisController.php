@@ -26,6 +26,30 @@ class SidangTesisController extends Controller
         }
     }
 
+    public function showFormPenilaianSidang(Request $request, $id) {
+        $currentUser = Auth::user();
+        $usr = User::where('username',$id)->first();
+        echo $usr;
+        if(!$usr)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $sidangtesis = $tesis->sidangTesis();
+        if(!$sidangtesis)
+            return abort(400);
+        else {
+            if (($tesis->dosen_pembimbing1 == $currentUser->id) || ($sidangtesis->dosen_penguji_1 == $currentUser->id) || ($sidangtesis->dosen_penguji_2 == $currentUser->id)) {
+              return view('dosen.penilaian_sidang', ['mahasiswa' => $mhs]);  
+            } else {
+                return abort(403);
+            }
+        }
+    }
+
     public function nilaiSidangTesis(Request $request, $id) {
         $currentUser = Auth::user();
         $usr = User::where('username',$id)->first();
@@ -41,35 +65,38 @@ class SidangTesisController extends Controller
         $sidangtesis = $tesis->sidangTesis();
         if(!$sidangtesis)
             return abort(400);
-        else if($tesis->dosen_pembimbing1 == $currentUser->id) {
-            $scoreutama = $request->get('scoreUtama');
-            $scorepenting = $request->get('scorePenting');
-            $scorependukung = $request->get('scorePendukung');
-            $sidangtesis->nilai_dosen_pembimbing_utama = $scoreutama;
-            $sidangtesis->nilai_dosen_pembimbing_pendukung = $scorependukung;
-            $sidangtesis->nilai_dosen_pembimbing_penting = $scorepenting;
-            $sidangtesis->save();
-            return back();
-        } else if($sidangtesis->dosen_penguji_1 == $currentUser->id) {
-            $scoreutama = $request->get('scoreUtama');
-            $scorepenting = $request->get('scorePenting');
-            $scorependukung = $request->get('scorePendukung');
-            $sidangtesis->nilai_dosen_penguji_1_utama = $scoreutama;
-            $sidangtesis->nilai_dosen_penguji_1_pendukung = $scorependukung;
-            $sidangtesis->nilai_dosen_penguji_1_penting = $scorepenting;
-            $sidangtesis->save();
-            return back();
-        } else if($sidangtesis->dosen_penguji_2 == $currentUser->id) {
-            $scoreutama = $request->get('scoreUtama');
-            $scorepenting = $request->get('scorePenting');
-            $scorependukung = $request->get('scorePendukung');
-            $sidangtesis->nilai_dosen_penguji_2_utama = $scoreutama;
-            $sidangtesis->nilai_dosen_penguji_2_pendukung = $scorependukung;
-            $sidangtesis->nilai_dosen_penguji_2_penting = $scorepenting;
-            $sidangtesis->save();
-            return back();
-        } else {
-            return abort(403);
+        else {
+            if($tesis->dosen_pembimbing1 == $currentUser->id) {
+                $scoreutama = $request->get('scoreUtama');
+                $scorepenting = $request->get('scorePenting');
+                $scorependukung = $request->get('scorePendukung');
+                $sidangtesis->nilai_dosen_pembimbing_utama = $scoreutama;
+                $sidangtesis->nilai_dosen_pembimbing_pendukung = $scorependukung;
+                $sidangtesis->nilai_dosen_pembimbing_penting = $scorepenting;
+                $all_score_filled =  !is_null($sidangtesis->nilai_dosen_penguji_1_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_utama);
+                if ($all_score_filled) {
+                    $sidang_tesis->nilai = "TEST";
+                }
+                $sidangtesis->save();
+            } else if($sidangtesis->dosen_penguji_1 == $currentUser->id) {
+                $scoreutama = $request->get('scoreUtama');
+                $scorepenting = $request->get('scorePenting');
+                $scorependukung = $request->get('scorePendukung');
+                $sidangtesis->nilai_dosen_penguji_1_utama = $scoreutama;
+                $sidangtesis->nilai_dosen_penguji_1_pendukung = $scorependukung;
+                $sidangtesis->nilai_dosen_penguji_1_penting = $scorepenting;
+                $sidangtesis->save();
+            } else if($sidangtesis->dosen_penguji_2 == $currentUser->id) {
+                $scoreutama = $request->get('scoreUtama');
+                $scorepenting = $request->get('scorePenting');
+                $scorependukung = $request->get('scorePendukung');
+                $sidangtesis->nilai_dosen_penguji_2_utama = $scoreutama;
+                $sidangtesis->nilai_dosen_penguji_2_pendukung = $scorependukung;
+                $sidangtesis->nilai_dosen_penguji_2_penting = $scorepenting;
+                $sidangtesis->save();
+            } else {
+                return abort(403);
+            }
         }
     }
     /**
