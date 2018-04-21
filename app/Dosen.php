@@ -30,4 +30,8 @@ class Dosen extends Model
         $hsl_bimbingan = HasilBimbingan::where('dosen_id',$this->id)->orderBy('status','asc')->orderBy('tanggal_waktu','desc')->get();
         return $hsl_bimbingan;
     }
+
+    public static function getListDosenPenguji() {
+        return Dosen::where('status', '>=','0')->get();
+    }
 }
