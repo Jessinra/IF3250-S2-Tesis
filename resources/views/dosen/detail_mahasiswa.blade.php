@@ -8,6 +8,7 @@
     @php($seminarProposal = $mahasiswa->seminarProposal())
     @php($tesis = $mahasiswa->tesis())
     @php($seminarTesis = $tesis->seminarTesis())
+    @php($sidangTesis = $tesis->sidangTesis())
 
     <div class="container detail-mahasiswa-control-page">
         <div class="row">
@@ -55,12 +56,175 @@
                 </div>
 
             </div>
+
             <div class="col-md-8">
+                @if ($sidangTesis)
+                    <div class="mb-2">
+                        <h3>
+                            Penilaian Sidang Tesis
+                        </h3>
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                            <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                <i class="material-icons font-size-18-px mr-2">check_circle</i>
+                                &nbsp Kelulusan mahasiswa ditetapkan pada {{date("d M Y H:i:s", strtotime($sidangTopik->updated_at.'UTC'))}}
+
+                            </div>
+                            @endif
+                                <div class="row justify-content-center">
+
+                                    <form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
+                                        {{csrf_field()}}
+                                        <input type="hidden" value="{{$user->username}}" name="mahasiswa">
+                                        <div class="form-group row width-full justify-content-center">
+                                            <label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+                                            <select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama"
+                                            >
+                                                <option value="L">L</option>
+                                                <option value="M">M</option>
+                                                <option value="K">K</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group row width-full justify-content-center">
+                                            <label for="scoreIndexPenting" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Penting</label>
+                                            <select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
+                                            >
+                                                <option value="L">L</option>
+                                                <option value="M">M</option>
+                                                <option value="K">K</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group row width-full justify-content-center">
+                                            <label for="scoreIndexPendukung" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Pendukung</label>
+                                            <select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
+                                            >
+                                                <option value="L">L</option>
+                                                <option value="M">M</option>
+                                                <option value="K">K</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group row width-full justify-content-center">
+                                            <button  class="col-md-2 btn btn-blue ml-1 mr-1">
+                                                    Tetapkan
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                    </div>
+                @endif
                 @if($tesis->sidangTesis())
                     <div class="mb-2">
                         <h3>
                             Sidang Tesis
                         </h3>
+                        <div>
+                            <form action="/sidangtesis/dosen/edit/{{$user->username}}" method="post" id="form-hsl-bimbingan" >
+                                {{csrf_field()}}
+                                <div class="form-group">
+                                    <div class="form-group row col-md-12">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right text-center ">Nama<sup>*</sup></label>
+                                        <input type="text" name="name" id="name" class="col-md-8 form-control"  value="{{$user->name}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">NIM<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$user->username}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">Opsi<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$tesis->keilmuan}}" required disabled>
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="judul" class="col-md-4 col-form-label text-md-right text-center ">Judul Tesis<sup>*</sup></label>
+                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->topic}}" required disabled>
+                                    </div>
+
+
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tanggal
+                                        </label>
+                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$sidangTesis->tanggal}}" >
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
+                                            Waktu
+                                        </label>
+                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$sidangTesis->jam}}">
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tempat
+                                        </label>
+                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$sidangTesis->tempat}}">
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="usulan_penguji1"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                        @if($sidangTesis->ajuan_penguji1 == $item->id)
+                                                        selected
+                                                        @endif
+                                                >
+                                                    {{$item->user->name}}
+
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+
+                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="usulan_penguji2"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                        @if($sidangTesis->ajuan_penguji2 == $item->id)
+                                                        selected
+                                                        @endif
+                                                >
+                                                    {{$item->user->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+
+                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="usulan_penguji3"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                        @if($sidangTesis->ajuan_penguji3 == $item->id)
+                                                        selected
+                                                        @endif
+                                                >
+                                                    {{$item->user->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="row justify-content-center">
+                                <button class="btn btn-blue display-flex align-items-center ">
+                                    <i class="material-icons font-size-18-px">
+                                        edit
+                                    </i>
+                                    Edit
+                                </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 @endif
                 @if($seminarTesis)

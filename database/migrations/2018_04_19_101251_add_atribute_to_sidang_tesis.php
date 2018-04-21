@@ -15,19 +15,19 @@ class AddAtributeToSidangTesis extends Migration
     {        Schema::table('sidang_tesis', function (Blueprint $table) {
 
                 $table->dropColumn('dosen_penguji');
-                $table->unsignedInteger('dosen_penguji_1');
-                $table->unsignedInteger('dosen_penguji_2');
-                $table->char('nilai_dosen_pembimbing_utama');
-                $table->char('nilai_dosen_pembimbing_penting');
-                $table->char('nilai_dosen_pembimbing_pendukung');
-                $table->char('nilai_dosen_penguji_1_utama');
-                $table->char('nilai_dosen_penguji_1_penting');
-                $table->char('nilai_dosen_penguji_1_pendukung');
-                $table->char('nilai_dosen_penguji_2_utama');
-                $table->char('nilai_dosen_penguji_2_penting');
-                $table->char('nilai_dosen_penguji_2_pendukung');
-                $table->char('nilai_dosen_kelas_utama');
-                $table->char('nilai_dosen_kelas_penting');
+                $table->unsignedInteger('dosen_penguji_1')->nullable();
+                $table->unsignedInteger('dosen_penguji_2')->nullable();
+                $table->char('nilai_dosen_pembimbing_utama')->nullable();
+                $table->char('nilai_dosen_pembimbing_penting')->nullable();
+                $table->char('nilai_dosen_pembimbing_pendukung')->nullable();
+                $table->char('nilai_dosen_penguji_1_utama')->nullable();
+                $table->char('nilai_dosen_penguji_1_penting')->nullable();
+                $table->char('nilai_dosen_penguji_1_pendukung')->nullable();
+                $table->char('nilai_dosen_penguji_2_utama')->nullable();
+                $table->char('nilai_dosen_penguji_2_penting')->nullable();
+                $table->char('nilai_dosen_penguji_2_pendukung')->nullable();
+                $table->char('nilai_dosen_kelas_utama')->nullable();
+                $table->char('nilai_dosen_kelas_penting')->nullable();
             });
     }
 
