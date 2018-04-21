@@ -1,22 +1,34 @@
 @extends('layouts.app')
 @section('title','Pendaftaran Sidang Tesis')
-
+@php($user = Auth::user());
+@php($sidangTesis = $user->isMahasiswa()->tesis()->sidangTesis())
 @section('content')
     <div class="container">
+        @if(isset($success))
+            <div class="alert alert-success display-flex align-items-center">
+                <i class="material-icons font-size-18-px">check_circle</i>
+                Data Berhasil Disimpan
+            </div>
+        @endif
         <h2  class="text-center">Formulir Pendaftaran Sidang Tesis</h2>
         <br>
         <div id="form-app">
-            <form action="" method="post" id="form-daftar-sidang" >
-{{--                {{csrf_field()}}--}}
+
+            <form action="/sidangtesis/mahasiswa/edit/{{$user->username}}" method="post" id="form-daftar-sidang" enctype="multipart/form-data">
+                {{csrf_field()}}
                 {{--<input type="hidden" id="id" name="id"  value="{{$id}}">--}}
                 <div class="form-group">
                     <div class="form-group row col-md-12">
                         <label for="semester-daftar" class="col-md-4 col-form-label text-md-right text-center">Terdaftar pada Semester<sup>*</sup></label>
-                        <input type="text" id="semester_daftar" name="semester_daftar" class="form-control col-md-8 " value="" required>
+                        <input type="text" id="semester_daftar" name="semester_daftar" class="form-control col-md-8 " value="{{$sidangTesis->semester_terdaftar}}" required>
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="tanggal_seminar_tesis" class="col-md-4 col-form-label text-md-right text-center">Waktu Seminar Tesis<sup>*</sup></label>
-                        <input type="datetime-local" id="tanggal_seminar_tesis" name="tanggal_seminar_tesis" class="form-control col-md-8 " value="" required>
+                        <input type="datetime-local" id="tanggal_seminar_tesis" name="tanggal_seminar_tesis" class="form-control col-md-8 "
+                               @if($sidangTesis->jadwal_seminar)
+                               value="{{date("Y-m-d\TH:i:s", strtotime($sidangTesis->jadwal_seminar))}}"
+                               @endif
+                               required>
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="" class="col-md-4 col-form-label text-md-right text-center">Dokumen Evaluasi Diri</label>
@@ -29,6 +41,11 @@
                         <div v-if="eval_diri" class=" col-12 col-md-5 text-center text-md-left">
                         @{{eval_diri.name+" ("+humanFileSize(eval_diri.size)+")"}}
                         </div>
+                        @if($sidangTesis->evaluasi_diri)
+                            <a href="/sidangtesis/download/{{$sidangTesis->evaluasi_diri}}" class="text-color-blue">
+                                {{basename($sidangTesis->evaluasi_diri)}}
+                            </a>
+                        @endif
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="" class="col-md-4 col-form-label text-md-right text-center">Draft Makalah</label>
@@ -40,6 +57,11 @@
                         <div v-if="draft_makalah" class=" col-12 col-md-5 text-center text-md-left">
                             @{{draft_makalah.name+" ("+humanFileSize(draft_makalah.size)+")"}}
                         </div>
+                        @if($sidangTesis->draft_makalah)
+                            <a href="/sidangtesis/download/{{$sidangTesis->draft_makalah}}" class="text-color-blue">
+                                {{basename($sidangTesis->draft_makalah)}}
+                            </a>
+                        @endif
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="" class="col-md-4 col-form-label text-md-right text-center">Laporan Tesis</label>
@@ -51,6 +73,12 @@
                         <div v-if="laporan_tesis" class=" col-12 col-md-5 text-center text-md-left">
                             @{{laporan_tesis.name+" ("+humanFileSize(laporan_tesis.size)+")"}}
                         </div>
+                        @if($sidangTesis->laporan_tesis)
+                            <a href="/sidangtesis/download/{{$sidangTesis->evaluasi_diri}}" class="text-color-blue">
+                                {{basename($sidangTesis->laporan_tesis)}}
+                            </a>
+                        @endif
+
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="" class="col-md-4 col-form-label text-md-right text-center">KSM Semester Terakhir</label>
@@ -63,6 +91,13 @@
                         <div v-if="ksm_akhir" class=" col-12 col-md-5 text-center text-md-left">
                             @{{ksm_akhir.name+" ("+humanFileSize(ksm_akhir.size)+")"}}
                         </div>
+
+                        @if($sidangTesis->ksm_terakhir)
+                            <a href="/sidangtesis/download/{{$sidangTesis->ksm_terakhir}}" class="text-color-blue">
+                                {{basename($sidangTesis->ksm_terakhir)}}
+                            </a>
+                        @endif
+                      
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="" class="col-md-4 col-form-label text-md-right text-center">Form Submit Paper</label>
@@ -74,7 +109,13 @@
                         <div v-if="form_paper" class=" col-12 col-md-5 text-center text-md-left">
                             @{{form_paper.name+" ("+humanFileSize(form_paper.size)+")"}}
                         </div>
+                        @if($sidangTesis->submit_paper)
+                            <a href="/sidangtesis/download/{{$sidangTesis->submit_paper}}" class="text-color-blue">
+                                {{basename($sidangTesis->submit_paper)}}
+                            </a>
+                        @endif
                     </div>
+
                 </div>
 
             </form>
