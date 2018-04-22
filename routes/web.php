@@ -83,4 +83,5 @@ Route::get('/sidangtesis/create/{id}','SidangTesisController@create');
 Route::post('/sidangtesis/dosen/edit/{id}','SidangTesisController@dosenEdit');
 Route::post('/sidangtesis/nilai/{id}','SidangTesisController@nilaiSidangTesis');
 
-
+Route::get('/penjadwalan','PenjadwalanController@showPenjadwalanPage');
+Route::post('/penjadwalan','PenjadwalanController@penentuanJadwalBatch');
