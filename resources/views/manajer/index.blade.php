@@ -67,6 +67,16 @@
                     Kontrol Panel
                 </a>
             </div>
+
+            <div class="col-xs-6 col-lg-3 text-center">
+                <a href="/penjadwalan" class="thumbnail">
+                    <div>
+                        <i class="material-icons icon-style">schedule</i>
+                    </div>
+
+                    Pengaturan Jadwal Seminar dan Sidang
+                </a>
+            </div>
         </div>
 
     </div>
