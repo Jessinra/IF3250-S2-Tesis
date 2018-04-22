@@ -40,4 +40,8 @@ class Proposal extends Model
     function getStatusString() {
         return Proposal::STATUS_STRING[$this->status];
     }
+
+    public function mahasiswa() {
+        return $this->belongsTo('App\Mahasiswa','mahasiswa_id','id');
+    }
 }

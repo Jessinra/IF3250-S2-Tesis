@@ -8,7 +8,7 @@ class SeminarProposal extends Model
     const ACTION_LULUS = 1;
     const ACTION_GAGAL = 0;
     protected $fillable = [
-        "mahasiswa_id","schedule","creator_id","passed","evaluator_id"
+        "mahasiswa_id","schedule","creator_id","passed","evaluator_id","proposal_id"
     ];
 
     public function creator() {
@@ -17,5 +17,9 @@ class SeminarProposal extends Model
 
     public function evaluator() {
         return $this->belongsTo('App\User','evaluator_id','id');
+    }
+
+    public function mahasiswa() {
+        return $this->belongsTo('App\Mahasiswa','mahasiswa_id','id');
     }
 }
