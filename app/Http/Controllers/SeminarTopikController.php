@@ -18,7 +18,8 @@ class SeminarTopikController extends Controller
                     [
                         "mahasiswa_id" => $mhs_id,
                         "schedule" => $request->get("date"),
-                        "creator_id" => $manajer->id
+                        "creator_id" => $manajer->id,
+                        "topik_id" => $mahasiswa->getApprovedTopic()->id
                     ]
                 );
                 $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK;
