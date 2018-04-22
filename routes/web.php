@@ -85,3 +85,7 @@ Route::post('/sidangtesis/nilai/{id}','SidangTesisController@nilaiSidangTesis');
 
 Route::get('/penjadwalan','PenjadwalanController@showPenjadwalanPage');
 Route::post('/penjadwalan','PenjadwalanController@penentuanJadwalBatch');
+
+Route::post('/sidangtesis/mahasiswa/edit/{id}', 'SidangTesisController@mahasiswaEdit');
+Route::get('/sidangtesis/download/{id}/{filename}', 'SidangTesisController@downloadFile');
+

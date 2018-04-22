@@ -47,7 +47,7 @@
                     </button>
                     </a>
                     @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
-                        <a href="/sidangtesis/create/{{$mahasiswa->user()->username}}">
+                        <a href="/sidangtesis/create/{{$mahasiswa->user()->username}}" class="mb-4">
                             <button class="btn btn-blue">
                                 Buat Pengajuan Sidang Tesis
                             </button>
@@ -58,7 +58,7 @@
             </div>
 
             <div class="col-md-8">
-                @if ($sidangTesis)
+            @if (!is_null($sidangTesis->waktu))
                     <div class="mb-2">
                         <h3>
                             Penilaian Sidang Tesis
