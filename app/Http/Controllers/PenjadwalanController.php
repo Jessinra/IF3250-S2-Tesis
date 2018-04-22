@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Mahasiswa;
+use App\Proposal;
 use App\SeminarProposal;
 use App\SeminarTesis;
 use App\SeminarTopik;
@@ -29,11 +30,20 @@ class PenjadwalanController extends Controller
                 $q->select('topik_id')->from('seminar_topiks');
             })->get();
 
+            $proposal = Proposal::where('status',1)->whereNotIn('id', function($q){
+                $q->select('proposal_id')->from('seminar_proposals');
+            })->get();
+//            $proposal = Proposal::where('status',0)->whereNotIn('id', function($q){
+//                $q->select('proposal_id')->from('seminar_proposals');
+//            })->get();
+
+            //error_log(count($proposal));
             $seminar_proposal = SeminarProposal::get();
             $seminar_tesis = SeminarTesis::get();
             $sidang_tesis = SidangTesis::get();
 
             return view('manajer.penjadwalan',['topik' => $topik,
+                                                    'proposal' => $proposal,
                                                     'seminar_topik' => $seminar_topik,
                                                     'seminar_proposal' => $seminar_proposal,
                                                     'seminar_tesis' => $seminar_tesis,
@@ -43,7 +53,7 @@ class PenjadwalanController extends Controller
         }
     }
 
-    public function penentuanJadwalBatch(Request $request){
+    public function penentuanJadwalSeminarTopikBatch(Request $request){
         $manajer= Auth::user()->isManajer();
         $data = $request->all();
         if($manajer) {
@@ -51,14 +61,11 @@ class PenjadwalanController extends Controller
             $topik_id = 0;
             $status = 0;
             foreach ($data as $key => $value){
-                error_log('key: '.$key.' val: '.$value.' mhs id: '.$id);
-
                 if(substr($key,0,2) === 'id') {
                     $id = $value;
                 }else if(substr($key,0,2) === 'tp' && substr($key,2) === $id){
                     $topik_id = $value;
                 }else if(substr($key,0,3) === 'sch') {
-                    error_log('tes');
                     if ($id === substr($key, 3)) {
                         $mahasiswa = Mahasiswa::find($id);
                         SeminarTopik::create(
@@ -71,7 +78,6 @@ class PenjadwalanController extends Controller
                         );
                         $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK;
                         $mahasiswa->save();
-                        error_log('success');
                     }
                     $status = 1;
                 }
@@ -81,23 +87,46 @@ class PenjadwalanController extends Controller
             }else{
                 return redirect('/penjadwalan');
             }
+        } else {
+            return abort(403);
+        }
+    }
 
-
-//            if($mahasiswa) {
-//                SeminarTopik::create(
-//                    [
-//                        "mahasiswa_id" => $mhs_id,
-//                        "schedule" => $request->get("date"),
-//                        "creator_id" => $manajer->id
-//                    ]
-//                );
-//                $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK;
-//                $mahasiswa->save();
-//                return redirect('/mahasiswa/control/'.$mahasiswa->user()->username);
-//            } else {
-//                return abort(400);
-//            }
-
+    public function penentuanJadwalSeminarProposalBatch(Request $request){
+        $manajer= Auth::user()->isManajer();
+        $data = $request->all();
+        if($manajer) {
+            $id = 0;
+            $status = 0;
+            $proposal_id = 0;
+            foreach ($data as $key => $value){
+                if(substr($key,0,2) === 'id') {
+                    $id = $value;
+                }else if(substr($key,0,2) === 'tp' && substr($key,2) === $id){
+                    $proposal_id = $value;
+                    error_log($proposal_id);
+                }else if(substr($key,0,3) === 'sch') {
+                    if ($id === substr($key, 3)) {
+                        $mahasiswa = Mahasiswa::find($id);
+                        SeminarProposal::create(
+                            [
+                                "mahasiswa_id" => $id,
+                                "schedule" => $request->get($key),
+                                "creator_id" => $manajer->id,
+                                "proposal_id" => $proposal_id
+                            ]
+                        );
+                        $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL;
+                        $mahasiswa->save();
+                    }
+                    $status = 1;
+                }
+            }
+            if($status === 0){
+                return abort(404);
+            }else{
+                return redirect('/penjadwalan');
+            }
         } else {
             return abort(403);
         }

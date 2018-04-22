@@ -84,7 +84,10 @@ Route::post('/sidangtesis/dosen/edit/{id}','SidangTesisController@dosenEdit');
 Route::post('/sidangtesis/nilai/{id}','SidangTesisController@nilaiSidangTesis');
 
 Route::get('/penjadwalan','PenjadwalanController@showPenjadwalanPage');
-Route::post('/penjadwalan','PenjadwalanController@penentuanJadwalBatch');
+Route::post('/penjadwalan/seminartopik','PenjadwalanController@penentuanJadwalSeminarTopikBatch');
+Route::post('/penjadwalan/seminarproposal','PenjadwalanController@penentuanJadwalSeminarProposalBatch');
+Route::post('/penjadwalan/seminartesis','PenjadwalanController@penentuanJadwalSeminarTesisBatch');
+Route::post('/penjadwalan/sidangtesis','PenjadwalanController@penentuanJadwalSidangTesisBatch');
 
 Route::post('/sidangtesis/mahasiswa/edit/{id}', 'SidangTesisController@mahasiswaEdit');
 Route::get('/sidangtesis/download/{id}/{filename}', 'SidangTesisController@downloadFile');
