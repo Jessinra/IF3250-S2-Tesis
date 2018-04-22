@@ -10,11 +10,15 @@ class SeminarTopik extends Model
     const ACTION_LULUS = 1;
     const ACTION_GAGAL = 0;
     protected $fillable = [
-        "mahasiswa_id","schedule","creator_id","passed","evaluator_id"
+        "mahasiswa_id","schedule","creator_id","passed","evaluator_id","topik_id"
     ];
 
     public function creator() {
         return $this->belongsTo('App\User','creator_id','id');
+    }
+
+    public function topik() {
+        return $this->belongsTo('App\TopicApproval', 'topik_id', 'topic_id');
     }
 
     public function evaluator() {
