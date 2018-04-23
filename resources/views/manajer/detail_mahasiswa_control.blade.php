@@ -9,6 +9,9 @@
     @php($proposal= $mahasiswa->proposal())
     @php($tesis = $mahasiswa->tesis())
     @php($topik = $mahasiswa->getApprovedTopic())
+    @if($tesis)
+    @php($sidangTesis = $tesis->sidangTesis())
+    @endif
     <div class="container detail-mahasiswa-control-page">
         <div class="row">
             <div class="col-md-4">
@@ -41,6 +44,228 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if(isset($sidangTesis))
+                    <div class="mb-2">
+                        <h3>
+                            Sidang Tesis
+                        </h3>
+                        <div>
+                            <form action="/sidangtesis/manajer/edit/{{$user->username}}" method="post" id="form-hsl-bimbingan" >
+                                {{csrf_field()}}
+                                <div class="form-group">
+                                    <div class="form-group row col-md-12">
+                                        <label for="name" class="col-md-4 col-form-label text-md-right text-center ">Nama<sup>*</sup></label>
+                                        <input type="text" name="name" id="name" class="col-md-8 form-control"  value="{{$user->name}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">NIM<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$user->username}}" required disabled>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+                                        <label for="nim" class="col-md-4 col-form-label text-md-right text-center">Opsi<sup>*</sup></label>
+                                        <input type="text" name="nim" id="nim" class="col-md-8 form-control" value="{{$tesis->keilmuan}}" required disabled>
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="judul" class="col-md-4 col-form-label text-md-right text-center ">Judul Tesis<sup>*</sup></label>
+                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->topic}}" required disabled>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-group row col-md-12">
+                                            <label for="semester-daftar" class="col-md-4 col-form-label text-md-right text-center">Terdaftar pada Semester<sup>*</sup></label>
+                                            <div class="display-flex align-items-center">
+                                            {{$sidangTesis->semesterTerdaftar}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row col-md-12">
+                                            <label for="tanggal_seminar_tesis" class="col-md-4 col-form-label text-md-right text-center">Waktu Seminar Tesis<sup>*</sup></label>
+                                            <div class="display-flex align-items-center">
+
+                                            @if($sidangTesis->jadwal_seminar)
+                                                   {{date("d-m-Y ", strtotime($sidangTesis->jadwal_seminar))}}
+                                                   @endif
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row col-md-12">
+                                            <label for="" class="col-md-4 col-form-label text-md-right text-center">Dokumen Evaluasi Diri</label>
+                                            <div class="display-flex align-items-center">
+                                            @if($sidangTesis->evaluasi_diri)
+                                                <a href="/sidangtesis/download/{{$sidangTesis->evaluasi_diri}}" class="text-color-blue">
+                                                    {{basename($sidangTesis->evaluasi_diri)}}
+                                                </a>
+                                            @else
+                                                Belum Mengumpulkan
+                                            @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row col-md-12">
+                                            <label for="" class="col-md-4 col-form-label text-md-right text-center">Draft Makalah</label>
+                                            <div class="display-flex align-items-center">
+
+                                            @if($sidangTesis->draft_makalah)
+                                                <a href="/sidangtesis/download/{{$sidangTesis->draft_makalah}}" class="text-color-blue">
+                                                    {{basename($sidangTesis->draft_makalah)}}
+                                                </a>
+                                            @else
+                                                Belum Mengumpulkan
+                                            @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-group row col-md-12">
+                                            <label for="" class="col-md-4 col-form-label text-md-right text-center">Laporan Tesis</label>
+                                            <div class="display-flex align-items-center">
+
+                                            @if($sidangTesis->laporan_tesis)
+                                                <a href="/sidangtesis/download/{{$sidangTesis->evaluasi_diri}}" class="text-color-blue">
+                                                    {{basename($sidangTesis->laporan_tesis)}}
+                                                </a>
+                                            @else
+                                                Belum Mengumpulkan
+                                            @endif
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row col-md-12">
+                                            <label for="" class="col-md-4 col-form-label text-md-right text-center">KSM Semester Terakhir</label>
+                                            <div class="display-flex align-items-center">
+
+                                            @if($sidangTesis->ksm_terakhir)
+                                                <a href="/sidangtesis/download/{{$sidangTesis->ksm_terakhir}}" class="text-color-blue">
+                                                    {{basename($sidangTesis->ksm_terakhir)}}
+                                                </a>
+                                            @else
+                                                Belum Mengumpulkan
+                                            @endif
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row col-md-12">
+                                            <label for="" class="col-md-4 col-form-label text-md-right text-center">Form Submit Paper</label>
+                                            <div class="display-flex align-items-center">
+                                            @if($sidangTesis->submit_paper)
+                                                <a href="/sidangtesis/download/{{$sidangTesis->submit_paper}}" class="text-color-blue">
+                                                    {{basename($sidangTesis->submit_paper)}}
+                                                </a>
+                                            @else
+                                                Belum Mengumpulkan
+                                            @endif
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tanggal
+                                        </label>
+                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$sidangTesis->tanggal}}" >
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
+                                            Waktu
+                                        </label>
+                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$sidangTesis->jam}}">
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Tempat
+                                        </label>
+                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$sidangTesis->tempat}}">
+                                    </div>
+                                    <div class="row  offset-md-2 justify-content-center">
+                                        <table width="300" class="table table-hover" style="width: 60%">
+                                            <tr>
+                                                <th colspan="3">
+                                                    Ajuan Dosen Penguji
+                                                </th>
+                                                <th>
+                                                    Status
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    {{$sidangTesis->ajuan_penguji_1->name}}
+                                                </td>
+                                                <td>
+                                                    {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji1) !!}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    {{$sidangTesis->ajuan_penguji_2->name}}
+                                                </td>
+                                                <td>
+                                                    {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji2) !!}
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="3">
+                                                    {{$sidangTesis->ajuan_penguji_3->name}}
+                                                </td>
+                                                <td>
+                                                    {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji3) !!}
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+
+                                    <div class="form-group row col-md-12">
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="dosen_penguji1"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                    @if($sidangTesis->dosen_penguji_1 == $item->id)
+                                                        selected
+                                                            @endif
+
+                                                >
+                                                    {{$item->user->name}}
+
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group row col-md-12">
+
+                                        <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
+                                            Usulan Dosen Penguji
+                                        </label>
+                                        <select name="dosen_penguji2"  class="form-control col-md-8" id="">
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                                <option value="{{$item->id}}"
+                                                        @if($sidangTesis->dosen_penguji_2 == $item->id)
+                                                        selected
+                                                        @endif
+                                                >
+                                                    {{$item->user->name}}
+
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="justify-content-center row">
+                                    <button class="btn btn-blue align-items-center display-flex">
+                                        <i class="material-icons pencil md-12 font-size-18-px">save</i>
+                                        Simpan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS || $mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                     @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
@@ -130,7 +355,7 @@
 
                                 </div>
                                 <div class="justify-content-center row">
-                                    <button class="btn btn-primary align-items-center display-flex">
+                                    <button class="btn btn-blue align-items-center display-flex">
                                         <i class="material-icons pencil md-12 font-size-18-px">save</i>
                                         Simpan
                                     </button>

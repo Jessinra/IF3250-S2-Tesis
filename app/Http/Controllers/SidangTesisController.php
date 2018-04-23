@@ -430,4 +430,24 @@ class SidangTesisController extends Controller
             return Storage::download($id.'/'.$filename);
         }
     }
+
+    public function manajerEdit(Request $request, $id){
+        $usr = User::where('username',$id)->first();
+//        echo $usr;
+        $mhs = $usr->isMahasiswa();
+        $tesis = $mhs->tesis();
+        $sidang = $tesis->sidangTesis();
+        if(Auth::user()->isManajer()) {
+            print_r($request->all());
+            $sidang->tanggal  = $request->get('haritgl');
+            $sidang->jam  = $request->get('waktu');
+            $sidang->tempat = $request->get('tempat');
+            $sidang->dosen_penguji_1 = $request->get('dosen_penguji1');
+            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');
+            $sidang->save();
+            return back();
+        }  else{
+            return abort(403);
+        }
+    }
 }
