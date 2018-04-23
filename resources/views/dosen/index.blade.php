@@ -223,26 +223,30 @@
 		        <div class="mt-5">
 		        	@foreach($mahasiswabimbingan as $item)
 			            @php($user = $item->user())
+			            @php($currenttime = \Carbon\Carbon::now()->toDateString())
 			            @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
-				        <div class="row">
-				        	<div class="col-md-auto text-center" style="border-right: 1px solid grey">
-				        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-				        		<div>{{$jadwalbimbingan->format('d F Y')}}</div>
-				        	</div>
-				        	<div class="col">
-				        		<div class="row mb-4">
-				        			<div class="col">
-				        				<h5><span class="badge badge-info">Bimbingan</span></h5>
-						        		<h4>{{$user->name}} - {{$user->username}}</h4>
-						        		<h5>
-						        			<span class="badge badge-primary">Tempat: Ruang dosen</span>
-						        			<span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
-						        		</h5>
-				        			</div>
-				        		</div>
-				        	</div>
-				        </div>
+			            @if($jadwalbimbingan >= $currenttime)
+					        <div class="row">
+					        	<div class="col-md-auto text-center" style="border-right: 1px solid grey">
+					        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+					        		<div>{{$jadwalbimbingan->format('d F Y')}}</div>
+					        	</div>
+					        	<div class="col">
+					        		<div class="row mb-4">
+					        			<div class="col">
+					        				<h5><span class="badge badge-info">Bimbingan</span></h5>
+							        		<h4>{{$user->name}} - {{$user->username}}</h4>
+							        		<h5>
+							        			<span class="badge badge-primary">Tempat: Ruang dosen</span>
+							        			<span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
+							        		</h5>
+					        			</div>
+					        		</div>
+					        	</div>
+					        </div>
+					    @endif
 			        @endforeach
+			        
 		        </div>
 		        
 			</div>

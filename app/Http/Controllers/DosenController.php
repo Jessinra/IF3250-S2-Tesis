@@ -6,6 +6,7 @@ use App\Mahasiswa;
 use App\User;
 use App\Dosen;
 use App\Thesis;
+use App\SeminarTesis;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +37,13 @@ class DosenController extends Controller
                     $mahasiswabimbingan->push($value);
                 }
             }
-            return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan]);
+            $mahasiswaseminar = [];
+            foreach ($mahasiswabimbingantemp as $key => $value) {
+                if (!is_null($value->tesis()->seminarTesis()->tanggal)) {
+                    $mahasiswaseminar->push($value);   
+                }
+            }
+            return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan, 'mahasiswaseminar' => $mahasiswaseminar]);
         } else {
             return abort(403);
         }
