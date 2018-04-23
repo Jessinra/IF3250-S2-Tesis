@@ -59,27 +59,77 @@
                                 </tr>
                                 <tr>
                                     <th>Penguji 1</th>
-                                    <td>{{$sidangTesis->nilai_dosen_penguji1_utama}}</td>
-                                    <td>{{$sidangTesis->nilai_dosen_penguji1_penting}}</td>
-                                    <td>{{$sidangTesis->nilai_dosen_penguji1_pendukung}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji_1_utama}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji_1_penting}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji_1_pendukung}}</td>
+                                    <td> 
+                                    <form action="/sidangtesis/nilai/penguji1/reset/{{$user->username}}" method="post">
+                                    {{csrf_field()}}
+                                    <button class="btn btn-blue align-items-center display-flex">
+                                        <i class="material-icons pencil md-12 font-size-18-px">delete</i>
+                                        Reset
+                                    </button>
+                                    </form>
                                 </tr>
                                 <tr>
                                     <th>Penguji 2</th>
-                                    <td>{{$sidangTesis->nilai_dosen_penguji2_utama}}</td>
-                                    <td>{{$sidangTesis->nilai_dosen_penguji2_penting}}</td>
-                                    <td>{{$sidangTesis->nilai_dosen_penguji2_pendukung}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji_2_utama}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji_2_penting}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji_2_pendukung}}</td>
+                                    <td>
+                                    <form action="/sidangtesis/nilai/penguji2/reset/{{$user->username}}" method="post">
+                                    {{csrf_field()}}
+                                    <button class="btn btn-blue align-items-center display-flex">
+                                        <i class="material-icons pencil md-12 font-size-18-px">delete</i>
+                                        Reset
+                                    </button>
+                                    </form>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Pembimbing</th>
                                     <td>{{$sidangTesis->nilai_dosen_pembimbing_utama}}</td>
                                     <td>{{$sidangTesis->nilai_dosen_pembimbing_penting}}</td>
                                     <td>{{$sidangTesis->nilai_dosen_pembimbing_pendukung}}</td>
+                                    <td>
+                                    <form action="/sidangtesis/nilai/pembimbing/reset/{{$user->username}}" method="post">
+                                    {{csrf_field()}}
+                                    <button class="btn btn-blue align-items-center display-flex">
+                                        <i class="material-icons pencil md-12 font-size-18-px">delete</i>
+                                        Reset
+                                    </button>
+                                    </form>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Dosen Tesis</th>
-                                    <td>{{$sidangTesis->nilai_kelas_utama}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_kelas_utama}}</td>
                                     <td>-</td>
                                     <td>-</td>
+                                    <td>
+                                    <form action="/sidangtesis/nilai/kelas/reset/{{$user->username}}" method="post">
+                                    {{csrf_field()}}
+                                    <button class="btn btn-blue align-items-center display-flex">
+                                        <i class="material-icons pencil md-12 font-size-18-px">delete</i>
+                                        Reset
+                                    </button>
+                                    </form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th> Nilai Akhir </th>
+                                    <td colspan="4">
+                                    <b>
+                                    @if($sidangTesis->nilai=="E")
+                                        <font color="red">
+                                        TIDAK LULUS 
+                                    @else
+                                        <font color="green"> 
+                                        {{$sidangTesis->nilai}}
+                                    @endif
+                                        </font>
+                                    </b>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

@@ -188,6 +188,78 @@ class SidangTesisController extends Controller
         }
     }
 
+    public function resetNilaiPenguji1(Request $request, $id) {
+        $manajer = Auth::User()->isManajer();
+        $usr = User::where('username',$id)->first();
+        echo $usr;
+        if (!$manajer)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $sidangtesis = $tesis->sidangTesis();
+        if(!$sidangtesis)
+            return abort(400);
+        else {
+            $sidangtesis->nilai_dosen_penguji_1_utama = NULL;
+            $sidangtesis->nilai_dosen_penguji_1_penting = NULL;
+            $sidangtesis->nilai_dosen_penguji_1_pendukung = NULL;
+            $sidangtesis->save();
+            return back();
+        }
+    }
+
+    public function resetNilaiPenguji2(Request $request, $id) {
+        $manajer = Auth::User()->isManajer();
+        $usr = User::where('username',$id)->first();
+        echo $usr;
+        if (!$manajer)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $sidangtesis = $tesis->sidangTesis();
+        if(!$sidangtesis)
+            return abort(400);
+        else {
+            $sidangtesis->nilai_dosen_penguji_2_utama = NULL;
+            $sidangtesis->nilai_dosen_penguji_2_penting = NULL;
+            $sidangtesis->nilai_dosen_penguji_2_pendukung = NULL;
+            $sidangtesis->save();
+            return back();
+        }
+    }
+    
+    public function resetNilaiPembimbing(Request $request, $id) {
+        $manajer = Auth::User()->isManajer();
+        $usr = User::where('username',$id)->first();
+        echo $usr;
+        if (!$manajer)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $sidangtesis = $tesis->sidangTesis();
+        if(!$sidangtesis)
+            return abort(400);
+        else {
+            $sidangtesis->nilai_dosen_pembimbing_utama = NULL;
+            $sidangtesis->nilai_dosen_pembimbing_penting = NULL;
+            $sidangtesis->nilai_dosen_pembimbing_pendukung = NULL;
+            $sidangtesis->save();
+            return back();
+        }
+    }
+
     private function countRata($nilai1, $nilai2, $nilai3) {
         $countArray = array();
         $count_nilai_K = 0;
@@ -279,7 +351,6 @@ class SidangTesisController extends Controller
             SidangTesis::create([
                 'thesis_id'=>$mhs->tesis()->id
             ]);
-
             return back();
         } else {
             return abort(403);

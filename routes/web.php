@@ -101,3 +101,9 @@ Route::post('/sidangtesis/mahasiswa/edit/{id}', 'SidangTesisController@mahasiswa
 Route::post('/sidangtesis/manajer/edit/{id}', 'SidangTesisController@manajerEdit');
 Route::get('/sidangtesis/download/{id}/{filename}', 'SidangTesisController@downloadFile');
 
+Route::post('/sidangtesis/nilai/penguji1/reset/{id}', 'SidangTesisController@resetNilaiPenguji1');
+Route::post('/sidangtesis/nilai/penguji2/reset/{id}', 'SidangTesisController@resetNilaiPenguji2');
+Route::post('/sidangtesis/nilai/pembimbing/reset/{id}', 'SidangTesisController@resetNilaiPembimbing');
+Route::post('/sidangtesis/nilai/kelas/reset/{id}', 'SidangTesisController@resetNilaiKelas');
+
+
