@@ -247,33 +247,37 @@
 						        </div>
 						    @endif
 						@endif
-						@if(!is_null($item->tesis()->seminarTesis()->hari))
-							@php($user = $item->user())
-				        	@php($seminar = $item->tesis()->seminarTesis())
-				        	@php($date = $seminar->hari)
-				        	@php($time = $seminar->waktu)
-				        	@php($datetimeString = $date." ".$time)
-				        	@php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
-				        	@if($jadwalseminar >= $currenttime)
-				        		<div class="row">
-						        	<div class="col-md-auto text-center" style="border-right: 1px solid grey">
-						        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-						        		<div>{{$jadwalseminar->format('d F Y')}}</div>
-						        	</div>
-						        	<div class="col">
-						        		<div class="row mb-4">
-						        			<div class="col">
-						        				<h5><span class="badge badge-success">Seminar Tesis</span></h5>
-								        		<h4>{{$user->name}} - {{$user->username}}</h4>
-								        		<h5>
-								        			<span class="badge badge-primary">Tempat: {{$seminar->tempat}}</span>
-								        			<span class="badge badge-primary">Waktu: {{$jadwalseminar->format('g:i A')}}</span>
-								        		</h5>
-						        			</div>
-						        		</div>
-						        	</div>
-						        </div>
-				        	@endif
+						@if(!is_null($item->tesis()))
+							@php($seminar = $item->tesis()->seminarTesis())
+							@if(!is_null($seminar))
+								@php($date = $seminar->hari)
+					        	@php($time = $seminar->waktu)
+								@if(!is_null($date) && !is_null($time))
+									@php($user = $item->user())
+						        	@php($datetimeString = $date." ".$time)
+						        	@php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
+						        	@if($jadwalseminar >= $currenttime)
+						        		<div class="row">
+								        	<div class="col-md-auto text-center" style="border-right: 1px solid grey">
+								        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+								        		<div>{{$jadwalseminar->format('d F Y')}}</div>
+								        	</div>
+								        	<div class="col">
+								        		<div class="row mb-4">
+								        			<div class="col">
+								        				<h5><span class="badge badge-success">Seminar Tesis</span></h5>
+										        		<h4>{{$user->name}} - {{$user->username}}</h4>
+										        		<h5>
+										        			<span class="badge badge-primary">Tempat: {{$seminar->tempat}}</span>
+										        			<span class="badge badge-primary">Waktu: {{$jadwalseminar->format('g:i A')}}</span>
+										        		</h5>
+								        			</div>
+								        		</div>
+								        	</div>
+								        </div>
+						        	@endif
+						        @endif
+					        @endif
 						@endif
 			        @endforeach
 		        </div>
