@@ -8,13 +8,14 @@ class Dosen extends Model
 {
     const STATUS_PENGUJI_2 = 1;
     const STATUS_PENGUJI_1 = 2;
-    const STATUS_PEMBIMBING = 3;
+    const STATUS_PEMBIMBING_2 = 3;
+    const STATUS_PEMBIMBING_1 = 4;
     protected $fillable= ['id'];
     public static function getListDosenPembimbing1() {
-        return Dosen::where('status','>=','0')->get();
+        return Dosen::where('status','>=',Dosen::STATUS_PEMBIMBING_1)->get();
     }
     public static function getListDosenPembimbing2() {
-        return Dosen::where('status','>=','0')->get();
+        return Dosen::where('status','>=',Dosen::STATUS_PEMBIMBING_2)->get();
     }
     public function user() {
         return $this->belongsTo('\App\User','id','id');
@@ -32,6 +33,6 @@ class Dosen extends Model
     }
 
     public static function getListDosenPenguji() {
-        return Dosen::where('status', '>=','0')->get();
+        return Dosen::where('status', '>=',Dosen::STATUS_PENGUJI_2)->get();
     }
 }

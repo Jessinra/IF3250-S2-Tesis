@@ -301,6 +301,9 @@ class SidangTesisController extends Controller
             $sidang->ajuan_penguji1 = $request->get('usulan_penguji1');
             $sidang->ajuan_penguji2 = $request->get('usulan_penguji2');
             $sidang->ajuan_penguji3 = $request->get('usulan_penguji3');
+            $sidang->approval_penguji1 = false;
+            $sidang->approval_penguji2 = false;
+            $sidang->approval_penguji3 = false;
             $sidang->save();
             return back();
         }  else{
@@ -425,6 +428,26 @@ class SidangTesisController extends Controller
         if($cusr->username == $id || $usr->isMahasiswa()->tesis()->dosen_pembimbing1 == $cusr->id || $usr->isMahasiswa()->tesis()->dosen_pembimbing2 == $cusr->id || $cusr->isManajer())
         {
             return Storage::download($id.'/'.$filename);
+        }
+    }
+
+    public function manajerEdit(Request $request, $id){
+        $usr = User::where('username',$id)->first();
+//        echo $usr;
+        $mhs = $usr->isMahasiswa();
+        $tesis = $mhs->tesis();
+        $sidang = $tesis->sidangTesis();
+        if(Auth::user()->isManajer()) {
+            print_r($request->all());
+            $sidang->tanggal  = $request->get('haritgl');
+            $sidang->jam  = $request->get('waktu');
+            $sidang->tempat = $request->get('tempat');
+            $sidang->dosen_penguji_1 = $request->get('dosen_penguji1');
+            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');
+            $sidang->save();
+            return back();
+        }  else{
+            return abort(403);
         }
     }
 }

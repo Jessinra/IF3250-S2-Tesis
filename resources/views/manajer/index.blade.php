@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-xs-6 col-lg-3 text-center">
-                <a href="/kontrolpanel" class="thumbnail">
+                <a href="/admin/panel" class="thumbnail">
                     <div>
                         <i class="material-icons icon-style">build</i>
                     </div>
