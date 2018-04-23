@@ -58,7 +58,6 @@
             </div>
 
             <div class="col-md-8">
-            <div>{{$mahasiswa->status}}</div>
         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
             @if($sidangTesis)
             @if (!is_null($sidangTesis->jam) && !is_null($sidangTesis->tempat))
