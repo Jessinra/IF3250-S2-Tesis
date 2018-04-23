@@ -8,7 +8,8 @@ class Dosen extends Model
 {
     const STATUS_PENGUJI_2 = 1;
     const STATUS_PENGUJI_1 = 2;
-    const STATUS_PEMBIMBING = 3;
+    const STATUS_PEMBIMBING_2 = 3;
+    const STATUS_PEMBIMBING_1 = 4;
     protected $fillable= ['id'];
     public static function getListDosenPembimbing1() {
         return Dosen::where('status','>=','0')->get();

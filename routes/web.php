@@ -27,6 +27,11 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('admin/panel', 'UserController@index');
 Route::get('user/control/{uname}', 'UserController@show');
 Route::post('user/control/{uname}', 'UserController@save');
+Route::post('addrole/dosen/{uname}', 'UserController@addDosenRole');
+Route::post('addrole/mahasiswa/{uname}', 'UserController@addMahasiswaRole');
+Route::post('addrole/manajer/{uname}', 'UserController@addManajerRole');
+Route::post('dosen/edit/{id}', 'DosenController@edit');
+
 
 Route::get('register','Auth\RegisterController@showForm')->name('register');
 Route::post('register','Auth\RegisterController@registerUser')->name('registerPost');

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mahasiswa;
+use App\Dosen;
+use App\Manajer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +21,8 @@ class UserController extends Controller
         $usr = User::where('username',$uname)->first();
         if($auth->id  == $usr->id || $auth->isManajer())  {
             return view('edit_user',['user'=>$usr]);
+        } else {
+            return abort(403);
         }
     }
 
@@ -42,7 +47,37 @@ class UserController extends Controller
             return view('edit_user',['user'=>$usr,'success'=>true]);
 //            $usr->name = $request->get('name');
 //            $usr->name = $request->get('name');
+        } else {
+            return abort(403);
         }
     }
+
+    public function addDosenRole(Request $request, $id) {
+        if(Auth::user()->isManajer()) {
+            Dosen::create(['id'=>$id]);
+            return back();
+
+        } else {
+            return abort(403);
+        }
+    }
+    public function addMahasiswaRole(Request $request, $id) {
+        if(Auth::user()->isManajer()) {
+            Mahasiswa::create(['id'=>$id]);
+            return back();
+        } else {
+            return abort(403);
+        }
+    }
+    public function addManajerRole(Request $request, $id) {
+        if(Auth::user()->isManajer()) {
+            Manajer::create(['id'=>$id]);
+            return back();
+
+        } else {
+            return abort(403);
+        }
+    }
+
 
 }

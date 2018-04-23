@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Register</div>
+                <div class="card-header">Edit User</div>
 
                 <div class="card-body">
                     <form method="POST" action="/user/control/{{$user->username}}">
@@ -105,6 +105,112 @@
                     </form>
                 </div>
             </div>
+            <br>
+            @if(Auth::user()->isManajer())
+            <div class="card">
+                <div class="card-header">Edit Mahasiswa</div>
+
+                <div class="card-body">
+                    @if($mhs = $user->isMahasiswa())
+                        <form action="/dosen/edit/{{$user->id}}" method="post">
+                            {{csrf_field()}}
+                            <div class="form-group row">
+                                <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
+                                <select class="mr-4" name="status" id="status" >
+                                    @foreach($mhs->statusString as $key=>$val)
+                                        <option value="{{$key}}">{{$key}} - {{$val}}</option>
+                                    @endforeach
+                                </select>
+                                <button class="btn btn-blue">Submit</button>
+                            </div>
+                        </form>
+                    @else
+                        <div class="">
+                            <div class="row justify-content-center">
+                        User ini tidak memiliki role Mahasiswa
+                            </div>
+                            <div class="row justify-content-center">
+                                <form action="/addrole/mahasiswa/{{$user->id}}" method="post">
+                                    {{csrf_field()}}
+                                <button class="btn btn-green justify-content-center align-items-center display-flex">
+                            <i class="material-icons font-size-18-px">add_circle</i>
+                            Tambah Role Mahasiswa
+                                </button>
+                        </button>
+                            </div>
+                    </div>
+                    @endif
+
+                </div>
+            </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">Edit Dosen</div>
+
+                    <div class="card-body">
+                        @if($dosen = $user->isDosen())
+                            User ini memiliki role Dosen
+
+                            <form action="/dosen/edit/{{$user->id}}" method="post">
+                                {{csrf_field()}}
+                                <div class="form-group row">
+                                    <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
+                                    <select class="mr-4" name="status" id="status" >
+                                        <option value="1" @if($dosen->status == 1) selected @endif>Dosen Penguji 2</option>
+                                        <option value="2" @if($dosen->status == 2) selected @endif>Dosen Penguji 1</option>
+                                        <option value="3" @if($dosen->status == 3) selected @endif>Dosen Pembimbing 2</option>
+                                        <option value="4" @if($dosen->status == 4) selected @endif>Dosen Pembimbing 1</option>
+                                    </select>
+                                    <button class="btn btn-blue">Submit</button>
+                                </div>
+                            </form>
+                        @else
+                            <div class="">
+                                <div class="row justify-content-center">
+                                    User ini tidak memiliki role Dosen
+                                </div>
+                                <div class="row justify-content-center">
+                                    <form action="/addrole/dosen/{{$user->id}}" method="post">
+                                        {{csrf_field()}}
+                                    <button class="btn btn-green justify-content-center align-items-center display-flex">
+                                        <i class="material-icons font-size-18-px">add_circle</i>
+                                        Tambah Role Dosen
+                                    </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">Edit Manajer</div>
+
+                    <div class="card-body">
+                        @if($user->isManajer())
+                            <div class="row justify-content-center">
+                            User ini telah memiliki role Manajer
+                            </div>
+                        @else
+                            <div class="">
+                                <div class="row justify-content-center">
+                                    User ini tidak memiliki role Manajer
+                                </div>
+                                <div class="row justify-content-center">
+                                    {{csrf_field()}}
+                                    <form action="/addrole/manajer/{{$user->id}}" method="post">
+                                        <button class="btn btn-green justify-content-center align-items-center display-flex">
+                                            <i class="material-icons font-size-18-px">add_circle</i>
+                                            Tambah Role Dosen
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+            @endif
         </div>
     </div>
 </div>

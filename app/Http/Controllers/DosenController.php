@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Mahasiswa;
 use App\User;
+use App\Dosen;
 use App\Thesis;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,9 +79,16 @@ class DosenController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit(Request $request, $id)
     {
-        //
+        if(Auth::user()->isManajer()) {
+            $usr = Dosen::find($id);
+            $usr->status = $request->get('status');
+            $usr->save();
+            return back();
+        } else {
+            return abort(403);
+        }
     }
 
     /**
