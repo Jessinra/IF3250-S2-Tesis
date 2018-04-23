@@ -27,7 +27,16 @@ class DosenController extends Controller
     {
         
         if(Auth::user()->isDosen()) {
-            return view('dosen.index');
+            $iddosen = Auth::user()->id;
+            $idmahasiswabimbingan = Thesis::where('dosen_pembimbing1', $iddosen)->orWhere('dosen_pembimbing2', $iddosen)->pluck('mahasiswa_id');
+            $mahasiswabimbingantemp = Mahasiswa::whereIn('id',$idmahasiswabimbingan)->get();
+            $mahasiswabimbingan = [];
+            foreach ($mahasiswabimbingantemp as $key => $value) {
+                if ($value->getHasilBimbingan() != []) {
+                    $mahasiswabimbingan->push($value);
+                }
+            }
+            return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan]);
         } else {
             return abort(403);
         }
