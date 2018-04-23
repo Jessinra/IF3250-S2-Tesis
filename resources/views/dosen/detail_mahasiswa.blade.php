@@ -58,7 +58,7 @@
             </div>
 
             <div class="col-md-8">
-            @if (!is_null($sidangTesis->waktu))
+            @if (!is_null($sidangTesis->jam) && !is_null($sidangTesis->tempat))
                     <div class="mb-2">
                         <h3>
                             Penilaian Sidang Tesis
@@ -67,9 +67,9 @@
                             <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                 <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                 &nbsp Kelulusan mahasiswa ditetapkan pada {{date("d M Y H:i:s", strtotime($sidangTopik->updated_at.'UTC'))}}
-
                             </div>
-                            @endif
+                            <fieldset disabled="disabled">
+                        @endif
                                 <div class="row justify-content-center">
 
                                     <form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
