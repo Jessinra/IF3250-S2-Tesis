@@ -44,6 +44,47 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if(isset($sidangTesis->dosen_penguji_1) && isset($sidangTesis->dosen_penguji_2))
+                    <div class="mb-2">
+                        <h3>
+                            Penilaian Sidang Tesis
+                        </h3>
+                        <div>
+                            <table class="table text-center">
+                                <tr>
+                                    <th></th>
+                                    <th>Substansi</th>
+                                    <th>Buku Tesis</th>
+                                    <th>Presentasi dan Tanya Jawab</th>
+                                </tr>
+                                <tr>
+                                    <th>Penguji 1</th>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji1_utama}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji1_penting}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji1_pendukung}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Penguji 2</th>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji2_utama}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji2_penting}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_penguji2_pendukung}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pembimbing</th>
+                                    <td>{{$sidangTesis->nilai_dosen_pembimbing_utama}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_pembimbing_penting}}</td>
+                                    <td>{{$sidangTesis->nilai_dosen_pembimbing_pendukung}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Dosen Tesis</th>
+                                    <td>{{$sidangTesis->nilai_kelas_utama}}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                @endif
                 @if(isset($sidangTesis))
                     <div class="mb-2">
                         <h3>
