@@ -223,7 +223,7 @@
 		        <div class="mt-5">
 		        	@php($currenttime = \Carbon\Carbon::now()->toDateString())
 		        	@foreach($mahasiswabimbingan as $item)
-		        		@if(!is_null($item->getHasilBimbingan()))
+		        		@if($item->getHasilBimbingan()->count() > 0)
 				            @php($user = $item->user())
 				            @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
 				            @if($jadwalbimbingan >= $currenttime)
