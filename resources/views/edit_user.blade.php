@@ -136,7 +136,7 @@
                             <i class="material-icons font-size-18-px">add_circle</i>
                             Tambah Role Mahasiswa
                                 </button>
-                        </button>
+                                </form>
                             </div>
                     </div>
                     @endif
