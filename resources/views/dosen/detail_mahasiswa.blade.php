@@ -58,6 +58,8 @@
             </div>
 
             <div class="col-md-8">
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+            @if($sidangTesis)
             @if (!is_null($sidangTesis->jam) && !is_null($sidangTesis->tempat))
                     <div class="mb-2">
                         <h3>
@@ -111,6 +113,8 @@
                                 </div>
                     </div>
                 @endif
+                @endif
+            @endif
                 @if($tesis->sidangTesis())
                     <div class="mb-2">
                         <h3>

@@ -156,7 +156,7 @@ class DosenController extends Controller
         $mhs = $user->isMahasiswa();
         if(!$mhs) return abort(400);
         if($mhs->tesis() && ($mhs->tesis()->dosen_pembimbing1 == $dosen->id || $mhs->tesis()->dosen_pembimbing2 == $dosen->id)) {
-            return view('dosen.detail_mahasiswa',['mahasiswa'=>$mhs, 'user'=>$user]);
+            return view('dosen.detail_mahasiswa',['mahasiswa'=>$mhs, 'user'=>$user, 'dosen'=>$dosen]);
         } else {
             return abort(403);
         }
