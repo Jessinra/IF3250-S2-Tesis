@@ -6,6 +6,7 @@ use App\Mahasiswa;
 use App\User;
 use App\Dosen;
 use App\Thesis;
+use App\SeminarTesis;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,11 @@ class DosenController extends Controller
     {
         
         if(Auth::user()->isDosen()) {
-            return view('dosen.index');
+            $iddosen = Auth::user()->id;
+            $idmahasiswabimbingan = Thesis::where('dosen_pembimbing1', $iddosen)->orWhere('dosen_pembimbing2', $iddosen)->pluck('mahasiswa_id');
+            $mahasiswabimbingan = Mahasiswa::whereIn('id',$idmahasiswabimbingan)->get();
+
+            return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan]);
         } else {
             return abort(403);
         }
@@ -140,7 +145,7 @@ class DosenController extends Controller
         $mhs = $user->isMahasiswa();
         if(!$mhs) return abort(400);
         if($mhs->tesis() && ($mhs->tesis()->dosen_pembimbing1 == $dosen->id || $mhs->tesis()->dosen_pembimbing2 == $dosen->id)) {
-            return view('dosen.detail_mahasiswa',['mahasiswa'=>$mhs, 'user'=>$user]);
+            return view('dosen.detail_mahasiswa',['mahasiswa'=>$mhs, 'user'=>$user, 'dosen'=>$dosen]);
         } else {
             return abort(403);
         }

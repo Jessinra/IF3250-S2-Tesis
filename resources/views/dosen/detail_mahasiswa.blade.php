@@ -58,18 +58,29 @@
             </div>
 
             <div class="col-md-8">
-            @if (!is_null($sidangTesis->jam) && !is_null($sidangTesis->tempat))
-                    <div class="mb-2">
-                        <h3>
-                            Penilaian Sidang Tesis
-                        </h3>
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
-                            <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
-                                <i class="material-icons font-size-18-px mr-2">check_circle</i>
-                                &nbsp Kelulusan mahasiswa ditetapkan pada {{date("d M Y H:i:s", strtotime($sidangTopik->updated_at.'UTC'))}}
-                            </div>
-                            <fieldset disabled="disabled">
-                        @endif
+            @if ($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                @if($sidangTesis)
+                @if (!is_null($sidangTesis->jam) && !is_null($sidangTesis->tempat))
+                        <div class="mb-2">
+                            <h3>
+                                Penilaian Sidang Tesis
+                            </h3>
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                                <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                    <i class="material-icons font-size-18-px mr-2">check_circle</i>
+                                    &nbsp Kelulusan mahasiswa ditetapkan pada {{date("d M Y H:i:s", strtotime($sidangTesis->updated_at.'UTC'))}}
+                                </div>
+                                <fieldset disabled="disabled">
+                            @endif
+                            @if($tesis->dosen_pembimbing1 == $dosen->id)
+                                @if(!is_null($sidangTesis->nilai_dosen_pembimbing_utama))
+                                    <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                                        <i class="material-icons font-size-18-px mr-2">check_circle</i>
+                                        Anda telah melakukan penilaian terhadap mahasiswa yang bersangkutan silakan hubungi Admin untuk perubahan nilai.
+                                    </div>
+                                    <fieldset disabled="disabled">
+                                @endif
+                            @endif
                                 <div class="row justify-content-center">
 
                                     <form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
@@ -79,27 +90,51 @@
                                             <label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
                                             <select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama"
                                             >
-                                                <option value="L">L</option>
-                                                <option value="M">M</option>
-                                                <option value="K">K</option>
+                                                @if($sidangTesis->nilai_dosen_pembimbing_utama == "L")
+                                                    <option selected ="selected" value="L">L</option>
+                                                @elseif ($sidangTesis->nilai_dosen_pembimbing_utama == "M")
+                                                    <option selected ="selected" value="M">M</option>
+                                                @elseif ($sidangTesis->nilai_dosen_pembimbing_utama == "K")
+                                                    <option selected ="selected" value="K">K</option>
+                                                @else
+                                                    <option value="L">L</option>
+                                                    <option value="M">M</option>
+                                                    <option value="K">K</option>
+                                                @endif
                                             </select>
                                         </div>
                                         <div class="form-group row width-full justify-content-center">
                                             <label for="scoreIndexPenting" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Penting</label>
                                             <select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
                                             >
-                                                <option value="L">L</option>
-                                                <option value="M">M</option>
-                                                <option value="K">K</option>
+                                                @if($sidangTesis->nilai_dosen_pembimbing_penting == "L")
+                                                    <option selected ="selected" value="L">L</option>
+                                                @elseif ($sidangTesis->nilai_dosen_pembimbing_penting == "M")
+                                                    <option selected ="selected" value="M">M</option>
+                                                @elseif ($sidangTesis->nilai_dosen_pembimbing_penting == "K")
+                                                    <option selected ="selected" value="K">K</option>
+                                                @else
+                                                    <option value="L">L</option>
+                                                    <option value="M">M</option>
+                                                    <option value="K">K</option>
+                                                @endif
                                             </select>
                                         </div>
                                         <div class="form-group row width-full justify-content-center">
                                             <label for="scoreIndexPendukung" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Pendukung</label>
                                             <select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
                                             >
-                                                <option value="L">L</option>
-                                                <option value="M">M</option>
-                                                <option value="K">K</option>
+                                                @if($sidangTesis->nilai_dosen_pembimbing_pendukung == "L")
+                                                    <option selected ="selected" value="L">L</option>
+                                                @elseif ($sidangTesis->nilai_dosen_pembimbing_pendukung == "M")
+                                                    <option selected ="selected" value="M">M</option>
+                                                @elseif ($sidangTesis->nilai_dosen_pembimbing_pendukung == "K")
+                                                    <option selected ="selected" value="K">K</option>
+                                                @else
+                                                    <option value="L">L</option>
+                                                    <option value="M">M</option>
+                                                    <option value="K">K</option>
+                                                @endif
                                             </select>
                                         </div>
                                         <div class="form-group row width-full justify-content-center">
@@ -110,6 +145,8 @@
                                     </form>
                                 </div>
                     </div>
+                    @endif
+                    @endif
                 @endif
                 @if($tesis->sidangTesis())
                     <div class="mb-2">

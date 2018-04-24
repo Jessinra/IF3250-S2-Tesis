@@ -66,7 +66,7 @@ Route::post('/proposal/upload','ProposalController@upload');
 Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
 Route::post('/proposal/penerimaan','ProposalController@approval')->name('proposal-penerimaan');
 
-Route::get('/dashboard/dosen','DosenController@showMahasiswa');
+// Route::get('/dashboard/dosen','DosenController@showMahasiswa');
 Route::get('/hasilbimbingan/mahasiswa','HasilBimbinganController@showListHasilBimbingan');
 Route::post('/hasilbimbingan/mahasiswa','HasilBimbinganController@getBimbinganID');
 Route::get('/hasilbimbingan/tambah','HasilBimbinganController@showFormTambahHasilBimbingan');
@@ -100,4 +100,10 @@ Route::post('/penjadwalan/sidangtesis','PenjadwalanController@penentuanJadwalSid
 Route::post('/sidangtesis/mahasiswa/edit/{id}', 'SidangTesisController@mahasiswaEdit');
 Route::post('/sidangtesis/manajer/edit/{id}', 'SidangTesisController@manajerEdit');
 Route::get('/sidangtesis/download/{id}/{filename}', 'SidangTesisController@downloadFile');
+
+Route::post('/sidangtesis/nilai/penguji1/reset/{id}', 'SidangTesisController@resetNilaiPenguji1');
+Route::post('/sidangtesis/nilai/penguji2/reset/{id}', 'SidangTesisController@resetNilaiPenguji2');
+Route::post('/sidangtesis/nilai/pembimbing/reset/{id}', 'SidangTesisController@resetNilaiPembimbing');
+Route::post('/sidangtesis/nilai/kelas/reset/{id}', 'SidangTesisController@resetNilaiKelas');
+
 
