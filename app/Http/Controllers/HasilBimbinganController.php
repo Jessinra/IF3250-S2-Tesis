@@ -73,9 +73,9 @@ class HasilBimbinganController extends Controller
             $data = $request->all();
 
             if($data['id'] < 0){
-                $user = Auth::user();
+
                 $id = -1 * $data['id'];
-                DB::table('hasil_bimbingans')->where('mahasiswa_id',$user->id)->where('id', $id)->delete();
+                DB::table('hasil_bimbingans')->where('thesis_id',$mahasiswa->tesis()->id)->where('id', $id)->delete();
                 return redirect('/hasilbimbingan/mahasiswa');
             }else{
                 Session::put('edit_id', $data['id']);
