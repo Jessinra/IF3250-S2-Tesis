@@ -43,6 +43,24 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="dropdown">
+                                    @if(Auth::user()->isManajer())
+                                    <a class="dropdown-item text-color-primary" href="/dashboard/manajer">
+                                        Dashboard Manajer
+                                    </a>
+                                    @endif
+                                        @if(Auth::user()->isDosen())
+                                            <a class="dropdown-item text-color-primary" href="/dashboard/dosen">
+                                                Dashboard Dosen
+                                            </a>
+                                        @endif
+                                        @if(Auth::user()->isMahasiswa())
+                                            <a class="dropdown-item text-color-primary" href="/dashboard/mahasiswa">
+                                                Dashboard Manajer
+                                            </a>
+                                        @endif
+                                        <a class="dropdown-item text-color-primary" href="/user/control/{{Auth::user()->username}}">
+                                            Edit User
+                                        </a>
                                     <a class="dropdown-item text-color-primary" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
