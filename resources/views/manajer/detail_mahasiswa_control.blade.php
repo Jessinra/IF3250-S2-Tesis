@@ -67,12 +67,12 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div id="topik" class="container tab-pane active"><br>
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK )
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                         <div class="control-seminar-topik mb-4">
                             <h3>
                                 Penilaian Seminar Topik
                             </h3>
-                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                                 <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                     <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                     &nbsp Kelulusan seminar topik ditetapkan oleh {{$seminarTopik->evaluator->name}}
@@ -107,14 +107,14 @@
                             @endif
                         </div>
                         @endif
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK)
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
 
                             <div class="control-jadwal mb-4">
                                 <h3>
                                     Penetapan Jadwal Seminar Topik
                                 </h3>
                                 <div>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK || $mahasiswa->status <= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                                         <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                             <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                             &nbsp Jadwal seminar topik ditetapkan oleh {{$seminarTopik->creator->name}}
@@ -253,7 +253,7 @@
                                 <h3>
                                     Penetapan Dosen Pembimbing
                                 </h3>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
                                     <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                         <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                         &nbsp Dosen pembimbing telah ditetapkan oleh {{$tesis->creator_admin->name}}
@@ -340,7 +340,7 @@
                                 <h3>
                                     Penilaian Seminar Proposal
                                 </h3>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
                                     <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                         <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                         &nbsp Kelulusan seminar proposal ditetapkan oleh {{$seminarTopik->evaluator->name}}
@@ -348,7 +348,7 @@
 
                                     </div>
                                     <fieldset disabled="disabled">
-                                        @elseif($mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
+                                        @elseif($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
                                             <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                                 <i class="material-icons font-size-18-px mr-2">cancel</i>
                                                 Seminar Topik dinyatakan tidak lulus oleh {{$seminarTopik->evaluator->name}}
@@ -393,7 +393,7 @@
                                 <h3>
                                     Penetapan Seminar Proposal
                                 </h3>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL || $mahasiswa->status < \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                                     <div class="alert alert-success row align-items-center">
                                         <i class="material-icons font-size-18-px">check_circle</i>
                                         &nbsp Jadwal seminar proposal ditetapkan oleh {{$seminarProposal->creator->name}}
@@ -585,6 +585,7 @@
                             </div>
                             <fieldset disabled="disabled">
                                 @endif
+                        @if($mahasiswa->status != \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                         <div>
                             <form action="/seminartesis/edit/{{$user->username}}" method="post">
                                 {{csrf_field()}}
@@ -662,6 +663,7 @@
                                 </div>
                             </form>
                         </div>
+                        @endif
                     </div>
                 @endif
                     </div>
@@ -790,7 +792,7 @@
                                                 <div class="form-group row col-md-12">
                                                     <label for="semester-daftar" class="col-md-4 col-form-label text-md-right text-center">Terdaftar pada Semester<sup>*</sup></label>
                                                     <div class="display-flex align-items-center">
-                                                    {{$sidangTesis->semesterTerdaftar}}
+                                                    {{$sidangTesis->semester_terdaftar}}
                                                     </div>
                                                 </div>
                                                 <div class="form-group row col-md-12">

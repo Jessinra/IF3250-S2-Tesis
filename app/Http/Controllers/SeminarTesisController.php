@@ -92,7 +92,7 @@ class SeminarTesisController extends Controller
                     $seminarteman = $request->get('check-seminar-dengan-teman');
 
                     $st->draft_laporan = isset($draft);
-                    $st->seminar_dengan_teman = isset($seminarteman);
+                    $st->sidang_dengan_teman = isset($seminarteman);
                     $st->save();
                 }
                 if($db1 || $db2) {

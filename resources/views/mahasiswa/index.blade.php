@@ -183,13 +183,13 @@
         </div>
 
         <div class="tab-content">
-        @if($mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+        @if($mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK and $mahasiswa->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
             <div id="step1" class="container tab-pane fade active show">
         @else
             <div id="step1" class="container tab-pane fade">
         @endif
                 <h3 class="header">Seminar Topik</h3>
-                @if ($mahasiswa->seminarTopik() and $mahasiswa->status!=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK and $mahasiswa->status!=\App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                @if ($mahasiswa->seminarTopik() and $mahasiswa->status!=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
                     <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{date("d M Y H:i:s", strtotime($mahasiswa->seminarTopik()->schedule.'UTC'))}}</span></h4></p>
                     
                 @endif
@@ -338,8 +338,8 @@
                     <a class="btn btn-blue" href="/topik/pengajuan" role="button">Ajukan Topik</a>
                 @endif
             </div>
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK &&
-            $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)
+        @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK &&
+            $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL) || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
             <div id="step2" class="container tab-pane fade active show">
         @else
             <div id="step2" class="container tab-pane fade">
@@ -372,14 +372,14 @@
                     </div>
                     <br>
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Edit Proposal</a>
-                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                     <p>Anda dapat mengunggah proposal topik tesis.</p>
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Unggah Proposal</a>
                 @endif
             </div>
 
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL &&
-            $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+        @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL &&
+            $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
             <div id="step3" class="container tab-pane fade active show">
         @else
             <div id="step3" class="container tab-pane fade">

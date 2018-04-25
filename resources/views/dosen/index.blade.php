@@ -348,8 +348,10 @@
 								<div class="col">
 									<div class="row mb-4">
 										<div class="col">
+											@php($tsis = App\Thesis::where('id', $st->thesis_id)->first())
+											@php($useruji = App\Mahasiswa::where('id', $tsis->mahasiswa_id)->first()->user())
 											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
-											<h4>{{$user->name}} - {{$user->username}}</h4>
+											<h4>{{$useruji->name}} - {{$useruji->username}}</h4>
 											<h6>
 												Topik: {{$st->tesis->topic}} <br>
 												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
@@ -382,8 +384,10 @@
 								<div class="col">
 									<div class="row mb-4">
 										<div class="col">
-											<h5><span class="badge badge-sucess">Sidang Tesis</span></h5>
-											<h4>{{$user->name}} - {{$user->username}}</h4>
+											@php($tsis2 = App\Thesis::where('id', $st->thesis_id)->first())
+											@php($useruji2 = App\Mahasiswa::where('id', $tsis2->mahasiswa_id)->first()->user())
+											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
+											<h4>{{$useruji2->name}} - {{$useruji2->username}}</h4>
 											<h6>
 												Topik: {{$st->tesis->topic}} <br>
 												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
