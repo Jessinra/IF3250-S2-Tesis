@@ -112,13 +112,13 @@
 
                 <div class="card-body">
                     @if($mhs = $user->isMahasiswa())
-                        <form action="/dosen/edit/{{$user->id}}" method="post">
+                        <form action="/mahasiswa/edit/{{$user->id}}" method="post">
                             {{csrf_field()}}
                             <div class="form-group row">
                                 <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
                                 <select class="mr-4" name="status" id="status" >
                                     @foreach($mhs->statusString as $key=>$val)
-                                        <option value="{{$key}}">{{$key}} - {{$val}}</option>
+                                        <option value="{{$key}}" @if($mhs->status == $key) selected @endif >{{$key}} - {{$val}}</option>
                                     @endforeach
                                 </select>
                                 <button class="btn btn-blue">Submit</button>
