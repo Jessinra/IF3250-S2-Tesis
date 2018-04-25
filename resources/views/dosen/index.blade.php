@@ -306,6 +306,74 @@
 						@endif
 						@endif
 			        @endforeach
+					@foreach($dosen->upcomingSidangAsPenguji1 as $st)
+						@if($st->tanggal.'T'.$st->waktu >= $currenttime)
+							<div class="row">
+								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
+									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+								</div>
+								<div class="col">
+									<div class="row mb-4">
+										<div class="col">
+											<h5><span class="badge badge-warning text-color-white">Sidang Tesis</span></h5>
+											<h4>{{$user->name}} - {{$user->username}}</h4>
+											<h6>
+												Topik: {{$st->tesis->topic}} <br>
+												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+												<br>
+												@if($st->tesis->dosen_pembimbing_2)
+												Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+												@endif
+												<br>
+												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+												<br>
+												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+											</h6>
+											<h5>
+												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+											</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						@endif
+					@endforeach
+					@foreach($dosen->upcomingSidangAsPenguji2 as $st)
+						@if($st->tanggal.'T'.$st->waktu >= $currenttime)
+							<div class="row">
+								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
+									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+								</div>
+								<div class="col">
+									<div class="row mb-4">
+										<div class="col">
+											<h5><span class="badge badge-warning text-color-white">Sidang Tesis</span></h5>
+											<h4>{{$user->name}} - {{$user->username}}</h4>
+											<h6>
+												Topik: {{$st->tesis->topic}} <br>
+												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+												<br>
+												@if($st->tesis->dosen_pembimbing_2)
+													Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+												@endif
+												<br>
+												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+												<br>
+												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+											</h6>
+											<h5>
+												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+											</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						@endif
+					@endforeach
 		        </div>
 
 		        

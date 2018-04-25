@@ -37,11 +37,11 @@ class Dosen extends Model
     }
 
     public function upcomingSidangAsPenguji1() {
-        return $this->hasMany('App\SidangTesis','dosen_penguji1','id');
+        return $this->hasMany('App\SidangTesis','dosen_penguji_1','id');
     }
 
     public function upcomingSidangAsPenguji2() {
-        return $this->hasMany('App\SidangTesis','dosen_penguji2','id');
+        return $this->hasMany('App\SidangTesis','dosen_penguji_2','id');
     }
 
     public function sidangTesisNeedApproval() {
