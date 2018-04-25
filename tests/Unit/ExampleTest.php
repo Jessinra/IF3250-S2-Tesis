@@ -25,7 +25,7 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
 
         $username = 'admin';
-        $password = 'admin';
+        $password = 'admin123';
         Session::start();
 
         $response = $this->followingRedirects()->call('POST', '/login', [
