@@ -143,7 +143,6 @@
                             </table>
                         </div>
                     </div>
-                    </fieldset>
                 @endif
                 @if(isset($sidangTesis))
                     <div class="mb-2">
@@ -366,6 +365,7 @@
                             </form>
                         </div>
                     </div>
+                    </fieldset>
                 @endif
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS || $mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
