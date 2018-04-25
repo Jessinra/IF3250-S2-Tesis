@@ -189,7 +189,7 @@
             <div id="step1" class="container tab-pane fade">
         @endif
                 <h3 class="header">Seminar Topik</h3>
-                @if ($mahasiswa->seminarTopik() and $mahasiswa->status!=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
+                @if ($mahasiswa->seminarTopik() and $mahasiswa->status!=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK and $mahasiswa->status!=\App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                     <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{date("d M Y H:i:s", strtotime($mahasiswa->seminarTopik()->schedule.'UTC'))}}</span></h4></p>
                     
                 @endif
@@ -348,7 +348,8 @@
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL)
                     <p>Proposal telah disetujui.</p>
                     @php($seminar_proposal = $mahasiswa->seminarProposal())
-                    <p>Jadwal seminar: {{$seminar_proposal->schedule}}</p>
+                    <p>Jadwal seminar: <h4><span class="badge badge-info">{{date("d M Y H:i:s", strtotime($seminar_proposal->schedule.'UTC'))}}
+                        </span></h4></p>
                     @php($proposal = $mahasiswa->proposal())
                     <div class="row col-md-12 flex-wrap-nowrap proposal-container">
                         <div class="row align-items-center justify-content-start file-name  width-full">
