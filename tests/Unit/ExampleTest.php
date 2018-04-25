@@ -27,6 +27,16 @@ class ExampleTest extends TestCase
         $username = 'admin';
         $password = 'admin';
         Session::start();
+
+        $response = $this->followingRedirects()->call('POST', '/login', [
+            'username' => 'a',
+            'password' => 'a',
+            '_token' => csrf_token()
+        ]);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('auth.login', $response->original->name());
+
         $response = $this->followingRedirects()->call('POST', '/login', [
             'username' => $username,
             'password' => $password,
