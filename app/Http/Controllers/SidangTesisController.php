@@ -524,4 +524,19 @@ class SidangTesisController extends Controller
             return abort(403);
         }
     }
+    public function dosenPengujiApprove(Request $request, $id) {
+        $usr = Auth::user();
+        $st = SidangTesis::find($id);
+        if($st->ajuan_penguji1 == $usr->id) {
+            $st->approval_penguji1 = true;
+        } else if($st->ajuan_penguji2 == $usr->id) {
+            $st->approval_penguji2 = true;
+        } else if($st->ajuan_penguji3 == $usr->id) {
+            $st->approval_penguji3 = true;
+        } else {
+            return abort(403);
+        }
+        $st->save();
+        return back();
+    }
 }

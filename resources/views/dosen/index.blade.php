@@ -14,8 +14,8 @@
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="container"> 
-
-
+		@php($cuser = Auth::user())
+		@php($dosen = $cuser->isDosen())
 	  	<div class="row">
 			<div class="col col-md-6">
 			  	<!-- Nav tabs -->
@@ -112,7 +112,85 @@
 						      			</div>
 						      			<div id="collapseTwo" class="collapse" data-parent="#accordion">
 						        			<div class="card-body">
-						        				<p>tes</p>
+
+												@foreach($dosen->sidangTesisNeedApproval() as $st)
+													@if(($st->ajuan_penguji1 == $cuser->id  && !$st->approval_penguji1) || ($st->ajuan_penguji2 == $cuser->id  && !$st->approval_penguji2) || ($st->ajuan_penguji3 == $cuser->id  && !$st->approval_penguji3))
+													@php($tesis = $st->tesis)
+													@php($mhs = $tesis->mahasiswa)
+													@php($usr = $mhs->user())
+													<div class="border border-color-black pt-1 pr-1 pl-1 pb-1">
+														<div class="row">
+															<table class="col-md-8">
+																<tr>
+																	<td>
+																		Mahasiswa
+																	</td>
+																	<td>
+																		:
+																	</td>
+																	<td>
+																		{{$usr->name}}
+																	</td>
+																</tr>
+															<tr>
+																<td>
+																	Jadwal
+																</td>
+																<td>
+																	:
+																</td>
+																<td>
+																	{{date("d M Y H:iA", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}
+																</td>
+															</tr>
+
+															<tr>
+																<td>
+																	Tempat
+																</td>
+																<td>
+																	:
+																</td>
+																<td>
+																  {{$st->tempat}}
+																</td>
+															</tr>
+																<tr>
+																	<td>
+																		Judul Tesis
+																	</td>
+																	<td>
+																		:
+																	</td>
+																	<td>
+																		{{$tesis->topic}}
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Dosen Pembimbing
+																	</td>
+																	<td>
+																		:
+																	</td>
+																	<td>
+																		{{$tesis->dosen_pembimbing_1->user->name}}
+																	</td>
+																</tr>
+															</table>
+															<div class="display-flex justify-content-start align-items-center">
+																<form action="/sidangtesis/dosenuji/approve/{{$st->id}}" method="post">
+																	{{csrf_field()}}
+																	<input type="hidden" value="{{$cuser->id}}">
+																	<button class="btn btn-blue">
+																		Approve
+																	</button>
+																</form>
+															</div>
+														</div>
+													</div>
+													@endif
+												@endforeach
 												{{--<div class="row justify-content-center">--}}
 									                {{--<table class="mahasiswa-control-table">--}}
 									                    {{--<tr class="text-center">--}}
@@ -151,54 +229,6 @@
 						        			</div>
 								      	</div>
 								    </div>
-
-						  			<div class="card">
-									    <div class="card-header">
-									        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-									        	Mahasiswa Kelas Tesis
-									    	</a>
-									    </div>
-						      			<div id="collapseThree" class="collapse" data-parent="#accordion">
-						        			<div class="card-body">
-						        				<p>tes</p>
-												{{--<div class="row justify-content-center">--}}
-									                {{--<table class="mahasiswa-control-table">--}}
-									                    {{--<tr class="text-center">--}}
-									                        {{--<th>--}}
-									                            {{--No--}}
-									                        {{--</th>--}}
-									                        {{--<th>--}}
-									                            {{--Nama--}}
-									                        {{--</th>--}}
-									                        {{--<th>--}}
-									                            {{--NIM--}}
-									                        {{--</th>--}}
-									                        {{--<th>--}}
-									                            {{--Status--}}
-									                        {{--</th>--}}
-									                    {{--</tr>--}}
-									                {{--@foreach($mahasiswauji as $item)--}}
-									                    {{--@php($user = $item->user())--}}
-									                    {{--<tr class="text-center">--}}
-									                    {{--<td>--}}
-									                        {{--{{$loop->iteration}}--}}
-									                    {{--</td>--}}
-									                        {{--<td>--}}
-									                            {{--{{$user->name}}--}}
-									                        {{--</td>--}}
-									                        {{--<td>--}}
-									                            {{--{{$user->username}}--}}
-									                        {{--</td>--}}
-									                        {{--<td>--}}
-									                            {{--{{$item->getStatusString()}}--}}
-									                        {{--</td>--}}
-									                    {{--</tr>--}}
-									                {{--@endforeach--}}
-									                {{--</table>--}}
-									            {{--</div>--}}
-						        			</div>
-						      			</div>
-						    		</div>
 						  		</div>
 
 					  		<!-- </div> -->
@@ -226,9 +256,9 @@
 				            @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
 				            @if($jadwalbimbingan >= $currenttime)
 						        <div class="row">
-						        	<div class="col-md-auto text-center" style="border-right: 1px solid grey">
+						        	<div class="col-md-4 text-center" style="border-right: 1px solid grey">
 						        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-						        		<div>{{$jadwalbimbingan->format('d F Y')}}</div>
+						        		<div>{{$jadwalbimbingan->format('d M Y')}}</div>
 						        	</div>
 						        	<div class="col">
 						        		<div class="row mb-4">
@@ -255,9 +285,9 @@
 				        	@php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
 				        	@if($jadwalseminar >= $currenttime)
 				        		<div class="row">
-						        	<div class="col-md-auto text-center" style="border-right: 1px solid grey">
+						        	<div class="col-md-4 text-center" style="border-right: 1px solid grey">
 						        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-						        		<div>{{$jadwalseminar->format('d F Y')}}</div>
+						        		<div>{{$jadwalseminar->format('d M Y')}}</div>
 						        	</div>
 						        	<div class="col">
 						        		<div class="row mb-4">
@@ -276,7 +306,76 @@
 						@endif
 						@endif
 			        @endforeach
+					@foreach($dosen->upcomingSidangAsPenguji1 as $st)
+						@if($st->tanggal.'T'.$st->waktu >= $currenttime)
+							<div class="row">
+								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
+									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+								</div>
+								<div class="col">
+									<div class="row mb-4">
+										<div class="col">
+											<h5><span class="badge badge-warning text-color-white">Sidang Tesis</span></h5>
+											<h4>{{$user->name}} - {{$user->username}}</h4>
+											<h6>
+												Topik: {{$st->tesis->topic}} <br>
+												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+												<br>
+												@if($st->tesis->dosen_pembimbing_2)
+												Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+												@endif
+												<br>
+												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+												<br>
+												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+											</h6>
+											<h5>
+												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+											</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						@endif
+					@endforeach
+					@foreach($dosen->upcomingSidangAsPenguji2 as $st)
+						@if($st->tanggal.'T'.$st->waktu >= $currenttime)
+							<div class="row">
+								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
+									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+								</div>
+								<div class="col">
+									<div class="row mb-4">
+										<div class="col">
+											<h5><span class="badge badge-warning text-color-white">Sidang Tesis</span></h5>
+											<h4>{{$user->name}} - {{$user->username}}</h4>
+											<h6>
+												Topik: {{$st->tesis->topic}} <br>
+												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+												<br>
+												@if($st->tesis->dosen_pembimbing_2)
+													Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+												@endif
+												<br>
+												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+												<br>
+												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+											</h6>
+											<h5>
+												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+											</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						@endif
+					@endforeach
 		        </div>
+
 		        
 			</div>
 		</div>
