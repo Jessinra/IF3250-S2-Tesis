@@ -66,9 +66,16 @@ class MahasiswaController extends Controller
      * @param  \App\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit(Request $request, $id)
     {
-        //
+        if(Auth::user()->isManajer()) {
+            $usr = Mahasiswa::find($id);
+            $usr->status = $request->get('status');
+            $usr->save();
+            return back();
+        } else {
+            return abort(403);
+        }
     }
 
     /**
