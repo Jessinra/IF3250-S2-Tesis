@@ -14,31 +14,34 @@
 </script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class="container"> 
-      	<h2>Dashboard</h2>
 
-	  	<br>
 
 	  	<div class="row">
 			<div class="col col-md-6">
 			  	<!-- Nav tabs -->
-			  	<ul class="nav nav-tabs" role="tablist">
+			  	<!-- <ul class="nav nav-tabs" role="tablist">
 			    	<li class="nav-item">
 			      		<a class="nav-link active" data-toggle="tab" href="#home">Daftar Mahasiswa</a>
 			    	</li>
 			    	<li class="nav-item">
 			      		<a class="nav-link" data-toggle="tab" href="#menu1">Input Nilai Dosen Tesis</a>
 			    	</li>
-			    	<!-- <li class="nav-item">
+			    	<li class="nav-item">
 			      		<a class="nav-link" data-toggle="tab" href="#menu2">Input Nilai</a>
-			    	</li> -->
-			  	</ul>
+			    	</li>
+			  	</ul> -->
+
+
 
 	  			<!-- Tab panes -->
 	  	
-			  	<div class="tab-content">
-			    	<div id="home" class="container tab-pane active"><br>
-			      		<div class="row">
-					  		<div class="col">
+			  	<!-- <div class="tab-content"> -->
+			    	<!-- <div id="home" class="container tab-pane active"><br> -->
+			      		<!-- <div class="row">
+					  		<div class="col"> -->
+					  			<h3>Daftar Mahasiswa</h3>
+					  			
+					  			<hr/>
 					  			<div id="accordion">
 						    		<div class="card">
 						      			<div class="card-header">
@@ -95,6 +98,7 @@
 										                    </tr>
 										                @endforeach
 										            </table>
+										            <a class="btn btn-blue" href="/hasilbimbingan" role="button">Lihat Seluruh Jadwal Bimbingan</a>
 							                	</div>
 						        			</div>
 						      			</div>
@@ -197,28 +201,22 @@
 						    		</div>
 						  		</div>
 
-					  		</div>
+					  		<!-- </div> -->
 
-					</div>
-			    </div>
-
-			    <div id="menu1" class="container tab-pane fade"><br>
-			      	<h3>Input nilai Dosen Tesis</h3>
-			    </div>
-
-			    <!-- <div id="menu2" class="container tab-pane fade"><br>
-			      	<h3>Input Nilai</h3>
-			      	<p>Input nilai sidang tesis.</p>
-			    </div> -->
+					<!-- </div> -->
+			    <!-- </div> -->
 			    
-			  	</div>
+			  	<!-- </div> -->
+			
 			</div>
 			<div class="col col-md-6">
 				<!-- <h2>Jadwal Dosen</h2> -->
-				<a class="btn btn-outline-dark" href="/hasilbimbingan" role="button">Lihat Seluruh Jadwal Bimbingan</a>
+				
 				
 				<!-- <h3>Jadwal</h3>
 		        <hr/> -->
+		        <h3>Jadwal</h3>
+		        <hr/>
 		        
 		        <div class="mt-5">
 		        	@php($currenttime = \Carbon\Carbon::now()->toDateString())
