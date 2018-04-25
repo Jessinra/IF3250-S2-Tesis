@@ -84,12 +84,13 @@ class RegisterController extends Controller
         $data = $request->all();
         $username = $data['username'];
         if(User::where('username',$username)->count()>0) {
-            echo "User already exist";
+            echo '<div class="alert alert-warning alert-dismissible fade show text-center">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Warning!</strong> This user already exist.
+                  </div>';
+            return view('auth.register');
         } else {
-            echo "Creating user...<br>";
            $user = $this->create($data);
-           echo "User: ".$user->username." created...<br>";
-           echo "Creating Model";
            $role = $data['role'];
            if($role == User::ROLE_DOSEN) {
                Dosen::create(['id'=>$user->id]);
@@ -98,6 +99,7 @@ class RegisterController extends Controller
            } else if($role == User::ROLE_MANAJER) {
                Manajer::create(['id'=>$user->id]);
            }
+           return view('manajer.index');
         }
 //        echo $id;
 

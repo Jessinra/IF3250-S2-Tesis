@@ -44,6 +44,7 @@
                             </tr>
                             </thead>
 
+                            @php($count = 0)
                             @foreach($topik as $item)
                                 <tr class="text-center">
                                     <td>
@@ -64,11 +65,12 @@
                                         <input type="datetime-local" id="sch{{$item->topic->mahasiswa_id}}" name="sch{{$item->topic->mahasiswa_id}}" class="form-control col-lg-12 " value="" onkeyup="updateSaveButton()">
                                     </td>
                                 </tr>
+                                @php($count++)
                             @endforeach
                             @foreach($seminar_topik as $item)
                                 <tr class="text-center">
                                     <td>
-                                        {{$loop->iteration}}
+                                        {{$loop->iteration + $count}}
                                     </td>
                                     <td>
                                         {{$item->topik->topic->mahasiswa->user()->username}}
@@ -116,7 +118,7 @@
                                 <th></th>
                             </tr>
                             </thead>
-
+                            @php($count = 0)
                             @foreach($proposal as $item)
                                 <tr class="text-center">
                                     <td>
@@ -134,11 +136,12 @@
                                         <input type="datetime-local" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="form-control col-lg-12 " value="" onkeyup="updateSaveButton2()">
                                     </td>
                                 </tr>
+                                @php($count++)
                             @endforeach
                             @foreach($seminar_proposal as $item)
                                 <tr class="text-center">
                                     <td>
-                                        {{$loop->iteration}}
+                                        {{$loop->iteration + $count}}
                                     </td>
                                     <td>
                                         {{$item->mahasiswa->user()->username}}
