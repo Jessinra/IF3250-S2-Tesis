@@ -7,6 +7,7 @@ use App\Thesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Mahasiswa;
 use Illuminate\Support\Facades\Storage;
 
 class SidangTesisController extends Controller
@@ -514,11 +515,28 @@ class SidangTesisController extends Controller
             $sidang->jam  = $request->get('waktu');
             $sidang->tempat = $request->get('tempat');
             $sidang->dosen_penguji_1 = $request->get('dosen_penguji1');
-            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');
+            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');            
             $sidang->save();
+            $mhs->status = Mahasiswa::STATUS_SIAP_SIDANG_TESIS;
+            $mhs->save();
             return back();
         }  else{
             return abort(403);
         }
+    }
+    public function dosenPengujiApprove(Request $request, $id) {
+        $usr = Auth::user();
+        $st = SidangTesis::find($id);
+        if($st->ajuan_penguji1 == $usr->id) {
+            $st->approval_penguji1 = true;
+        } else if($st->ajuan_penguji2 == $usr->id) {
+            $st->approval_penguji2 = true;
+        } else if($st->ajuan_penguji3 == $usr->id) {
+            $st->approval_penguji3 = true;
+        } else {
+            return abort(403);
+        }
+        $st->save();
+        return back();
     }
 }

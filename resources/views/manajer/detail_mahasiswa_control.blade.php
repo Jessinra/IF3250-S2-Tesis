@@ -44,6 +44,15 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if($mahasiswa->status == \App\Mahasiswa::STATUS_LULUS)
+                    <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+                        <i class="material-icons font-size-18-px mr-4">check_circle</i>
+                            <span>
+                            Kelulusan Mahasiswa telah ditetapkan oleh pada {{date("d M Y H:i:s", strtotime($sidangTesis->updated_at.'UTC'))}}
+                            </span>
+                    </div>
+                    <fieldset disabled="disabled">
+                @endif
                 @if(isset($sidangTesis->dosen_penguji_1) && isset($sidangTesis->dosen_penguji_2))
                     <div class="mb-2">
                         <h3>
@@ -310,7 +319,7 @@
 
                                     <div class="form-group row col-md-12">
                                         <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
-                                            Usulan Dosen Penguji
+                                            Dosen Penguji 1
                                         </label>
                                         <select name="dosen_penguji1"  class="form-control col-md-8" id="">
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
@@ -329,7 +338,7 @@
                                     <div class="form-group row col-md-12">
 
                                         <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
-                                            Usulan Dosen Penguji
+                                            Dosen Penguji 2
                                         </label>
                                         <select name="dosen_penguji2"  class="form-control col-md-8" id="">
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
@@ -356,6 +365,7 @@
                             </form>
                         </div>
                     </div>
+                    </fieldset>
                 @endif
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS || $mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)

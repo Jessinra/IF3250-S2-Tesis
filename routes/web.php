@@ -105,5 +105,6 @@ Route::post('/sidangtesis/nilai/penguji1/reset/{id}', 'SidangTesisController@res
 Route::post('/sidangtesis/nilai/penguji2/reset/{id}', 'SidangTesisController@resetNilaiPenguji2');
 Route::post('/sidangtesis/nilai/pembimbing/reset/{id}', 'SidangTesisController@resetNilaiPembimbing');
 Route::post('/sidangtesis/nilai/kelas/reset/{id}', 'SidangTesisController@resetNilaiKelas');
+Route::post('/sidangtesis/dosenuji/approve/{id}', 'SidangTesisController@dosenPengujiApprove');
 
 
