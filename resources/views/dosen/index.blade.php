@@ -247,6 +247,7 @@
 						        </div>
 						    @endif
 						@endif
+						@if($item->tesis()->seminarTesis())
 						@if(!is_null($item->tesis()->seminarTesis()->hari))
 							@php($user = $item->user())
 				        	@php($seminar = $item->tesis()->seminarTesis())
@@ -274,6 +275,7 @@
 						        	</div>
 						        </div>
 				        	@endif
+						@endif
 						@endif
 			        @endforeach
 		        </div>
