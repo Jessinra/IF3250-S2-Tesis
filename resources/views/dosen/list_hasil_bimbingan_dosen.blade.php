@@ -49,6 +49,7 @@
                     <th></th>
                 </tr>
                 @foreach($hsl_bimbingan as $item)
+                @if($item->thesis)
                     <tr class="text-center">
                         <td>
                             {{$loop->iteration}}
@@ -121,6 +122,7 @@
                             </div>
                         </td>
                     </tr>
+                    @endif
                 @endforeach
             </table>
         </div>
@@ -142,11 +144,17 @@
         }
 
         for(var i = start; i < chkbox.length; i++){
-            if(chkbox[i].checked == true){
+            if(chkbox[i].checked){
                 counter++;
-                break;
             }
         }
+
+        if(counter < chkbox.length-1){
+            selectAll.checked = false;
+        }else{
+            selectAll.checked = true;
+        }
+
         if(counter > 0){
             saveButton.classList.remove("disabled");
             saveButton.disabled = false;

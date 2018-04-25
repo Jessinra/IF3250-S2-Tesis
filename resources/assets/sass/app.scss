@@ -128,3 +128,11 @@ body {
 .text-decoration-none, .text-decoration-none:hover, .text-decoration-none:active, .text-decoration-none:focus, .text-decoration-none:active:focus, .text-decoration-none:focus:active {
   text-decoration: none !important;
 }
+
+.text-color-green {
+  color: $green !important;
+}
+
+.border-color-black {
+  border-color: $black;
+}

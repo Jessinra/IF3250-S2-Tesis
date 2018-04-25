@@ -20,7 +20,8 @@ class SeminarProposalController extends Controller
                     [
                         "mahasiswa_id" => $mhs_id,
                         "schedule" => $request->get("date"),
-                        "creator_id" => $manajer->id
+                        "creator_id" => $manajer->id,
+                        "proposal_id" => $mahasiswa->proposal()->id
                     ]
                 );
                 $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL;

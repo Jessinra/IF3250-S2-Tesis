@@ -73,6 +73,16 @@
                     </div>
                 @endif
 
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                    <div class="progress progress_4">
+                        <div class="bar done"></div>
+                    </div>
+                @else
+                    <div class="progress progress_4">
+                        <div class="bar"></div>
+                    </div>
+                @endif
+
                 <div class="level level_1 level_reached"><p>1</p></div>
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK ||
@@ -91,10 +101,16 @@
                     <div class="level level_3"><p>3</p></div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
                     <div class="level level_4 level_reached"><p>4</p></div>
                 @else
                     <div class="level level_4"><p>4</p></div>
+                @endif
+
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                    <div class="level level_5 level_reached"><p>5</p></div>
+                @else
+                    <div class="level level_5"><p>5</p></div>
                 @endif
 
                 <div class="nav" role="tablist">
@@ -145,6 +161,20 @@
                         <a class="nav-link disabled" data-toggle="tab" href="#step4">
                             <div class="level_text level4_text">
                                 <p>Sidang Tesis</p>
+                            </div>
+                        </a>
+                    @endif
+
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+                        <a class="nav-link" data-toggle="tab" href="#step5">
+                            <div class="level_text level5_text">
+                                <p>Lulus</p>
+                            </div>
+                        </a>
+                    @else
+                        <a class="nav-link disabled" data-toggle="tab" href="#step5">
+                            <div class="level_text level5_text">
+                                <p>Lulus</p>
                             </div>
                         </a>
                     @endif
@@ -362,14 +392,25 @@
                 <a class="btn btn-outline-dark" href="/hasilbimbingan/mahasiswa" role="button">Lihat Hasil Bimbingan</a>
 
             </div>
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
-            <div id="step4" class="container tab-pane fade active show">
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+            <div id="step4" class="container tab-pane fade active show mt-4">
         @else
-            <div id="step4" class="container tab-pane fade">
+            <div id="step4" class="container tab-pane fade mt-4">
         @endif
                 <h3 class="header">Sidang Tesis</h3>
                 <p>Anda dapat mendaftar sidang tesis.</p>
                 <a class="btn btn-blue" href="/sidangtesis/daftar" role="button">Daftar Sidang Tesis</a>
+            </div>
+
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+            <div id="step5" class="container tab-pane fade active show mt-4">
+        @else
+            <div id="step5" class="container tab-pane fade mt-4">
+        @endif
+                <h3 class="header">Lulus</h3>
+                <p>Berikut ini hasil akhir Tesis Anda.</p>
+                <p>Lorem ipsum</p>
+                {{--<a class="btn btn-blue" href="/sidangtesis/daftar" role="button">Daftar Sidang Tesis</a>--}}
             </div>
         </div>
 

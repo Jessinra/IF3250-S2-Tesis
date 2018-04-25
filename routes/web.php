@@ -24,6 +24,14 @@ Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm'
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::get('admin/panel', 'UserController@index');
+Route::get('user/control/{uname}', 'UserController@show');
+Route::post('user/control/{uname}', 'UserController@save');
+Route::post('addrole/dosen/{uname}', 'UserController@addDosenRole');
+Route::post('addrole/mahasiswa/{uname}', 'UserController@addMahasiswaRole');
+Route::post('addrole/manajer/{uname}', 'UserController@addManajerRole');
+Route::post('dosen/edit/{id}', 'DosenController@edit');
+
 
 Route::get('register','Auth\RegisterController@showForm')->name('register');
 Route::post('register','Auth\RegisterController@registerUser')->name('registerPost');
@@ -58,7 +66,7 @@ Route::post('/proposal/upload','ProposalController@upload');
 Route::get('/proposal/download/{id}/{filename}','ProposalController@download');
 Route::post('/proposal/penerimaan','ProposalController@approval')->name('proposal-penerimaan');
 
-Route::get('/dashboard/dosen','DosenController@showMahasiswa');
+// Route::get('/dashboard/dosen','DosenController@showMahasiswa');
 Route::get('/hasilbimbingan/mahasiswa','HasilBimbinganController@showListHasilBimbingan');
 Route::post('/hasilbimbingan/mahasiswa','HasilBimbinganController@getBimbinganID');
 Route::get('/hasilbimbingan/tambah','HasilBimbinganController@showFormTambahHasilBimbingan');
@@ -81,5 +89,22 @@ Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesi
 Route::get('/sidangtesis/daftar','SidangTesisController@showFormDaftarSidang');
 Route::get('/sidangtesis/create/{id}','SidangTesisController@create');
 Route::post('/sidangtesis/dosen/edit/{id}','SidangTesisController@dosenEdit');
+Route::post('/sidangtesis/nilai/{id}','SidangTesisController@nilaiSidangTesis');
+
+Route::get('/penjadwalan','PenjadwalanController@showPenjadwalanPage');
+Route::post('/penjadwalan/seminartopik','PenjadwalanController@penentuanJadwalSeminarTopikBatch');
+Route::post('/penjadwalan/seminarproposal','PenjadwalanController@penentuanJadwalSeminarProposalBatch');
+Route::post('/penjadwalan/seminartesis','PenjadwalanController@penentuanJadwalSeminarTesisBatch');
+Route::post('/penjadwalan/sidangtesis','PenjadwalanController@penentuanJadwalSidangTesisBatch');
+
+Route::post('/sidangtesis/mahasiswa/edit/{id}', 'SidangTesisController@mahasiswaEdit');
+Route::post('/sidangtesis/manajer/edit/{id}', 'SidangTesisController@manajerEdit');
+Route::get('/sidangtesis/download/{id}/{filename}', 'SidangTesisController@downloadFile');
+
+Route::post('/sidangtesis/nilai/penguji1/reset/{id}', 'SidangTesisController@resetNilaiPenguji1');
+Route::post('/sidangtesis/nilai/penguji2/reset/{id}', 'SidangTesisController@resetNilaiPenguji2');
+Route::post('/sidangtesis/nilai/pembimbing/reset/{id}', 'SidangTesisController@resetNilaiPembimbing');
+Route::post('/sidangtesis/nilai/kelas/reset/{id}', 'SidangTesisController@resetNilaiKelas');
+Route::post('/sidangtesis/dosenuji/approve/{id}', 'SidangTesisController@dosenPengujiApprove');
 
 

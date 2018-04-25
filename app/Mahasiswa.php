@@ -34,7 +34,7 @@ class Mahasiswa extends Model
     const STATUS_SIAP_SIDANG_TESIS = 14;
     const STATUS_LULUS = 15;
 
-    protected $statusString = [
+    public $statusString = [
         "0" => "Menunggu topik",
         "1" => "Topik telah diajukan",
         "2" => "Topik telah disetujui",

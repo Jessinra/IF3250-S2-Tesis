@@ -73,9 +73,9 @@ class HasilBimbinganController extends Controller
             $data = $request->all();
 
             if($data['id'] < 0){
-                $user = Auth::user();
+
                 $id = -1 * $data['id'];
-                DB::table('hasil_bimbingans')->where('mahasiswa_id',$user->id)->where('id', $id)->delete();
+                DB::table('hasil_bimbingans')->where('thesis_id',$mahasiswa->tesis()->id)->where('id', $id)->delete();
                 return redirect('/hasilbimbingan/mahasiswa');
             }else{
                 Session::put('edit_id', $data['id']);
@@ -108,7 +108,7 @@ class HasilBimbinganController extends Controller
                     $cur->topik = $data['topik'];
                     $cur->hasil_dan_diskusi = $data['hasil_dan_diskusi'];
                     $cur->rencana_tindak_lanjut = $data['rencana_tindak_lanjut'];
-                    if($item_count > 7){
+                    if($item_count > 8){
                         $cur->dosen_id2 = $data['dosen_id2'];
                     }
                     $cur->waktu_bimbingan_selanjutnya = $data['waktu_bimbingan_selanjutnya'];
@@ -141,7 +141,7 @@ class HasilBimbinganController extends Controller
             } else {
                 $ok_count++;
                 $dosen2 = null;
-                if($item_count > 7){
+                if($item_count > 8){
                     $dosen2 = $data['dosen_id2'];
                 }
                 $hasil_bimbingan = HasilBimbingan::create([
