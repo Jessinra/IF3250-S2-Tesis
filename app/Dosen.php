@@ -35,4 +35,16 @@ class Dosen extends Model
     public static function getListDosenPenguji() {
         return Dosen::where('status', '>=',Dosen::STATUS_PENGUJI_2)->get();
     }
+
+    public function upcomingSidangAsPenguji1() {
+        return $this->hasMany('App\SidangTesis','dosen_penguji1','id');
+    }
+
+    public function upcomingSidangAsPenguji2() {
+        return $this->hasMany('App\SidangTesis','dosen_penguji2','id');
+    }
+
+    public function sidangTesisNeedApproval() {
+        return SidangTesis::where('ajuan_penguji1', $this->id)->orWhere('ajuan_penguji2',$this->id)->orWhere('ajuan_penguji3',$this->id)->get();
+    }
 }
