@@ -49,6 +49,7 @@
                     <th></th>
                 </tr>
                 @foreach($hsl_bimbingan as $item)
+                @if($item->thesis)
                     <tr class="text-center">
                         <td>
                             {{$loop->iteration}}
@@ -121,6 +122,7 @@
                             </div>
                         </td>
                     </tr>
+                    @endif
                 @endforeach
             </table>
         </div>
