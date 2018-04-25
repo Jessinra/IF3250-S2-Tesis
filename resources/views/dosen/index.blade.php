@@ -286,14 +286,14 @@
 						        	@php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
 						        	@if($jadwalseminar >= $currenttime)
 						        		<div class="row">
-								        	<div class="col-md-auto text-center" style="border-right: 1px solid grey">
+								        	<div class="col-md-4 text-center" style="border-right: 1px solid grey">
 								        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
 								        		<div>{{$jadwalseminar->format('d M Y')}}</div>
 								        	</div>
 								        	<div class="col">
 								        		<div class="row mb-4">
 								        			<div class="col">
-								        				<h5><span class="badge badge-success">Seminar Tesis</span></h5>
+								        				<h5><span class="badge badge-warning text-color-white">Seminar Tesis</span></h5>
 										        		<h4>{{$user->name}} - {{$user->username}}</h4>
 										        		<h5>
 										        			<span class="badge badge-primary">Tempat: {{$seminar->tempat}}</span>
@@ -318,7 +318,7 @@
 								<div class="col">
 									<div class="row mb-4">
 										<div class="col">
-											<h5><span class="badge badge-warning text-color-white">Sidang Tesis</span></h5>
+											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
 											<h4>{{$user->name}} - {{$user->username}}</h4>
 											<h6>
 												Topik: {{$st->tesis->topic}} <br>
@@ -352,7 +352,7 @@
 								<div class="col">
 									<div class="row mb-4">
 										<div class="col">
-											<h5><span class="badge badge-warning text-color-white">Sidang Tesis</span></h5>
+											<h5><span class="badge badge-sucess">Sidang Tesis</span></h5>
 											<h4>{{$user->name}} - {{$user->username}}</h4>
 											<h6>
 												Topik: {{$st->tesis->topic}} <br>
