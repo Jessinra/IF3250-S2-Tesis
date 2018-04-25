@@ -144,7 +144,7 @@
                                         </div>
                                     </form>
                                 </div>
-                    </div>
+                                </fieldset>
                     @endif
                     @endif
                 @endif
@@ -263,6 +263,7 @@
                             </form>
                         </div>
                     </div>
+                    </fieldset>
                 @endif
                 @if($seminarTesis)
                 @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2))
@@ -294,6 +295,7 @@
                             </form>
                         </div>
                     </div>
+                    </fieldset>
                 @endif
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)
@@ -384,6 +386,7 @@
                             </form>
                         </div>
                     </div>
+                    </fieldset>
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL )
                     @php($hasilBimbinganAktif = $mahasiswa->tesis()->getHasilBimbinganAktif())
