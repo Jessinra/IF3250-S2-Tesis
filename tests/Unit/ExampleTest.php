@@ -39,6 +39,19 @@ class ExampleTest extends TestCase
         $response = $this->get('/register');
         $response->assertStatus(200);
 
+        $response = $this->followingRedirects()->call('POST', '/register', [
+            'username' => $username,
+            'password' => $password,
+            'password_confirmation' => $password,
+            'phone' => '123456789',
+            'email' => 'akun@palsu.com',
+            'name' => $username,
+            'role' => 'Manajer',
+            '_token' => csrf_token()
+        ]);
+
+        $this->assertEquals(200, $response->getStatusCode());
+
         $response = $this->followingRedirects()->call('POST', '/logout',[
             '_token' => csrf_token()
         ]);
