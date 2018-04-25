@@ -310,7 +310,7 @@
 
                                     <div class="form-group row col-md-12">
                                         <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
-                                            Usulan Dosen Penguji
+                                            Dosen Penguji 1
                                         </label>
                                         <select name="dosen_penguji1"  class="form-control col-md-8" id="">
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
@@ -329,7 +329,7 @@
                                     <div class="form-group row col-md-12">
 
                                         <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
-                                            Usulan Dosen Penguji
+                                            Dosen Penguji 2
                                         </label>
                                         <select name="dosen_penguji2"  class="form-control col-md-8" id="">
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
