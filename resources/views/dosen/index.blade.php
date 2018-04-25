@@ -308,7 +308,7 @@
 x					    @endif
 			        @endforeach
 					@foreach($dosen->upcomingSidangAsPenguji1 as $st)
-						@if($user = $st->tesis->mahasiswa->user())
+						@php($user = $st->tesis->mahasiswa->user())
 						@if($st->tanggal.'T'.$st->waktu >= $currenttime)
 							<div class="row">
 								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
@@ -343,7 +343,7 @@ x					    @endif
 						@endif
 					@endforeach
 					@foreach($dosen->upcomingSidangAsPenguji2 as $st)
-								@if($user = $st->tesis->mahasiswa->user())
+								@php($user = $st->tesis->mahasiswa->user())
 								@if($st->tanggal.'T'.$st->waktu >= $currenttime)
 							<div class="row">
 								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
