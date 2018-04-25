@@ -189,6 +189,10 @@
             <div id="step1" class="container tab-pane fade">
         @endif
                 <h3 class="header">Seminar Topik</h3>
+                @if ($mahasiswa->seminarTopik() and $mahasiswa->status!=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
+                    <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{date("d M Y H:i:s", strtotime($mahasiswa->seminarTopik()->schedule.'UTC'))}}</span></h4></p>
+                    
+                @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_TELAH_DIAJUKAN ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_TOPIK_DITOLAK ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK ||
