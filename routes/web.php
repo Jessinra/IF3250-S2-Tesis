@@ -31,6 +31,7 @@ Route::post('addrole/dosen/{uname}', 'UserController@addDosenRole');
 Route::post('addrole/mahasiswa/{uname}', 'UserController@addMahasiswaRole');
 Route::post('addrole/manajer/{uname}', 'UserController@addManajerRole');
 Route::post('dosen/edit/{id}', 'DosenController@edit');
+Route::post('mahasiswa/edit/{id}', 'MahasiswaController@edit');
 
 
 Route::get('register','Auth\RegisterController@showForm')->name('register');
