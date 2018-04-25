@@ -275,6 +275,7 @@
 						        </div>
 						    @endif
 						@endif
+
 						@if(!is_null($item->tesis()))
 							@php($seminar = $item->tesis()->seminarTesis())
 							@if(!is_null($seminar))
@@ -348,7 +349,9 @@
 								<div class="col">
 									<div class="row mb-4">
 										<div class="col">
+
 											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
+
 											<h4>{{$user->name}} - {{$user->username}}</h4>
 											<h6>
 												Topik: {{$st->tesis->topic}} <br>
@@ -383,6 +386,7 @@
 									<div class="row mb-4">
 										<div class="col">
 											<h5><span class="badge badge-sucess">Sidang Tesis</span></h5>
+
 											<h4>{{$user->name}} - {{$user->username}}</h4>
 											<h6>
 												Topik: {{$st->tesis->topic}} <br>

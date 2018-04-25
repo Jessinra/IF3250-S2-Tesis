@@ -53,6 +53,7 @@
                     @if($mahasiswa->status == \App\Mahasiswa::STATUS_LULUS)
                     <fieldset disabled="disabled">
                     @endif
+
                     @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                         <a href="/sidangtesis/create/{{$mahasiswa->user()->username}}" class="mb-4">
                             <button class="btn btn-blue">
@@ -60,6 +61,7 @@
                             </button>
                         </a>
                     </fieldset>
+
                     @endif
                 </div>
 
@@ -69,7 +71,7 @@
             @if ($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
                 @if($sidangTesis)
                 @if (!is_null($sidangTesis->jam) && !is_null($sidangTesis->tempat))
-                        <div class="mb-2">
+                        < class="mb-2">
                             <h3>
                                 Penilaian Sidang Tesis
                             </h3>
@@ -152,6 +154,7 @@
                                         </div>
                                     </form>
                                 </div>
+
                                 </fieldset>
                     @endif
                     @endif
@@ -271,7 +274,9 @@
                             </form>
                         </div>
                     </div>
+
                     </fieldset>
+
                 @endif
                 @if($seminarTesis)
                 @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2))
@@ -304,6 +309,7 @@
                         </div>
                     </div>
                     </fieldset>
+                @endif
                 @endif
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)

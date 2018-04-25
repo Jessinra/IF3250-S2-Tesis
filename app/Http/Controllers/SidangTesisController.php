@@ -7,7 +7,9 @@ use App\Thesis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+
 use App\Mahasiswa;
+
 use Illuminate\Support\Facades\Storage;
 
 class SidangTesisController extends Controller
@@ -519,6 +521,7 @@ class SidangTesisController extends Controller
             $sidang->save();
             $mhs->status = Mahasiswa::STATUS_SIAP_SIDANG_TESIS;
             $mhs->save();
+
             return back();
         }  else{
             return abort(403);

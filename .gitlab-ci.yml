@@ -1,0 +1,24 @@
+before_script:
+  - bash .gitlab-ci.sh
+variables:
+  MYSQL_DATABASE: gitlab_test
+  MYSQL_ROOT_PASSWORD: gitlab_test
+
+phpunit:php7.1:mysql5.6:
+  image: php:7.1
+  services:
+    - mysql:5.6
+  script:
+    - php vendor/bin/phpunit --colors
+    - npm test
+  after_script:
+    - sudo cp -rfvu ./ /var/www
+    - cd /var/www
+    - composer dump-autoload
+    - cp .env.production .env
+    - php artisan config:cache
+    - sudo chmod -R 777 storage
+    - php artisan migrate
+    - php artisan key:generate
+  only:
+  - master

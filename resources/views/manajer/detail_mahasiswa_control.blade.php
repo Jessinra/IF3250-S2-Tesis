@@ -44,6 +44,7 @@
                 </div>
             </div>
             <div class="col-md-8">
+
                 @if($mahasiswa->status == \App\Mahasiswa::STATUS_LULUS)
                     <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                         <i class="material-icons font-size-18-px mr-4">check_circle</i>
@@ -53,6 +54,7 @@
                     </div>
                     <fieldset disabled="disabled">
                 @endif
+
                 @if(isset($sidangTesis->dosen_penguji_1) && isset($sidangTesis->dosen_penguji_2))
                     <div class="mb-2">
                         <h3>
