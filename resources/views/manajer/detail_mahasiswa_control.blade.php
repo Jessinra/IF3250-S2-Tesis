@@ -107,7 +107,7 @@
                             @endif
                         </div>
                         @endif
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK || $mahasiswa->status > \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
 
                             <div class="control-jadwal mb-4">
                                 <h3>
@@ -388,7 +388,7 @@
                         @endif
 
 
-                        @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA || $mahasiswa->status <= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                        @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA and $mahasiswa->status != \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                             <div class="control-pengajuan-proposal mb-4">
                                 <h3>
                                     Penetapan Seminar Proposal
@@ -458,12 +458,16 @@
                                         {{csrf_field()}}
                                         <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
                                         <input type="hidden" value="{{$proposal->id}}" name="proposal">
+                                        @if($mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                                            <fieldset disabled="disabled">
+                                        @endif
                                         <button class="btn btn-red mr-1" name="action" value="0">
                                             Tolak
                                         </button>
                                         <button class="btn btn-blue ml-1" name="action" value="1">
                                             Terima
                                         </button>
+                                        </fieldset>
                                     </div>
                                 </form>
 
@@ -471,11 +475,7 @@
                             @if($proposal->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
                                 </fieldset>
                             @endif
-                        </div>
-
-
                         @endif
-                    </div>
 
                     <div id="bimbingan" class="container tab-pane fade"><br>
                         
@@ -541,7 +541,7 @@
                                                         <!-- Modal body -->
                                                         <div class="modal-body">
                                                             <h5>Dosen Pembimbing: </h5>
-                                                            <p>{{$item->name}}</p>
+                                                            <p>{{$item->dosen_pembimbing->user1()->name}}</p>
                                                             <h5>Waktu Bimbingan: </h5>
                                                             <p>{{$item->tanggal_waktu}}</p>
                                                             <h5>Hasil dan diskusi: </h5>

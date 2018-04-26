@@ -183,13 +183,13 @@
         </div>
 
         <div class="tab-content">
-        @if($mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK and $mahasiswa->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+        @if($mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK and $mahasiswa->status > \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
             <div id="step1" class="container tab-pane fade active show">
         @else
             <div id="step1" class="container tab-pane fade">
         @endif
                 <h3 class="header">Seminar Topik</h3>
-                @if ($mahasiswa->seminarTopik() and $mahasiswa->status!=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
+                @if ($mahasiswa->seminarTopik() and $mahasiswa->status>=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
                     <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{date("d M Y H:i:s", strtotime($mahasiswa->seminarTopik()->schedule.'UTC'))}}</span></h4></p>
                     
                 @endif
@@ -373,7 +373,11 @@
                     <br>
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Edit Proposal</a>
                 @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
-                    <p>Anda dapat mengunggah proposal topik tesis.</p>
+                    @if($mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                        <p>Proposal Anda ditolak. Anda dapat menggungah proposal kembali.</p>
+                    @else
+                        <p>Anda dapat mengunggah proposal topik tesis.</p>
+                    @endif
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Unggah Proposal</a>
                 @endif
             </div>
@@ -391,6 +395,11 @@
                 @if($tesis->dosen_pembimbing_2)
                 <div>Dosen Pembimbing 2: {{$tesis->dosen_pembimbing_2->user->name}}</div>
                     @endif
+                @endif
+                @if(isset($mahasiswa->tesis()->seminarTesis()->hari) && isset($mahasiswa->tesis()->seminarTesis()->waktu))
+                @php($tesis_hari = $mahasiswa->tesis()->seminarTesis()->hari)
+                @php($tesis_waktu = $mahasiswa->tesis()->seminarTesis()->waktu)
+                    <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{$tesis_hari}} {{$tesis_waktu}}</span></h4></p>
                 @endif
                 <p>Anda dapat mengunggah hasil bimbingan setiap kali selesai bimbingan.</p>
                 <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">Entri Hasil Bimbingan</a>

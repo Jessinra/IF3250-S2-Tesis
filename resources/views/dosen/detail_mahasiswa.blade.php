@@ -459,7 +459,7 @@
                                                 <!-- Modal body -->
                                                 <div class="modal-body">
                                                     <h5>Dosen Pembimbing: </h5>
-                                                    <p>{{$item->name}}</p>
+                                                    <p>{{$item->dosen_pembimbing->user1()->name}}</p>
                                                     <h5>Waktu Bimbingan: </h5>
                                                     <p>{{$item->tanggal_waktu}}</p>
                                                     <h5>Hasil dan diskusi: </h5>

@@ -191,41 +191,86 @@
 													</div>
 													@endif
 												@endforeach
-												{{--<div class="row justify-content-center">--}}
-									                {{--<table class="mahasiswa-control-table">--}}
-									                    {{--<tr class="text-center">--}}
-									                        {{--<th>--}}
-									                            {{--No--}}
-									                        {{--</th>--}}
-									                        {{--<th>--}}
-									                            {{--Nama--}}
-									                        {{--</th>--}}
-									                        {{--<th>--}}
-									                            {{--NIM--}}
-									                        {{--</th>--}}
-									                        {{--<th>--}}
-									                            {{--Status--}}
-									                        {{--</th>--}}
-									                    {{--</tr>--}}
-									                {{--@foreach($mahasiswauji as $item)--}}
-									                    {{--@php($user = $item->user())--}}
-									                    {{--<tr class="text-center">--}}
-									                    {{--<td>--}}
-									                        {{--{{$loop->iteration}}--}}
-									                    {{--</td>--}}
-									                        {{--<td>--}}
-									                            {{--{{$user->name}}--}}
-									                        {{--</td>--}}
-									                        {{--<td>--}}
-									                            {{--{{$user->username}}--}}
-									                        {{--</td>--}}
-									                        {{--<td>--}}
-									                            {{--{{$item->getStatusString()}}--}}
-									                        {{--</td>--}}
-									                    {{--</tr>--}}
-									                {{--@endforeach--}}
-									                {{--</table>--}}
-									            {{--</div>--}}
+						        			</div>
+											<div class="card-body">
+
+												@foreach($dosen->sidangTesisApproved() as $st)
+													@if(($st->dosen_penguji_1 == $cuser->id) || ($st->dosen_penguji_2 == $cuser->id))
+													@php($tesis = $st->tesis)
+													@php($mhs = $tesis->mahasiswa)
+													@php($usr = $mhs->user())
+													<div class="border border-color-black pt-1 pr-1 pl-1 pb-1">
+														<div class="row">
+															<table class="col-md-8">
+																<tr>
+																	<td>
+																		Mahasiswa
+																	</td>
+																	<td>
+																		:
+																	</td>
+																	<td>
+																		{{$usr->name}}
+																	</td>
+																</tr>
+															<tr>
+																<td>
+																	Jadwal
+																</td>
+																<td>
+																	:
+																</td>
+																<td>
+																	{{date("d M Y H:iA", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}
+																</td>
+															</tr>
+
+															<tr>
+																<td>
+																	Tempat
+																</td>
+																<td>
+																	:
+																</td>
+																<td>
+																  {{$st->tempat}}
+																</td>
+															</tr>
+																<tr>
+																	<td>
+																		Judul Tesis
+																	</td>
+																	<td>
+																		:
+																	</td>
+																	<td>
+																		{{$tesis->topic}}
+																	</td>
+																</tr>
+																<tr>
+																	<td>
+																		Dosen Pembimbing
+																	</td>
+																	<td>
+																		:
+																	</td>
+																	<td>
+																		{{$tesis->dosen_pembimbing_1->user->name}}
+																	</td>
+																</tr>
+															</table>
+															<div class="display-flex justify-content-start align-items-center">
+																<form action="/sidangtesis/dosenuji/approve/{{$st->id}}" method="post">
+																	{{csrf_field()}}
+																	<button class="btn btn-green">
+																		Nilai
+																	</button>
+																</form>
+															</div>
+														</div>
+													</div>
+													@endif
+												@endforeach
 						        			</div>
 								      	</div>
 								    </div>
@@ -305,7 +350,7 @@
 						        	@endif
 						        @endif
 					        @endif
-x					    @endif
+					    @endif
 			        @endforeach
 					@foreach($dosen->upcomingSidangAsPenguji1 as $st)
 						@php($user = $st->tesis->mahasiswa->user())
@@ -318,8 +363,8 @@ x					    @endif
 								<div class="col">
 									<div class="row mb-4">
 										<div class="col">
-											@php($tsis = App\Thesis::where('id', $st->thesis_id)->first())
-											@php($useruji = App\Mahasiswa::where('id', $tsis->mahasiswa_id)->first()->user())
+											@php($tsis = $st->tesis)
+											@php($useruji = $tsis->mahasiswa->user())
 											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
 											<h4>{{$useruji->name}} - {{$useruji->username}}</h4>
 											<h6>
