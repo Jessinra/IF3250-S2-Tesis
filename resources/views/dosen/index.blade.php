@@ -123,7 +123,6 @@
 																				</div>
 																				<fieldset disabled="disabled">
 																			@endif
-																			@if($st->dosen_kelas ==  $dosen->id)
 																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
 																				<div class="form-group row width-full justify-content-center">
 																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
@@ -147,7 +146,6 @@
 																				</button>
 																			</div>
 																			</div>
-																			@endif
 	
 																			</form>
 																			</fieldset>
