@@ -145,10 +145,13 @@
 																						Tetapkan
 																				</button>
 																			</div>
+                                                                                </fieldset>
+                                                                            </form>
+
 																			</div>
 	
-																			</form>
-																			</fieldset>
+
+
 
 																			<!-- Modal footer -->
 																			<div class="modal-footer">
@@ -424,7 +427,7 @@
 																			<form action="/sidangtesis/nilai/{{$usr->username}}" method="post" class="width-full">
 																			{{csrf_field()}}
 
-																			@if(!is_null($st->nilai_dosen_penguji_1_utama))
+																			@if(!is_null($st->nilai_dosen_penguji_1_utama) && !is_null($st->nilai_dosen_penguji_2_utama))
 																				<div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
 																					<i class="material-icons font-size-18-px mr-2">check_circle</i>
 																					Anda telah melakukan penilaian terhadap mahasiswa yang bersangkutan silakan hubungi Admin untuk perubahan nilai.
