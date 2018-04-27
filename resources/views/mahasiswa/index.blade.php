@@ -396,10 +396,12 @@
                 <div>Dosen Pembimbing 2: {{$tesis->dosen_pembimbing_2->user->name}}</div>
                     @endif
                 @endif
-                @if(isset($mahasiswa->tesis()->seminarTesis()->hari) && isset($mahasiswa->tesis()->seminarTesis()->waktu))
-                @php($tesis_hari = $mahasiswa->tesis()->seminarTesis()->hari)
-                @php($tesis_waktu = $mahasiswa->tesis()->seminarTesis()->waktu)
-                    <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{$tesis_hari}} {{$tesis_waktu}}</span></h4></p>
+                @if($tesis)
+                    @if(isset($tesis->seminarTesis()->hari) && isset($tesis->seminarTesis()->waktu))
+                    @php($tesis_hari = $tesis->seminarTesis()->hari)
+                    @php($tesis_waktu = $tesis->seminarTesis()->waktu)
+                        <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{$tesis_hari}} {{$tesis_waktu}}</span></h4></p>
+                    @endif
                 @endif
                 <p>Anda dapat mengunggah hasil bimbingan setiap kali selesai bimbingan.</p>
                 <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">Entri Hasil Bimbingan</a>

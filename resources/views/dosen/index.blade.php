@@ -40,16 +40,143 @@
 			      		<!-- <div class="row">
 					  		<div class="col"> -->
 					  			<h3>Daftar Mahasiswa</h3>
-					  			
+
 					  			<hr/>
 					  			<div id="accordion">
+									@if($kelas->id_dosen_kelas == $dosen->id)
+									<div class="card">
+						      			<div class="card-header">
+						        			<a class="card-link" data-toggle="collapse" href="#collapseThree">
+						          				Mahasiswa Kelas Tesis
+						        			</a>
+						      			</div>
+						      			<div id="collapseThree" class="collapse show" data-parent="#accordion">
+						        			<div class="card-body">
+											<div class="row justify-content-center">
+							                		<table class="mahasiswa-control-table width-full table table-hover">
+							                			<thead>
+										                    <tr class="text-center">
+										                        <th>
+										                            No
+										                        </th>
+										                        <th>
+										                            Nama
+										                        </th>
+										                        <th>
+										                            NIM
+										                        </th>
+										                        <!-- <th>
+										                            Status
+										                        </th> -->
+										                        <th></th>
+										                    </tr>
+										                </thead>
+										                @foreach($mahasiswakelas as $item)
+										                    @php($user = $item->user())
+										                     <tr class="text-center" >
+										                    <td>
+										                        {{$loop->iteration}}
+										                    </td>
+										                        <td>
+										                            {{$user->name}}
+										                        </td>
+										                        <td>
+										                            {{$user->username}}
+										                        </td>
+										                        <!-- <td>
+										                            {{$item->getStatusString()}}
+										                        </td> -->
+										                        <td>
+										                            <div class="display-flex justify-content-start align-items-center">
+																	@php($tesis = $item->tesis())
+																	@php($st = $tesis->sidangTesis())																	
+																		@if(!is_null($st->nilai_dosen_kelas_utama))
+																		<button class="btn btn-grey" data-toggle="modal" data-target="#kelas{{$loop->iteration}}">
+																			Nilai
+																		</button>
+																		@else
+																		<button class="btn btn-green" data-toggle="modal" data-target="#kelas{{$loop->iteration}}">
+																			Nilai
+        	        													</button>
+																		@endif
+																	</div>
+
+																	<div class="modal fade" id="kelas{{$loop->iteration}}">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+
+																			<!-- Modal Header -->
+																			<div class="modal-header">
+																				<h4 class="modal-title">Penilaian Sidang: {{$user->name}}</h4>
+																				<button type="button" class="close" data-dismiss="modal">&times;</button>
+																			</div>
+
+																			<!-- Modal body -->
+																			<div class="modal-body">
+																			<form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
+																			{{csrf_field()}}
+
+																			@if(!is_null($st->nilai_dosen_kelas_utama))
+																				<div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+																					<i class="material-icons font-size-18-px mr-2">check_circle</i>
+																					Anda telah melakukan penilaian terhadap mahasiswa yang bersangkutan silakan hubungi Admin untuk perubahan nilai.
+																				</div>
+																				<fieldset disabled="disabled">
+																			@endif
+																			@if($st->dosen_kelas ==  $dosen->id)
+																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
+																						@if($st->nilai_dosen_kelas_utama == "L")
+																							<option selected ="selected" value="L">L</option>
+																						@elseif ($st->nilai_dosen_kelas_utama == "M")
+																							<option selected ="selected" value="M">M</option>
+																						@elseif ($st->nilai_dosen_kelas_utama == "K")
+																							<option selected ="selected" value="K">K</option>
+																						@else
+																							<option value="L">L</option>
+																							<option value="M">M</option>
+																							<option value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+																			<div class="form-group row width-full justify-content-center">
+																				<button  class="col-md-4 btn btn-blue ml-1 mr-1">
+																						Tetapkan
+																				</button>
+																			</div>
+																			</div>
+																			@endif
+	
+																			</form>
+																			</fieldset>
+
+																			<!-- Modal footer -->
+																			<div class="modal-footer">
+																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+																			</div>
+
+																		</div>
+																	</div>
+																</div>
+										                        </td>
+										                    </tr>
+										                @endforeach
+										            </table>
+											</div>
+										</div>
+									</div>
+									@endif
+
+
 						    		<div class="card">
 						      			<div class="card-header">
 						        			<a class="card-link" data-toggle="collapse" href="#collapseOne">
 						          				Mahasiswa Bimbingan
 						        			</a>
 						      			</div>
-						      			<div id="collapseOne" class="collapse show" data-parent="#accordion">
+						      			<div id="collapseOne" class="collapse" data-parent="#accordion">
 						        			<div class="card-body">
 							               		<div class="row justify-content-center">
 							                		<table class="mahasiswa-control-table width-full table table-hover">
@@ -192,13 +319,13 @@
 													@endif
 												@endforeach
 						        			</div>
-											<div class="card-body">
 
 												@foreach($dosen->sidangTesisApproved() as $st)
 													@if(($st->dosen_penguji_1 == $cuser->id) || ($st->dosen_penguji_2 == $cuser->id))
 													@php($tesis = $st->tesis)
 													@php($mhs = $tesis->mahasiswa)
 													@php($usr = $mhs->user())
+													<div class="card-body">
 													<div class="border border-color-black pt-1 pr-1 pl-1 pb-1">
 														<div class="row">
 															<table class="col-md-8">
@@ -260,17 +387,196 @@
 																</tr>
 															</table>
 															<div class="display-flex justify-content-start align-items-center">
-																<form action="/sidangtesis/dosenuji/approve/{{$st->id}}" method="post">
-																	{{csrf_field()}}
-																	<button class="btn btn-green">
-																		Nilai
-																	</button>
-																</form>
+																	@if($st->dosen_penguji_1 == $dosen->id)
+																		@if(!is_null($st->nilai_dosen_penguji_1_utama))
+																		<button class="btn btn-grey" data-toggle="modal" data-target="#uji{{$loop->iteration}}">
+																			Nilai
+																		</button>
+																		@else
+	`																	<button class="btn btn-green" data-toggle="modal" data-target="#uji{{$loop->iteration}}">
+																			Nilai
+        	        													</button>
+																		@endif
+																	@elseif($st->dosen_penguji_2 == $dosen->id)
+																		@if(!is_null($st->nilai_dosen_penguji_2_utama))
+																		<button class="btn btn-grey" data-toggle="modal" data-target="#uji{{$loop->iteration}}">
+																			Nilai
+																		</button>
+																		@else
+	`																	<button class="btn btn-green" data-toggle="modal" data-target="#uji{{$loop->iteration}}">
+																			Nilai
+        	        													</button>
+																		@endif
+																	@endif
+																	
+															
+
+																<div class="modal fade" id="uji{{$loop->iteration}}">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+
+																			<!-- Modal Header -->
+																			<div class="modal-header">
+																				<h4 class="modal-title">Penilaian Sidang: {{$usr->name}}</h4>
+																				<button type="button" class="close" data-dismiss="modal">&times;</button>
+																			</div>
+
+																			<!-- Modal body -->
+																			<div class="modal-body">
+																			<form action="/sidangtesis/nilai/{{$usr->username}}" method="post" class="width-full">
+																			{{csrf_field()}}
+
+																			@if(!is_null($st->nilai_dosen_penguji_1_utama))
+																				<div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+																					<i class="material-icons font-size-18-px mr-2">check_circle</i>
+																					Anda telah melakukan penilaian terhadap mahasiswa yang bersangkutan silakan hubungi Admin untuk perubahan nilai.
+																				</div>
+																				<fieldset disabled="disabled">
+																			@endif
+																			@if($st->dosen_penguji_1 ==  $dosen->id)
+																				<input type="hidden" value="{{$usr->username}}" name="mahasiswa">
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
+																						@if($st->nilai_dosen_penguji_1_utama == "L")
+																							<option selected ="selected" value="L">L</option>
+																						@elseif ($st->nilai_dosen_penguji_1_utama == "M")
+																							<option selected ="selected" value="M">M</option>
+																						@elseif ($st->nilai_dosen_penguji_1_utama == "K")
+																							<option selected ="selected" value="K">K</option>
+																						@else
+																							<option value="L">L</option>
+																							<option value="M">M</option>
+																							<option value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexPenting" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Penting</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
+																					>
+																						@if($st->nilai_dosen_penguji_1_penting == "L")
+																							<option selected ="selected" value="L">L</option>
+																						@elseif ($st->nilai_dosen_penguji_1_penting == "M")
+																							<option selected ="selected" value="M">M</option>
+																						@elseif ($st->nilai_dosen_penguji_1_penting == "K")
+																							<option selected ="selected" value="K">K</option>
+																						@else
+																							<option value="L">L</option>
+																							<option value="M">M</option>
+																							<option value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+																			<div class="form-group row width-full justify-content-center">
+																				<label for="scoreIndexPendukung" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Pendukung</label>
+																				<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
+																				>
+																					@if($st->nilai_dosen_penguji_1_pendukung == "L")
+																						<option selected ="selected" value="L">L</option>
+																					@elseif ($st->nilai_dosen_penguji_1_pendukung == "M")
+																						<option selected ="selected" value="M">M</option>
+																					@elseif ($st->nilai_dosen_penguji_1_pendukung == "K")
+																						<option selected ="selected" value="K">K</option>
+																					@else
+																						<option value="L">L</option>
+																						<option value="M">M</option>
+																						<option value="K">K</option>
+																					@endif
+																				</select>
+																			</div>
+																			<div class="form-group row width-full justify-content-center">
+																				<button  class="col-md-4 btn btn-blue ml-1 mr-1">
+																						Tetapkan
+																				</button>
+																			</div>
+																			</div>
+																			@endif
+
+																			@if($st->dosen_penguji_2 ==  $dosen->id)
+																			@if(!is_null($st->nilai_dosen_penguji_2_utama))
+																				<div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
+																					<i class="material-icons font-size-18-px mr-2">check_circle</i>
+																					Anda telah melakukan penilaian terhadap mahasiswa yang bersangkutan silakan hubungi Admin untuk perubahan nilai.
+																				</div>
+																				<fieldset disabled="disabled">
+																			@endif
+																				<input type="hidden" value="{{$usr->username}}" name="mahasiswa">
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
+																						@if($st->nilai_dosen_penguji_2_utama == "L")
+																							<option selected ="selected" value="L">L</option>
+																						@elseif ($st->nilai_dosen_penguji_2_utama == "M")
+																							<option selected ="selected" value="M">M</option>
+																						@elseif ($st->nilai_dosen_penguji_2_utama == "K")
+																							<option selected ="selected" value="K">K</option>
+																						@else
+																							<option value="L">L</option>
+																							<option value="M">M</option>
+																							<option value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexPenting" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Penting</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
+																					>
+																						@if($st->nilai_dosen_penguji_2_penting == "L")
+																							<option selected ="selected" value="L">L</option>
+																						@elseif ($st->nilai_dosen_penguji_2_penting == "M")
+																							<option selected ="selected" value="M">M</option>
+																						@elseif ($st->nilai_dosen_penguji_2_penting == "K")
+																							<option selected ="selected" value="K">K</option>
+																						@else
+																							<option value="L">L</option>
+																							<option value="M">M</option>
+																							<option value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+																			<div class="form-group row width-full justify-content-center">
+																				<label for="scoreIndexPendukung" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Pendukung</label>
+																				<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
+																				>
+																					@if($st->nilai_dosen_penguji_2_pendukung == "L")
+																						<option selected ="selected" value="L">L</option>
+																					@elseif ($st->nilai_dosen_penguji_2_pendukung == "M")
+																						<option selected ="selected" value="M">M</option>
+																					@elseif ($st->nilai_dosen_penguji_2_pendukung == "K")
+																						<option selected ="selected" value="K">K</option>
+																					@else
+																						<option value="L">L</option>
+																						<option value="M">M</option>
+																						<option value="K">K</option>
+																					@endif
+																				</select>
+																			</div>
+																			<div class="form-group row width-full justify-content-center">
+																				<button  class="col-md-2 btn btn-blue ml-1 mr-1">
+																						Tetapkan
+																				</button>
+																			</div>
+																			</div>
+																			@endif
+	
+																			</form>
+																			</fieldset>
+
+																			<!-- Modal footer -->
+																			<div class="modal-footer">
+																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+																			</div>
+
+																		</div>
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
 													@endif
 												@endforeach
+												</div>
 						        			</div>
 								      	</div>
 								    </div>
@@ -428,7 +734,6 @@
 					@endforeach
 		        </div>
 
-		        
 			</div>
 		</div>
     </div>
