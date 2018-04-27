@@ -8,7 +8,7 @@ class SeminarTesis extends Model
 {
     //
     protected $fillable =[
-        'tesis_id','tempat','hari','tanggal','approval_pembimbing1','approval_pembimbing2','issuer_id','evaluator_id','verdict', 'waktu'
+        'tesis_id','tempat','hari','tanggal','approval_pembimbing1','approval_pembimbing2','issuer_id','evaluator_id','verdict', 'waktu', 'draft_laporan'
     ];
 
     public function getApprovalStringPembimbing1() {

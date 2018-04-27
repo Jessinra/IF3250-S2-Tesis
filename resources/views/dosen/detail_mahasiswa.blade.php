@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'List Pengajuan Topik')
+@section('title', 'Detail Mahasiswa')
 
 
 @section('content')
@@ -88,7 +88,6 @@
                                     </div>
                                     <fieldset disabled="disabled">
                                 @endif
-                            @endif
                                 <div class="row justify-content-center">
 
                                     <form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
@@ -153,8 +152,9 @@
                                     </form>
                                 </div>
                                 </fieldset>
+                            @endif
                     @endif
-                    @endif
+                @endif
                 @endif
                 @if($tesis->sidangTesis())
                     <div class="mb-2">
@@ -274,7 +274,8 @@
                     </fieldset>
                 @endif
                 @if($seminarTesis)
-                @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2))
+                @if($mahasiswa->status != \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
+                @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2) && ($seminarTesis->draft_laporan))
                     <div class="mb-2">
                         <h3>
                             Penilaian Seminar Tesis
@@ -304,6 +305,7 @@
                         </div>
                     </div>
                     </fieldset>
+                @endif
                 @endif
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)
@@ -457,7 +459,7 @@
                                                 <!-- Modal body -->
                                                 <div class="modal-body">
                                                     <h5>Dosen Pembimbing: </h5>
-                                                    <p>{{$item->name}}</p>
+                                                    <p>{{$item->dosen_pembimbing->user1()->name}}</p>
                                                     <h5>Waktu Bimbingan: </h5>
                                                     <p>{{$item->tanggal_waktu}}</p>
                                                     <h5>Hasil dan diskusi: </h5>

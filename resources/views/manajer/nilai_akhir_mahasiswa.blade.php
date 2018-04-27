@@ -46,7 +46,7 @@
                             {{$item->tesis->mahasiswa->user()->name}}
                         </td>
                         <td>
-                            {{$item->tesis->nilai}}
+                            {{$item->nilai}}
                         </td>
                         <td>
                             {{$item->tesis->topic}}
@@ -55,7 +55,7 @@
                             {{$item->tesis->dosen_pembimbing_1->user->name}}
                         </td>
                         <td>
-                            {{$item->dosen_penguji}}
+                            {{$item->dosen_penguji1->name}}
                         </td>
                     </tr>
                 @endforeach

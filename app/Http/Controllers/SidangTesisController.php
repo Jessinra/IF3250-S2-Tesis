@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\KelasTesis;
 use App\SidangTesis;
 use App\Thesis;
 use Illuminate\Http\Request;
@@ -42,6 +43,7 @@ class SidangTesisController extends Controller
         if(!$tesis)
             return abort(400);
         $sidangtesis = $tesis->sidangTesis();
+        $kelas = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
         if(!$sidangtesis)
             return abort(400);
         else {
@@ -55,9 +57,11 @@ class SidangTesisController extends Controller
                 $cek_nilai_penguji_1 = !is_null($sidangtesis->nilai_dosen_penguji_1_utama) && !is_null($sidangtesis->nilai_dosen_penguji_1_penting) && !is_null($sidangtesis->nilai_dosen_penguji_1_pendukung);
                 $cek_nilai_penguji_2 = !is_null($sidangtesis->nilai_dosen_penguji_2_utama) && !is_null($sidangtesis->nilai_dosen_penguji_2_penting) && !is_null($sidangtesis->nilai_dosen_penguji_2_pendukung);
                 $cek_nilai_pembimbing = !is_null($sidangtesis->nilai_dosen_pembimbing_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_penting) && !is_null($sidangtesis->nilai_dosen_pembimbing_pendukung);
-                $cek_nilai_kelas = !is_null($sidangtesis->nilai_dosen_kelas_utama) && !is_null($sidangtesis->nilai_dosen_kelas_penting);
+                $cek_nilai_kelas = !is_null($sidangtesis->nilai_dosen_kelas_utama);
                 $all_score_filled = $cek_nilai_pembimbing && $cek_nilai_penguji_1 && $cek_nilai_penguji_2 && $cek_nilai_kelas;
+                error_log('tes masuk');
                 if ($all_score_filled) {
+                    error_log('tes masuk 2');
                     $ratautama = $this->countRata2($sidangtesis->nilai_dosen_penguji_1_utama, $sidangtesis->nilai_dosen_penguji_2_utama, $sidangtesis->nilai_dosen_pembimbing_utama, $sidangtesis->nilai_dosen_kelas_utama);
                     $ratapenting = $this->countRata2($sidangtesis->nilai_dosen_penguji_1_penting, $sidangtesis->nilai_dosen_penguji_2_penting, $sidangtesis->nilai_dosen_pembimbing_penting, $sidangtesis->nilai_dosen_kelas_penting);
                     $ratapendukung = $this->countRata($sidangtesis->nilai_dosen_penguji_1_pendukung, $sidangtesis->nilai_dosen_penguji_2_pendukung, $sidangtesis->nilai_dosen_pembimbing_pendukung);
@@ -101,7 +105,7 @@ class SidangTesisController extends Controller
                 $cek_nilai_penguji_1 = !is_null($sidangtesis->nilai_dosen_penguji_1_utama) && !is_null($sidangtesis->nilai_dosen_penguji_1_penting) && !is_null($sidangtesis->nilai_dosen_penguji_1_pendukung);
                 $cek_nilai_penguji_2 = !is_null($sidangtesis->nilai_dosen_penguji_2_utama) && !is_null($sidangtesis->nilai_dosen_penguji_2_penting) && !is_null($sidangtesis->nilai_dosen_penguji_2_pendukung);
                 $cek_nilai_pembimbing = !is_null($sidangtesis->nilai_dosen_pembimbing_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_penting) && !is_null($sidangtesis->nilai_dosen_pembimbing_pendukung);
-                $cek_nilai_kelas = !is_null($sidangtesis->nilai_dosen_kelas_utama) && !is_null($sidangtesis->nilai_dosen_kelas_penting);
+                $cek_nilai_kelas = !is_null($sidangtesis->nilai_dosen_kelas_utama);
                 $all_score_filled = $cek_nilai_pembimbing && $cek_nilai_penguji_1 && $cek_nilai_penguji_2 && $cek_nilai_kelas;
                 if ($all_score_filled) {
                     $ratautama = $this->countRata2($sidangtesis->nilai_dosen_penguji_1_utama, $sidangtesis->nilai_dosen_penguji_2_utama, $sidangtesis->nilai_dosen_pembimbing_utama, $sidangtesis->nilai_dosen_kelas_utama);
@@ -155,22 +159,22 @@ class SidangTesisController extends Controller
                     $ratapendukung = $this->countRata($sidangtesis->nilai_dosen_penguji_1_pendukung, $sidangtesis->nilai_dosen_penguji_2_pendukung, $sidangtesis->nilai_dosen_pembimbing_pendukung);
                     if ($ratautama == "L") {
                         if ($ratapenting == "L") {
-                            if (($ratapendukung == "L") || ($ratapendukung=="M")) {
+                            if (($ratapendukung == "L") || ($ratapendukung == "M")) {
                                 $sidangtesis->nilai = "A";
                             } else {
                                 $sidangtesis->nilai = "AB";
                             }
                         } else {
-                                $sidangtesis->nilai = "AB";                         
+                            $sidangtesis->nilai = "AB";
                         }
                     } else {
                         if ($ratautama == "M") {
-                            if (($ratapenting == "L") || ($ratapenting=="M")) {
-                                if (($ratapendukung == "L") || ($ratapendukung=="M")) {
+                            if (($ratapenting == "L") || ($ratapenting == "M")) {
+                                if (($ratapendukung == "L") || ($ratapendukung == "M")) {
                                     $sidangtesis->nilai = "B";
                                 }
                             } else {
-                                if (($ratapendukung == "L") || ($ratapendukung=="M")) {
+                                if (($ratapendukung == "L") || ($ratapendukung == "M")) {
                                     $sidangtesis->nilai = "BC";
                                 } else {
                                     $sidangtesis->nilai = "C";
@@ -183,6 +187,50 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
+            }else if($kelas->id_dosen_kelas == $currentUser->id) {
+                    $scoreutama = $request->get('scoreUtama');
+
+                    $sidangtesis->nilai_dosen_kelas_utama = $scoreutama;
+
+                    $cek_nilai_penguji_1 = !is_null($sidangtesis->nilai_dosen_penguji_1_utama) && !is_null($sidangtesis->nilai_dosen_penguji_1_penting) && !is_null($sidangtesis->nilai_dosen_penguji_1_pendukung);
+                    $cek_nilai_penguji_2 = !is_null($sidangtesis->nilai_dosen_penguji_2_utama) && !is_null($sidangtesis->nilai_dosen_penguji_2_penting) && !is_null($sidangtesis->nilai_dosen_penguji_2_pendukung);
+                    $cek_nilai_pembimbing = !is_null($sidangtesis->nilai_dosen_pembimbing_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_penting) && !is_null($sidangtesis->nilai_dosen_pembimbing_pendukung);
+                    $cek_nilai_kelas = !is_null($sidangtesis->nilai_dosen_kelas_utama);
+                    $all_score_filled = $cek_nilai_pembimbing && $cek_nilai_penguji_1 && $cek_nilai_penguji_2 && $cek_nilai_kelas;
+                    if ($all_score_filled) {
+                        $ratautama = $this->countRata2($sidangtesis->nilai_dosen_penguji_1_utama, $sidangtesis->nilai_dosen_penguji_2_utama, $sidangtesis->nilai_dosen_pembimbing_utama, $sidangtesis->nilai_dosen_kelas_utama);
+                        $ratapenting = $this->countRata($sidangtesis->nilai_dosen_penguji_1_penting, $sidangtesis->nilai_dosen_penguji_2_penting, $sidangtesis->nilai_dosen_pembimbing_penting);
+                        $ratapendukung = $this->countRata($sidangtesis->nilai_dosen_penguji_1_pendukung, $sidangtesis->nilai_dosen_penguji_2_pendukung, $sidangtesis->nilai_dosen_pembimbing_pendukung);
+                        if ($ratautama == "L") {
+                            if ($ratapenting == "L") {
+                                if (($ratapendukung == "L") || ($ratapendukung=="M")) {
+                                    $sidangtesis->nilai = "A";
+                                } else {
+                                    $sidangtesis->nilai = "AB";
+                                }
+                            } else {
+                                $sidangtesis->nilai = "AB";
+                            }
+                        } else {
+                            if ($ratautama == "M") {
+                                if (($ratapenting == "L") || ($ratapenting=="M")) {
+                                    if (($ratapendukung == "L") || ($ratapendukung=="M")) {
+                                        $sidangtesis->nilai = "B";
+                                    }
+                                } else {
+                                    if (($ratapendukung == "L") || ($ratapendukung=="M")) {
+                                        $sidangtesis->nilai = "BC";
+                                    } else {
+                                        $sidangtesis->nilai = "C";
+                                    }
+                                }
+                            } else {
+                                $sidangtesis->nilai = "E";
+                            }
+                        }
+                    }
+                    $sidangtesis->save();
+                    return back();
             } else {
                 return abort(403);
             }
