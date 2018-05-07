@@ -560,7 +560,7 @@
 																			</div>
 																			</div>
 																			@endif
-	
+
 																			</form>
 																			</fieldset>
 
@@ -581,6 +581,150 @@
 						        			</div>
 								      	</div>
 								    </div>
+                <div class="col col-md-6">
+                    <!-- <h2>Jadwal Dosen</h2> -->
+
+
+                    <!-- <h3>Jadwal</h3>
+                    <hr/> -->
+                    <h3>Jadwal</h3>
+                    <hr/>
+
+                    <div class="mt-5">
+                        @php($currenttime = \Carbon\Carbon::now()->toDateString())
+                        @foreach($mahasiswabimbingan as $item)
+                            @php($user = $item->user())
+                            @if($item->getHasilBimbingan()->count() > 0)
+                                @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
+                                @if($jadwalbimbingan >= $currenttime)
+                                    <div class="row">
+                                        <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                            <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                            <div>{{$jadwalbimbingan->format('d M Y')}}</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <h5><span class="badge badge-info">Bimbingan</span></h5>
+                                                    <h4>{{$user->name}} - {{$user->username}}</h4>
+                                                    <h5>
+                                                        <span class="badge badge-primary">Tempat: Ruang dosen</span>
+                                                        <span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+                            @if(!is_null($item->tesis()))
+                                @php($seminar = $item->tesis()->seminarTesis())
+                                @if(!is_null($seminar))
+                                    @php($date = $seminar->hari)
+                                    @php($time = $seminar->waktu)
+                                    @if(!is_null($date) && !is_null($time))
+                                        @php($datetimeString = $date." ".$time)
+                                        @php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
+                                        @if($jadwalseminar >= $currenttime)
+                                            <div class="row">
+                                                <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                                    <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                                    <div>{{$jadwalseminar->format('d M Y')}}</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row mb-4">
+                                                        <div class="col">
+                                                            <h5><span class="badge badge-warning text-color-white">Seminar Tesis</span></h5>
+                                                            <h4>{{$user->name}} - {{$user->username}}</h4>
+                                                            <h5>
+                                                                <span class="badge badge-primary">Tempat: {{$seminar->tempat}}</span>
+                                                                <span class="badge badge-primary">Waktu: {{$jadwalseminar->format('g:i A')}}</span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+                        @endforeach
+                        @foreach($dosen->upcomingSidangAsPenguji1 as $st)
+                            @php($user = $st->tesis->mahasiswa->user())
+                            @if($st->tanggal.'T'.$st->waktu >= $currenttime)
+                                <div class="row">
+                                    <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                        <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                        <div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                @php($tsis = $st->tesis)
+                                                @php($useruji = $tsis->mahasiswa->user())
+                                                <h5><span class="badge badge-success">Sidang Tesis</span></h5>
+                                                <h4>{{$useruji->name}} - {{$useruji->username}}</h4>
+                                                <h6>
+                                                    Topik: {{$st->tesis->topic}} <br>
+                                                    Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+                                                    <br>
+                                                    @if($st->tesis->dosen_pembimbing_2)
+                                                        Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+                                                    @endif
+                                                    <br>
+                                                    Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+                                                    <br>
+                                                    Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+                                                </h6>
+                                                <h5>
+                                                    <span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+                                                    <span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        @foreach($dosen->upcomingSidangAsPenguji2 as $st)
+                            @php($user = $st->tesis->mahasiswa->user())
+                            @if($st->tanggal.'T'.$st->waktu >= $currenttime)
+                                <div class="row">
+                                    <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                        <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                        <div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                @php($tsis2 = App\Thesis::where('id', $st->thesis_id)->first())
+                                                @php($useruji2 = App\Mahasiswa::where('id', $tsis2->mahasiswa_id)->first()->user())
+                                                <h5><span class="badge badge-success">Sidang Tesis</span></h5>
+                                                <h4>{{$useruji2->name}} - {{$useruji2->username}}</h4>
+                                                <h6>
+                                                    Topik: {{$st->tesis->topic}} <br>
+                                                    Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+                                                    <br>
+                                                    @if($st->tesis->dosen_pembimbing_2)
+                                                        Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+                                                    @endif
+                                                    <br>
+                                                    Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+                                                    <br>
+                                                    Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+                                                </h6>
+                                                <h5>
+                                                    <span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+                                                    <span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
 						  		</div>
 
 					  		<!-- </div> -->
@@ -589,153 +733,9 @@
 			    <!-- </div> -->
 			    
 			  	<!-- </div> -->
-			
-			</div>
-			<div class="col col-md-6">
-				<!-- <h2>Jadwal Dosen</h2> -->
-				
-				
-				<!-- <h3>Jadwal</h3>
-		        <hr/> -->
-		        <h3>Jadwal</h3>
-		        <hr/>
-		        
-		        <div class="mt-5">
-		        	@php($currenttime = \Carbon\Carbon::now()->toDateString())
-		        	@foreach($mahasiswabimbingan as $item)
-						@php($user = $item->user())
-						@if($item->getHasilBimbingan()->count() > 0)
-				            @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
-				            @if($jadwalbimbingan >= $currenttime)
-						        <div class="row">
-						        	<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-						        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-						        		<div>{{$jadwalbimbingan->format('d M Y')}}</div>
-						        	</div>
-						        	<div class="col">
-						        		<div class="row mb-4">
-						        			<div class="col">
-						        				<h5><span class="badge badge-info">Bimbingan</span></h5>
-								        		<h4>{{$user->name}} - {{$user->username}}</h4>
-								        		<h5>
-								        			<span class="badge badge-primary">Tempat: Ruang dosen</span>
-								        			<span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
-								        		</h5>
-						        			</div>
-						        		</div>
-						        	</div>
-						        </div>
-						    @endif
-						@endif
-						@if(!is_null($item->tesis()))
-							@php($seminar = $item->tesis()->seminarTesis())
-							@if(!is_null($seminar))
-								@php($date = $seminar->hari)
-					        	@php($time = $seminar->waktu)
-								@if(!is_null($date) && !is_null($time))
-						        	@php($datetimeString = $date." ".$time)
-						        	@php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
-						        	@if($jadwalseminar >= $currenttime)
-						        		<div class="row">
-								        	<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-								        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-								        		<div>{{$jadwalseminar->format('d M Y')}}</div>
-								        	</div>
-								        	<div class="col">
-								        		<div class="row mb-4">
-								        			<div class="col">
-								        				<h5><span class="badge badge-warning text-color-white">Seminar Tesis</span></h5>
-										        		<h4>{{$user->name}} - {{$user->username}}</h4>
-										        		<h5>
-										        			<span class="badge badge-primary">Tempat: {{$seminar->tempat}}</span>
-										        			<span class="badge badge-primary">Waktu: {{$jadwalseminar->format('g:i A')}}</span>
-										        		</h5>
-								        			</div>
-								        		</div>
-								        	</div>
-								        </div>
-						        	@endif
-						        @endif
-					        @endif
-					    @endif
-			        @endforeach
-					@foreach($dosen->upcomingSidangAsPenguji1 as $st)
-						@php($user = $st->tesis->mahasiswa->user())
-						@if($st->tanggal.'T'.$st->waktu >= $currenttime)
-							<div class="row">
-								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
-								</div>
-								<div class="col">
-									<div class="row mb-4">
-										<div class="col">
-											@php($tsis = $st->tesis)
-											@php($useruji = $tsis->mahasiswa->user())
-											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
-											<h4>{{$useruji->name}} - {{$useruji->username}}</h4>
-											<h6>
-												Topik: {{$st->tesis->topic}} <br>
-												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
-												<br>
-												@if($st->tesis->dosen_pembimbing_2)
-												Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
-												@endif
-												<br>
-												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
-												<br>
-												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
-											</h6>
-											<h5>
-												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
-												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
-											</h5>
-										</div>
-									</div>
-								</div>
-							</div>
-						@endif
-					@endforeach
-					@foreach($dosen->upcomingSidangAsPenguji2 as $st)
-								@php($user = $st->tesis->mahasiswa->user())
-								@if($st->tanggal.'T'.$st->waktu >= $currenttime)
-							<div class="row">
-								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
-								</div>
-								<div class="col">
-									<div class="row mb-4">
-										<div class="col">
-											@php($tsis2 = App\Thesis::where('id', $st->thesis_id)->first())
-											@php($useruji2 = App\Mahasiswa::where('id', $tsis2->mahasiswa_id)->first()->user())
-											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
-											<h4>{{$useruji2->name}} - {{$useruji2->username}}</h4>
-											<h6>
-												Topik: {{$st->tesis->topic}} <br>
-												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
-												<br>
-												@if($st->tesis->dosen_pembimbing_2)
-													Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
-												@endif
-												<br>
-												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
-												<br>
-												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
-											</h6>
-											<h5>
-												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
-												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
-											</h5>
-										</div>
-									</div>
-								</div>
-							</div>
-						@endif
-					@endforeach
-		        </div>
 
 			</div>
+
 		</div>
     </div>
 @endsection
