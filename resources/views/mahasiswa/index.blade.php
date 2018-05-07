@@ -408,7 +408,7 @@
                 <a class="btn btn-outline-dark" href="/hasilbimbingan/mahasiswa" role="button">Lihat Hasil Bimbingan</a>
 
             </div>
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS && $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS)
             <div id="step4" class="container tab-pane fade active show mt-4">
         @else
             <div id="step4" class="container tab-pane fade mt-4">
@@ -418,16 +418,28 @@
                 <a class="btn btn-blue" href="/sidangtesis/daftar" role="button">Daftar Sidang Tesis</a>
             </div>
 
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS )
             <div id="step5" class="container tab-pane fade active show mt-4">
-        @else
-            <div id="step5" class="container tab-pane fade mt-4">
-        @endif
                 <h3 class="header">Lulus</h3>
                 <p>Berikut ini hasil akhir Tesis Anda.</p>
-                <p>Lorem ipsum</p>
+                <b>
+                    @if($mahasiswa->tesis()->sidangTesis()->nilai=="E")
+                        <font color="red">
+                            TIDAK LULUS
+                            @else
+                                <font color="green">
+                                    {{$mahasiswa->tesis()->sidangTesis()->nilai}}
+                                    @endif
+                                </font>
+                </b>
+
                 {{--<a class="btn btn-blue" href="/sidangtesis/daftar" role="button">Daftar Sidang Tesis</a>--}}
             </div>
+        @else
+            <div id="step5" class="container tab-pane fade mt-4">
+            </div>
+        @endif
+
         </div>
 
 

@@ -130,14 +130,14 @@
 																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
 																						@if($st->nilai_dosen_kelas_utama == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_kelas_utama == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_kelas_utama == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -445,14 +445,14 @@
 																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
 																						@if($st->nilai_dosen_penguji_1_utama == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_1_utama == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_1_utama == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -462,14 +462,14 @@
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
 																					>
 																						@if($st->nilai_dosen_penguji_1_penting == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_1_penting == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_1_penting == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -479,14 +479,14 @@
 																				<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
 																				>
 																					@if($st->nilai_dosen_penguji_1_pendukung == "L")
-																						<option selected ="selected" value="L">L</option>
+																						<option selected ="selected" value="L">B</option>
 																					@elseif ($st->nilai_dosen_penguji_1_pendukung == "M")
-																						<option selected ="selected" value="M">M</option>
+																						<option selected ="selected" value="M">C</option>
 																					@elseif ($st->nilai_dosen_penguji_1_pendukung == "K")
 																						<option selected ="selected" value="K">K</option>
 																					@else
-																						<option value="L">L</option>
-																						<option value="M">M</option>
+																						<option value="L">B</option>
+																						<option value="M">C</option>
 																						<option value="K">K</option>
 																					@endif
 																				</select>
@@ -512,14 +512,14 @@
 																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
 																						@if($st->nilai_dosen_penguji_2_utama == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_2_utama == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_2_utama == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -529,14 +529,14 @@
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
 																					>
 																						@if($st->nilai_dosen_penguji_2_penting == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_2_penting == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_2_penting == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -546,14 +546,14 @@
 																				<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
 																				>
 																					@if($st->nilai_dosen_penguji_2_pendukung == "L")
-																						<option selected ="selected" value="L">L</option>
+																						<option selected ="selected" value="L">B</option>
 																					@elseif ($st->nilai_dosen_penguji_2_pendukung == "M")
-																						<option selected ="selected" value="M">M</option>
+																						<option selected ="selected" value="M">C</option>
 																					@elseif ($st->nilai_dosen_penguji_2_pendukung == "K")
 																						<option selected ="selected" value="K">K</option>
 																					@else
-																						<option value="L">L</option>
-																						<option value="M">M</option>
+																						<option value="L">B</option>
+																						<option value="M">C</option>
 																						<option value="K">K</option>
 																					@endif
 																				</select>
