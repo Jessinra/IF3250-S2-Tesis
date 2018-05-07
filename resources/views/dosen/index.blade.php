@@ -168,6 +168,7 @@
 											</div>
 										</div>
 									</div>
+                                    </div>
 									@endif
 
 
@@ -568,7 +569,7 @@
 																			<div class="modal-footer">
 																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 																			</div>
-
+                                                                    </div>
 																		</div>
 																	</div>
 																</div>
@@ -581,6 +582,7 @@
 						        			</div>
 								      	</div>
 								    </div>
+
                 <div class="col col-md-6">
                     <!-- <h2>Jadwal Dosen</h2> -->
 

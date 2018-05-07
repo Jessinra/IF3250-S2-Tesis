@@ -151,7 +151,7 @@ class SidangTesisController extends Controller
                 $cek_nilai_penguji_1 = !is_null($sidangtesis->nilai_dosen_penguji_1_utama) && !is_null($sidangtesis->nilai_dosen_penguji_1_penting) && !is_null($sidangtesis->nilai_dosen_penguji_1_pendukung);
                 $cek_nilai_penguji_2 = !is_null($sidangtesis->nilai_dosen_penguji_2_utama) && !is_null($sidangtesis->nilai_dosen_penguji_2_penting) && !is_null($sidangtesis->nilai_dosen_penguji_2_pendukung);
                 $cek_nilai_pembimbing = !is_null($sidangtesis->nilai_dosen_pembimbing_utama) && !is_null($sidangtesis->nilai_dosen_pembimbing_penting) && !is_null($sidangtesis->nilai_dosen_pembimbing_pendukung);
-                $cek_nilai_kelas = !is_null($sidangtesis->nilai_dosen_kelas_utama) && !is_null($sidangtesis->nilai_dosen_kelas_penting);
+                $cek_nilai_kelas = !is_null($sidangtesis->nilai_dosen_kelas_utama);
                 $all_score_filled = $cek_nilai_pembimbing && $cek_nilai_penguji_1 && $cek_nilai_penguji_2 && $cek_nilai_kelas;
                 if ($all_score_filled) {
                     $ratautama = $this->countRata2($sidangtesis->nilai_dosen_penguji_1_utama, $sidangtesis->nilai_dosen_penguji_2_utama, $sidangtesis->nilai_dosen_pembimbing_utama, $sidangtesis->nilai_dosen_kelas_utama);
