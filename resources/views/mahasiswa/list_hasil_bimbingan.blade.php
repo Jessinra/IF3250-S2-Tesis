@@ -79,7 +79,8 @@
                                             <p>{{$item->hasil_dan_diskusi}}</p>
                                             <h5>Rencana tindak lanjut:</h5>
                                             <p>{{$item->rencana_tindak_lanjut}}</p>
-
+                                            <h5>Waktu Bimbingan Selanjutnya: </h5>
+                                            <p>{{$item->waktu_bimbingan_selanjutnya}}</p>
                                         </div>
 
                                         <!-- Modal footer -->

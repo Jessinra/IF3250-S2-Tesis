@@ -33,8 +33,8 @@ class DosenController extends Controller
             $idmahasiswabimbingan = Thesis::where('dosen_pembimbing1', $iddosen)->orWhere('dosen_pembimbing2', $iddosen)->pluck('mahasiswa_id');
             $mahasiswabimbingan = Mahasiswa::whereIn('id',$idmahasiswabimbingan)->get();
             $mahasiswakelas = Mahasiswa::where('status','>=',14)->get();
-            $kelas = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
-
+            //$kelas = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
+            $kelas = KelasTesis::where('id_dosen_kelas',$iddosen)->get();
             return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan, 'mahasiswakelas' => $mahasiswakelas, 'kelas' =>$kelas]);
         } else {
             return abort(403);

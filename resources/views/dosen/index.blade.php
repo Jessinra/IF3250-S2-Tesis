@@ -43,7 +43,7 @@
 
 					  			<hr/>
 					  			<div id="accordion">
-									@if($kelas->id_dosen_kelas == $dosen->id)
+									@if(count($kelas) > 0)
 									<div class="card">
 						      			<div class="card-header">
 						        			<a class="card-link" data-toggle="collapse" href="#collapseThree">
@@ -73,7 +73,9 @@
 										                </thead>
 										                @foreach($mahasiswakelas as $item)
 										                    @php($user = $item->user())
-										                     <tr class="text-center" >
+                                                            @if($item->id_kelas_tesis != null)
+                                                            @if($item->kelasTesis->id_dosen_kelas == $dosen->id)
+										                    <tr class="text-center" >
 										                    <td>
 										                        {{$loop->iteration}}
 										                    </td>
@@ -128,14 +130,14 @@
 																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
 																						@if($st->nilai_dosen_kelas_utama == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_kelas_utama == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_kelas_utama == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -163,11 +165,14 @@
 																</div>
 										                        </td>
 										                    </tr>
+                                                            @endif
+                                                            @endif
 										                @endforeach
 										            </table>
 											</div>
 										</div>
 									</div>
+                                    </div>
 									@endif
 
 
@@ -440,14 +445,14 @@
 																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
 																						@if($st->nilai_dosen_penguji_1_utama == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_1_utama == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_1_utama == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -457,14 +462,14 @@
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
 																					>
 																						@if($st->nilai_dosen_penguji_1_penting == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_1_penting == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_1_penting == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -474,14 +479,14 @@
 																				<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
 																				>
 																					@if($st->nilai_dosen_penguji_1_pendukung == "L")
-																						<option selected ="selected" value="L">L</option>
+																						<option selected ="selected" value="L">B</option>
 																					@elseif ($st->nilai_dosen_penguji_1_pendukung == "M")
-																						<option selected ="selected" value="M">M</option>
+																						<option selected ="selected" value="M">C</option>
 																					@elseif ($st->nilai_dosen_penguji_1_pendukung == "K")
 																						<option selected ="selected" value="K">K</option>
 																					@else
-																						<option value="L">L</option>
-																						<option value="M">M</option>
+																						<option value="L">B</option>
+																						<option value="M">C</option>
 																						<option value="K">K</option>
 																					@endif
 																				</select>
@@ -507,14 +512,14 @@
 																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
 																						@if($st->nilai_dosen_penguji_2_utama == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_2_utama == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_2_utama == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -524,14 +529,14 @@
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
 																					>
 																						@if($st->nilai_dosen_penguji_2_penting == "L")
-																							<option selected ="selected" value="L">L</option>
+																							<option selected ="selected" value="L">B</option>
 																						@elseif ($st->nilai_dosen_penguji_2_penting == "M")
-																							<option selected ="selected" value="M">M</option>
+																							<option selected ="selected" value="M">C</option>
 																						@elseif ($st->nilai_dosen_penguji_2_penting == "K")
 																							<option selected ="selected" value="K">K</option>
 																						@else
-																							<option value="L">L</option>
-																							<option value="M">M</option>
+																							<option value="L">B</option>
+																							<option value="M">C</option>
 																							<option value="K">K</option>
 																						@endif
 																					</select>
@@ -541,14 +546,14 @@
 																				<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
 																				>
 																					@if($st->nilai_dosen_penguji_2_pendukung == "L")
-																						<option selected ="selected" value="L">L</option>
+																						<option selected ="selected" value="L">B</option>
 																					@elseif ($st->nilai_dosen_penguji_2_pendukung == "M")
-																						<option selected ="selected" value="M">M</option>
+																						<option selected ="selected" value="M">C</option>
 																					@elseif ($st->nilai_dosen_penguji_2_pendukung == "K")
 																						<option selected ="selected" value="K">K</option>
 																					@else
-																						<option value="L">L</option>
-																						<option value="M">M</option>
+																						<option value="L">B</option>
+																						<option value="M">C</option>
 																						<option value="K">K</option>
 																					@endif
 																				</select>
@@ -560,7 +565,7 @@
 																			</div>
 																			</div>
 																			@endif
-	
+
 																			</form>
 																			</fieldset>
 
@@ -568,7 +573,7 @@
 																			<div class="modal-footer">
 																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 																			</div>
-
+                                                                    </div>
 																		</div>
 																	</div>
 																</div>
@@ -581,6 +586,151 @@
 						        			</div>
 								      	</div>
 								    </div>
+
+                <div class="col col-md-6">
+                    <!-- <h2>Jadwal Dosen</h2> -->
+
+
+                    <!-- <h3>Jadwal</h3>
+                    <hr/> -->
+                    <h3>Jadwal</h3>
+                    <hr/>
+
+                    <div class="mt-5">
+                        @php($currenttime = \Carbon\Carbon::now()->toDateString())
+                        @foreach($mahasiswabimbingan as $item)
+                            @php($user = $item->user())
+                            @if($item->getHasilBimbingan()->count() > 0)
+                                @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
+                                @if($jadwalbimbingan >= $currenttime)
+                                    <div class="row">
+                                        <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                            <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                            <div>{{$jadwalbimbingan->format('d M Y')}}</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row mb-4">
+                                                <div class="col">
+                                                    <h5><span class="badge badge-info">Bimbingan</span></h5>
+                                                    <h4>{{$user->name}} - {{$user->username}}</h4>
+                                                    <h5>
+                                                        <span class="badge badge-primary">Tempat: Ruang dosen</span>
+                                                        <span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+                            @if(!is_null($item->tesis()))
+                                @php($seminar = $item->tesis()->seminarTesis())
+                                @if(!is_null($seminar))
+                                    @php($date = $seminar->hari)
+                                    @php($time = $seminar->waktu)
+                                    @if(!is_null($date) && !is_null($time))
+                                        @php($datetimeString = $date." ".$time)
+                                        @php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
+                                        @if($jadwalseminar >= $currenttime)
+                                            <div class="row">
+                                                <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                                    <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                                    <div>{{$jadwalseminar->format('d M Y')}}</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row mb-4">
+                                                        <div class="col">
+                                                            <h5><span class="badge badge-warning text-color-white">Seminar Tesis</span></h5>
+                                                            <h4>{{$user->name}} - {{$user->username}}</h4>
+                                                            <h5>
+                                                                <span class="badge badge-primary">Tempat: {{$seminar->tempat}}</span>
+                                                                <span class="badge badge-primary">Waktu: {{$jadwalseminar->format('g:i A')}}</span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+                        @endforeach
+                        @foreach($dosen->upcomingSidangAsPenguji1 as $st)
+                            @php($user = $st->tesis->mahasiswa->user())
+                            @if($st->tanggal.'T'.$st->waktu >= $currenttime)
+                                <div class="row">
+                                    <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                        <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                        <div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                @php($tsis = $st->tesis)
+                                                @php($useruji = $tsis->mahasiswa->user())
+                                                <h5><span class="badge badge-success">Sidang Tesis</span></h5>
+                                                <h4>{{$useruji->name}} - {{$useruji->username}}</h4>
+                                                <h6>
+                                                    Topik: {{$st->tesis->topic}} <br>
+                                                    Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+                                                    <br>
+                                                    @if($st->tesis->dosen_pembimbing_2)
+                                                        Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+                                                    @endif
+                                                    <br>
+                                                    Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+                                                    <br>
+                                                    Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+                                                </h6>
+                                                <h5>
+                                                    <span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+                                                    <span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        @foreach($dosen->upcomingSidangAsPenguji2 as $st)
+                            @php($user = $st->tesis->mahasiswa->user())
+                            @if($st->tanggal.'T'.$st->waktu >= $currenttime)
+                                <div class="row">
+                                    <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                        <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                        <div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row mb-4">
+                                            <div class="col">
+                                                @php($tsis2 = App\Thesis::where('id', $st->thesis_id)->first())
+                                                @php($useruji2 = App\Mahasiswa::where('id', $tsis2->mahasiswa_id)->first()->user())
+                                                <h5><span class="badge badge-success">Sidang Tesis</span></h5>
+                                                <h4>{{$useruji2->name}} - {{$useruji2->username}}</h4>
+                                                <h6>
+                                                    Topik: {{$st->tesis->topic}} <br>
+                                                    Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
+                                                    <br>
+                                                    @if($st->tesis->dosen_pembimbing_2)
+                                                        Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
+                                                    @endif
+                                                    <br>
+                                                    Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
+                                                    <br>
+                                                    Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
+                                                </h6>
+                                                <h5>
+                                                    <span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
+                                                    <span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
 						  		</div>
 
 					  		<!-- </div> -->
@@ -589,153 +739,9 @@
 			    <!-- </div> -->
 			    
 			  	<!-- </div> -->
-			
-			</div>
-			<div class="col col-md-6">
-				<!-- <h2>Jadwal Dosen</h2> -->
-				
-				
-				<!-- <h3>Jadwal</h3>
-		        <hr/> -->
-		        <h3>Jadwal</h3>
-		        <hr/>
-		        
-		        <div class="mt-5">
-		        	@php($currenttime = \Carbon\Carbon::now()->toDateString())
-		        	@foreach($mahasiswabimbingan as $item)
-						@php($user = $item->user())
-						@if($item->getHasilBimbingan()->count() > 0)
-				            @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
-				            @if($jadwalbimbingan >= $currenttime)
-						        <div class="row">
-						        	<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-						        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-						        		<div>{{$jadwalbimbingan->format('d M Y')}}</div>
-						        	</div>
-						        	<div class="col">
-						        		<div class="row mb-4">
-						        			<div class="col">
-						        				<h5><span class="badge badge-info">Bimbingan</span></h5>
-								        		<h4>{{$user->name}} - {{$user->username}}</h4>
-								        		<h5>
-								        			<span class="badge badge-primary">Tempat: Ruang dosen</span>
-								        			<span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
-								        		</h5>
-						        			</div>
-						        		</div>
-						        	</div>
-						        </div>
-						    @endif
-						@endif
-						@if(!is_null($item->tesis()))
-							@php($seminar = $item->tesis()->seminarTesis())
-							@if(!is_null($seminar))
-								@php($date = $seminar->hari)
-					        	@php($time = $seminar->waktu)
-								@if(!is_null($date) && !is_null($time))
-						        	@php($datetimeString = $date." ".$time)
-						        	@php($jadwalseminar = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s", $datetimeString))
-						        	@if($jadwalseminar >= $currenttime)
-						        		<div class="row">
-								        	<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-								        		<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-								        		<div>{{$jadwalseminar->format('d M Y')}}</div>
-								        	</div>
-								        	<div class="col">
-								        		<div class="row mb-4">
-								        			<div class="col">
-								        				<h5><span class="badge badge-warning text-color-white">Seminar Tesis</span></h5>
-										        		<h4>{{$user->name}} - {{$user->username}}</h4>
-										        		<h5>
-										        			<span class="badge badge-primary">Tempat: {{$seminar->tempat}}</span>
-										        			<span class="badge badge-primary">Waktu: {{$jadwalseminar->format('g:i A')}}</span>
-										        		</h5>
-								        			</div>
-								        		</div>
-								        	</div>
-								        </div>
-						        	@endif
-						        @endif
-					        @endif
-					    @endif
-			        @endforeach
-					@foreach($dosen->upcomingSidangAsPenguji1 as $st)
-						@php($user = $st->tesis->mahasiswa->user())
-						@if($st->tanggal.'T'.$st->waktu >= $currenttime)
-							<div class="row">
-								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
-								</div>
-								<div class="col">
-									<div class="row mb-4">
-										<div class="col">
-											@php($tsis = $st->tesis)
-											@php($useruji = $tsis->mahasiswa->user())
-											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
-											<h4>{{$useruji->name}} - {{$useruji->username}}</h4>
-											<h6>
-												Topik: {{$st->tesis->topic}} <br>
-												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
-												<br>
-												@if($st->tesis->dosen_pembimbing_2)
-												Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
-												@endif
-												<br>
-												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
-												<br>
-												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
-											</h6>
-											<h5>
-												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
-												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
-											</h5>
-										</div>
-									</div>
-								</div>
-							</div>
-						@endif
-					@endforeach
-					@foreach($dosen->upcomingSidangAsPenguji2 as $st)
-								@php($user = $st->tesis->mahasiswa->user())
-								@if($st->tanggal.'T'.$st->waktu >= $currenttime)
-							<div class="row">
-								<div class="col-md-4 text-center" style="border-right: 1px solid grey">
-									<i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-									<div>{{date("d M Y", strtotime($st->tanggal.'T'.$st->jam.'UTC'))}}</div>
-								</div>
-								<div class="col">
-									<div class="row mb-4">
-										<div class="col">
-											@php($tsis2 = App\Thesis::where('id', $st->thesis_id)->first())
-											@php($useruji2 = App\Mahasiswa::where('id', $tsis2->mahasiswa_id)->first()->user())
-											<h5><span class="badge badge-success">Sidang Tesis</span></h5>
-											<h4>{{$useruji2->name}} - {{$useruji2->username}}</h4>
-											<h6>
-												Topik: {{$st->tesis->topic}} <br>
-												Dosen Pembimbing 1 : {{$st->tesis->dosen_pembimbing_1->user->name}}
-												<br>
-												@if($st->tesis->dosen_pembimbing_2)
-													Dosen Pembimbing 2 : {{$st->tesis->dosen_pembimbing_2->user->name}}
-												@endif
-												<br>
-												Dosen Penguji 1 : {{$st->dosen_penguji1->name}}
-												<br>
-												Dosen Penguji 2 : {{$st->dosen_penguji2->name}}
-											</h6>
-											<h5>
-												<span class="badge badge-primary">Tempat: {{$st->tempat}}</span>
-												<span class="badge badge-primary">Waktu: {{date("g:i A",strtotime($st->waktu))}}</span>
-											</h5>
-										</div>
-									</div>
-								</div>
-							</div>
-						@endif
-					@endforeach
-		        </div>
 
 			</div>
+
 		</div>
     </div>
 @endsection

@@ -58,7 +58,7 @@ class Mahasiswa extends Model
         "-9" => "Gagal Seminar Proposal",
         "-13" => "Gagal Seminar Tesis"
     ];
-    protected $fillable= ['id'];
+    protected $fillable= ['id','id_kelas_tesis'];
     public function getStatus($status) {
         return Mahasiswa::STATUS_STRINGS[$status];
     }
@@ -112,6 +112,6 @@ class Mahasiswa extends Model
     }
 
     public function kelasTesis() {
-        return $this->belongsTo('App\KelasThesis','id_kelas_tesis','id');
+        return $this->belongsTo('App\KelasTesis','id_kelas_tesis','id');
     }
 }

@@ -18,7 +18,7 @@
                                 <input type="text" v-model="topics[i].judul" id="judul" class="form-control col-md-8 " required>
                             </div>
                             <div class="form-group row col-md-12">
-                                <label for="keilmuan" class="col-md-4 col-form-label text-md-right text-center ">Area Keilmuan<sup>*</sup></label>
+                                <label for="keilmuan" class="col-md-4 col-form-label text-md-right text-center ">Opsi <sup>*</sup></label>
                                 <input type="text" id="keilmuan" v-model="topics[i].keilmuan" class="form-control col-md-8 " required>
                             </div>
                             <div class="form-group row col-md-12">

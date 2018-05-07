@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\KelasTesis;
 use App\User;
 use App\Manajer;
 use App\Dosen;
@@ -95,7 +96,8 @@ class RegisterController extends Controller
            if($role == User::ROLE_DOSEN) {
                Dosen::create(['id'=>$user->id]);
            }else if($role == User::ROLE_MAHASISWA) {
-               Mahasiswa::create(['id'=>$user->id]);
+               $id_kelas_tesis = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
+               Mahasiswa::create(['id'=>$user->id, 'id_kelas_tesis'=>$id_kelas_tesis->id]);
            } else if($role == User::ROLE_MANAJER) {
                Manajer::create(['id'=>$user->id]);
            }
