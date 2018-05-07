@@ -43,7 +43,8 @@ class SidangTesisController extends Controller
         if(!$tesis)
             return abort(400);
         $sidangtesis = $tesis->sidangTesis();
-        $kelas = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
+        //$kelas = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
+        $kelas = KelasTesis::where('id_dosen_kelas',$currentUser->id);
         if(!$sidangtesis)
             return abort(400);
         else {
@@ -187,7 +188,7 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
-            }else if($kelas->id_dosen_kelas == $currentUser->id) {
+            }else if(count($kelas) > 0) {
                     $scoreutama = $request->get('scoreUtama');
 
                     $sidangtesis->nilai_dosen_kelas_utama = $scoreutama;

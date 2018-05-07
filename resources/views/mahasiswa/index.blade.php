@@ -33,7 +33,7 @@
                     </div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                     <div class="progress progress_2">
                         <div class="bar done"></div>
@@ -94,7 +94,7 @@
                     <div class="level level_2"><p>2</p></div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                     <div class="level level_3 level_reached"><p>3</p></div>
                 @else
@@ -136,7 +136,7 @@
                         </a>
                     @endif
 
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                         <a class="nav-link" data-toggle="tab" href="#step3">
                             <div class="level_text level3_text">
@@ -339,7 +339,7 @@
                 @endif
             </div>
         @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK &&
-            $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL) || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+            $mahasiswa->status < \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH) || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
             <div id="step2" class="container tab-pane fade active show">
         @else
             <div id="step2" class="container tab-pane fade">
@@ -382,7 +382,7 @@
                 @endif
             </div>
 
-        @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL &&
+        @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH &&
             $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
             <div id="step3" class="container tab-pane fade active show">
         @else

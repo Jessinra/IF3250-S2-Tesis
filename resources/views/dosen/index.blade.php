@@ -43,7 +43,7 @@
 
 					  			<hr/>
 					  			<div id="accordion">
-									@if($kelas->id_dosen_kelas == $dosen->id)
+									@if(count($kelas) > 0)
 									<div class="card">
 						      			<div class="card-header">
 						        			<a class="card-link" data-toggle="collapse" href="#collapseThree">
@@ -73,7 +73,9 @@
 										                </thead>
 										                @foreach($mahasiswakelas as $item)
 										                    @php($user = $item->user())
-										                     <tr class="text-center" >
+                                                            @if($item->id_kelas_tesis != null)
+                                                            @if($item->kelasTesis->id_dosen_kelas == $dosen->id)
+										                    <tr class="text-center" >
 										                    <td>
 										                        {{$loop->iteration}}
 										                    </td>
@@ -163,6 +165,8 @@
 																</div>
 										                        </td>
 										                    </tr>
+                                                            @endif
+                                                            @endif
 										                @endforeach
 										            </table>
 											</div>
