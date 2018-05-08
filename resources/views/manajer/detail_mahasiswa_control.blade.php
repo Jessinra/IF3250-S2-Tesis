@@ -685,9 +685,30 @@
                                         </tr>
                                         <tr>
                                             <th>Penguji 1</th>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_1_utama}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_1_penting}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_1_pendukung}}</td>
+                                            @if($sidangTesis->nilai_dosen_penguji_1_utama == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_utama == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_1_penting == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_penting == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_1_pendukung == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_pendukung == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
                                             <td> 
                                             <form action="/sidangtesis/nilai/penguji1/reset/{{$user->username}}" method="post">
                                             {{csrf_field()}}
@@ -699,9 +720,30 @@
                                         </tr>
                                         <tr>
                                             <th>Penguji 2</th>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_2_utama}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_2_penting}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_2_pendukung}}</td>
+                                            @if($sidangTesis->nilai_dosen_penguji_2_utama == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_utama == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_2_penting == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_penting == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_2_pendukung == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_pendukung == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
                                             <td>
                                             <form action="/sidangtesis/nilai/penguji2/reset/{{$user->username}}" method="post">
                                             {{csrf_field()}}
@@ -714,9 +756,30 @@
                                         </tr>
                                         <tr>
                                             <th>Pembimbing</th>
-                                            <td>{{$sidangTesis->nilai_dosen_pembimbing_utama}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_pembimbing_penting}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_pembimbing_pendukung}}</td>
+                                            @if($sidangTesis->nilai_dosen_pembimbing_utama == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_utama == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_pembimbing_penting == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_penting == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_pembimbing_pendukung == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_pendukung == 'M')
+                                                <td>C</td>
+                                            @else
+                                                <td>K</td>
+                                            @endif
+
                                             <td>
                                             <form action="/sidangtesis/nilai/pembimbing/reset/{{$user->username}}" method="post">
                                             {{csrf_field()}}
@@ -729,7 +792,13 @@
                                         </tr>
                                         <tr>
                                             <th>Dosen Tesis</th>
-                                            <td>{{$sidangTesis->nilai_dosen_kelas_utama}}</td>
+                                            @if($sidangTesis->nilai_dosen_kelas_utama == 'L')
+                                            <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_kelas_utama == 'M')
+                                            <td>C</td>
+                                            @else
+                                            <td>K</td>
+                                            @endif
                                             <td>-</td>
                                             <td>-</td>
                                             <td>
