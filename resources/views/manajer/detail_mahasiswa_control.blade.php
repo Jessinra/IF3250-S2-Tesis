@@ -107,7 +107,8 @@
                                 @endif
                             </div>
                         @endif
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK || $mahasiswa->status > \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK)
+                            @if ($mahasiswa->status > \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
 
                             <div class="control-jadwal mb-4">
                                 <h3>
@@ -145,6 +146,7 @@
                                     @endif
                                 </div>
                             </div>
+                            @endif
                         @endif
                         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_TELAH_DIAJUKAN || $mahasiswa->status<=\App\Mahasiswa::STATUS_TOPIK_DITOLAK)
                             <div class="section" id="pengajuan-topik mb-4">
@@ -569,8 +571,8 @@
                                 </div>
 
                                 <div id="seminartesis" class="container tab-pane fade"><br>
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS || $mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                                     <h3>Seminar Tesis</h3>
-                                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS || $mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                                         @php($seminarTesis = $mahasiswa->tesis()->seminarTesis())
 
                                         <div class="control-seminar-tesis mb-4s">
