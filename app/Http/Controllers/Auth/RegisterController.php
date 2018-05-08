@@ -105,7 +105,7 @@ class RegisterController extends Controller
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Success !</strong> New user has successfully registered!
                   </div>';
-           return view('auth.register');
+           return view('manajer.index');
         }
 //        echo $id;
 

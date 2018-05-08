@@ -57,7 +57,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">Phone Number</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" >
+                                <input id="phone" type="phone" pattern="^[+]?[0-9][0-9]([-]?\s?)[0-9](\s?\d?[-]?)*$" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" >
                             </div>
                         </div>
 
