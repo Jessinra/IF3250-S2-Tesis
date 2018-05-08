@@ -101,7 +101,11 @@ class RegisterController extends Controller
            } else if($role == User::ROLE_MANAJER) {
                Manajer::create(['id'=>$user->id]);
            }
-           return view('manajer.index');
+            echo '<div class="alert alert-success alert-dismissible fade show text-center">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Success !</strong> New user has successfully registered!
+                  </div>';
+           return view('auth.register');
         }
 //        echo $id;
 
