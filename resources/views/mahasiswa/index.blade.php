@@ -33,7 +33,7 @@
                     </div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                     <div class="progress progress_2">
                         <div class="bar done"></div>
@@ -94,7 +94,7 @@
                     <div class="level level_2"><p>2</p></div>
                 @endif
 
-                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH ||
                     $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                     <div class="level level_3 level_reached"><p>3</p></div>
                 @else
@@ -136,7 +136,7 @@
                         </a>
                     @endif
 
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL ||
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH ||
                         $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                         <a class="nav-link" data-toggle="tab" href="#step3">
                             <div class="level_text level3_text">
@@ -183,13 +183,13 @@
         </div>
 
         <div class="tab-content">
-        @if($mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+        @if($mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK and $mahasiswa->status > \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
             <div id="step1" class="container tab-pane fade active show">
         @else
             <div id="step1" class="container tab-pane fade">
         @endif
                 <h3 class="header">Seminar Topik</h3>
-                @if ($mahasiswa->seminarTopik() and $mahasiswa->status!=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK and $mahasiswa->status!=\App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                @if ($mahasiswa->seminarTopik() and $mahasiswa->status>=\App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK)
                     <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{date("d M Y H:i:s", strtotime($mahasiswa->seminarTopik()->schedule.'UTC'))}}</span></h4></p>
                     
                 @endif
@@ -338,8 +338,8 @@
                     <a class="btn btn-blue" href="/topik/pengajuan" role="button">Ajukan Topik</a>
                 @endif
             </div>
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK &&
-            $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)
+        @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK &&
+            $mahasiswa->status < \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH) || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
             <div id="step2" class="container tab-pane fade active show">
         @else
             <div id="step2" class="container tab-pane fade">
@@ -372,14 +372,18 @@
                     </div>
                     <br>
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Edit Proposal</a>
-                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
-                    <p>Anda dapat mengunggah proposal topik tesis.</p>
+                @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                    @if($mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                        <p>Proposal Anda ditolak. Anda dapat menggungah proposal kembali.</p>
+                    @else
+                        <p>Anda dapat mengunggah proposal topik tesis.</p>
+                    @endif
                     <a class="btn btn-blue" href="/proposal/upload" role="button">Unggah Proposal</a>
                 @endif
             </div>
 
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL &&
-            $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+        @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_DOSEN_PEMBIMBING_TELAH_DIPILIH &&
+            $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || $mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
             <div id="step3" class="container tab-pane fade active show">
         @else
             <div id="step3" class="container tab-pane fade">
@@ -392,12 +396,19 @@
                 <div>Dosen Pembimbing 2: {{$tesis->dosen_pembimbing_2->user->name}}</div>
                     @endif
                 @endif
+                @if($tesis)
+                    @if(isset($tesis->seminarTesis()->hari) && isset($tesis->seminarTesis()->waktu))
+                    @php($tesis_hari = $tesis->seminarTesis()->hari)
+                    @php($tesis_waktu = $tesis->seminarTesis()->waktu)
+                        <p>Jadwal yang ditetapkan: <h4><span class="badge badge-info">{{$tesis_hari}} {{$tesis_waktu}}</span></h4></p>
+                    @endif
+                @endif
                 <p>Anda dapat mengunggah hasil bimbingan setiap kali selesai bimbingan.</p>
                 <a class="btn btn-blue" href="/hasilbimbingan/tambah" role="button">Entri Hasil Bimbingan</a>
                 <a class="btn btn-outline-dark" href="/hasilbimbingan/mahasiswa" role="button">Lihat Hasil Bimbingan</a>
 
             </div>
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS && $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS)
             <div id="step4" class="container tab-pane fade active show mt-4">
         @else
             <div id="step4" class="container tab-pane fade mt-4">
@@ -407,16 +418,28 @@
                 <a class="btn btn-blue" href="/sidangtesis/daftar" role="button">Daftar Sidang Tesis</a>
             </div>
 
-        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS)
+        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS )
             <div id="step5" class="container tab-pane fade active show mt-4">
-        @else
-            <div id="step5" class="container tab-pane fade mt-4">
-        @endif
                 <h3 class="header">Lulus</h3>
                 <p>Berikut ini hasil akhir Tesis Anda.</p>
-                <p>Lorem ipsum</p>
+                <b>
+                    @if($mahasiswa->tesis()->sidangTesis()->nilai=="E")
+                        <font color="red">
+                            TIDAK LULUS
+                            @else
+                                <font color="green">
+                                    {{$mahasiswa->tesis()->sidangTesis()->nilai}}
+                                    @endif
+                                </font>
+                </b>
+
                 {{--<a class="btn btn-blue" href="/sidangtesis/daftar" role="button">Daftar Sidang Tesis</a>--}}
             </div>
+        @else
+            <div id="step5" class="container tab-pane fade mt-4">
+            </div>
+        @endif
+
         </div>
 
 

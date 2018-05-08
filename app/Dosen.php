@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Dosen extends Model
 {
@@ -21,6 +22,10 @@ class Dosen extends Model
         return $this->belongsTo('\App\User','id','id');
     }
 
+    public function user1() {
+        return User::find($this->id);
+    }
+    
     public function getHasilBimbinganBelumDisetujui(){
         $hsl_bimbingan = HasilBimbingan::where('dosen_id',$this->id)->where('status',0)->get();
         return $hsl_bimbingan;
@@ -46,5 +51,9 @@ class Dosen extends Model
 
     public function sidangTesisNeedApproval() {
         return SidangTesis::where('ajuan_penguji1', $this->id)->orWhere('ajuan_penguji2',$this->id)->orWhere('ajuan_penguji3',$this->id)->get();
+    }
+
+    public function sidangTesisApproved() {
+        return SidangTesis::where('dosen_penguji_1', $this->id)->orWhere('dosen_penguji_2',$this->id)->get();
     }
 }

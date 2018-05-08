@@ -67,12 +67,12 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div id="topik" class="container tab-pane active"><br>
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK )
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                         <div class="control-seminar-topik mb-4">
                             <h3>
                                 Penilaian Seminar Topik
                             </h3>
-                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                            @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                                 <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                     <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                     &nbsp Kelulusan seminar topik ditetapkan oleh {{$seminarTopik->evaluator->name}}
@@ -107,14 +107,14 @@
                             @endif
                         </div>
                         @endif
-                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK)
+                        @if($mahasiswa->status >= \App\Mahasiswa::STATUS_TOPIK_DITERIMA || $mahasiswa->status < \App\Mahasiswa::STATUS_TOPIK_DITOLAK || $mahasiswa->status > \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
 
                             <div class="control-jadwal mb-4">
                                 <h3>
                                     Penetapan Jadwal Seminar Topik
                                 </h3>
                                 <div>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK || $mahasiswa->status <= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                                         <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                             <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                             &nbsp Jadwal seminar topik ditetapkan oleh {{$seminarTopik->creator->name}}
@@ -253,7 +253,7 @@
                                 <h3>
                                     Penetapan Dosen Pembimbing
                                 </h3>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
                                     <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                         <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                         &nbsp Dosen pembimbing telah ditetapkan oleh {{$tesis->creator_admin->name}}
@@ -340,7 +340,7 @@
                                 <h3>
                                     Penilaian Seminar Proposal
                                 </h3>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL || $mahasiswa->status < \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
                                     <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                         <i class="material-icons font-size-18-px mr-2">check_circle</i>
                                         &nbsp Kelulusan seminar proposal ditetapkan oleh {{$seminarTopik->evaluator->name}}
@@ -348,7 +348,7 @@
 
                                     </div>
                                     <fieldset disabled="disabled">
-                                        @elseif($mahasiswa->status <= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
+                                        @elseif($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL)
                                             <div class="alert alert-success row align-items-center flex-row display-flex flex-wrap-nowrap">
                                                 <i class="material-icons font-size-18-px mr-2">cancel</i>
                                                 Seminar Topik dinyatakan tidak lulus oleh {{$seminarTopik->evaluator->name}}
@@ -388,12 +388,12 @@
                         @endif
 
 
-                        @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA || $mahasiswa->status <= \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                        @if($mahasiswa->status >=  \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA and $mahasiswa->status != \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                             <div class="control-pengajuan-proposal mb-4">
                                 <h3>
                                     Penetapan Seminar Proposal
                                 </h3>
-                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL)
+                                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL || $mahasiswa->status < \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                                     <div class="alert alert-success row align-items-center">
                                         <i class="material-icons font-size-18-px">check_circle</i>
                                         &nbsp Jadwal seminar proposal ditetapkan oleh {{$seminarProposal->creator->name}}
@@ -458,12 +458,16 @@
                                         {{csrf_field()}}
                                         <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
                                         <input type="hidden" value="{{$proposal->id}}" name="proposal">
+                                        @if($mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
+                                            <fieldset disabled="disabled">
+                                        @endif
                                         <button class="btn btn-red mr-1" name="action" value="0">
                                             Tolak
                                         </button>
                                         <button class="btn btn-blue ml-1" name="action" value="1">
                                             Terima
                                         </button>
+                                        </fieldset>
                                     </div>
                                 </form>
 
@@ -471,11 +475,7 @@
                             @if($proposal->status >= \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
                                 </fieldset>
                             @endif
-                        </div>
-
-
                         @endif
-                    </div>
 
                     <div id="bimbingan" class="container tab-pane fade"><br>
                         
@@ -541,7 +541,7 @@
                                                         <!-- Modal body -->
                                                         <div class="modal-body">
                                                             <h5>Dosen Pembimbing: </h5>
-                                                            <p>{{$item->name}}</p>
+                                                            <p>{{$item->dosen_pembimbing->user1()->name}}</p>
                                                             <h5>Waktu Bimbingan: </h5>
                                                             <p>{{$item->tanggal_waktu}}</p>
                                                             <h5>Hasil dan diskusi: </h5>
@@ -585,6 +585,7 @@
                             </div>
                             <fieldset disabled="disabled">
                                 @endif
+                        @if($mahasiswa->status != \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                         <div>
                             <form action="/seminartesis/edit/{{$user->username}}" method="post">
                                 {{csrf_field()}}
@@ -662,6 +663,7 @@
                                 </div>
                             </form>
                         </div>
+                        @endif
                     </div>
                 @endif
                     </div>
@@ -683,9 +685,36 @@
                                         </tr>
                                         <tr>
                                             <th>Penguji 1</th>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_1_utama}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_1_penting}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_1_pendukung}}</td>
+                                            @if($sidangTesis->nilai_dosen_penguji_1_utama == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_utama == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_utama == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_1_penting == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_penting == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_penting == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_1_pendukung == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_pendukung == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_pendukung == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
                                             <td> 
                                             <form action="/sidangtesis/nilai/penguji1/reset/{{$user->username}}" method="post">
                                             {{csrf_field()}}
@@ -697,9 +726,36 @@
                                         </tr>
                                         <tr>
                                             <th>Penguji 2</th>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_2_utama}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_2_penting}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_penguji_2_pendukung}}</td>
+                                            @if($sidangTesis->nilai_dosen_penguji_2_utama == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_utama == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_utama == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_2_penting == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_penting == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_penting == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_penguji_2_pendukung == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_pendukung == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_pendukung == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
                                             <td>
                                             <form action="/sidangtesis/nilai/penguji2/reset/{{$user->username}}" method="post">
                                             {{csrf_field()}}
@@ -712,9 +768,36 @@
                                         </tr>
                                         <tr>
                                             <th>Pembimbing</th>
-                                            <td>{{$sidangTesis->nilai_dosen_pembimbing_utama}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_pembimbing_penting}}</td>
-                                            <td>{{$sidangTesis->nilai_dosen_pembimbing_pendukung}}</td>
+                                            @if($sidangTesis->nilai_dosen_pembimbing_utama == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_utama == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_utama == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_pembimbing_penting == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_penting == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_penting == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
+                                            @if($sidangTesis->nilai_dosen_pembimbing_pendukung == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_pendukung == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_pendukung == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+
                                             <td>
                                             <form action="/sidangtesis/nilai/pembimbing/reset/{{$user->username}}" method="post">
                                             {{csrf_field()}}
@@ -727,7 +810,15 @@
                                         </tr>
                                         <tr>
                                             <th>Dosen Tesis</th>
-                                            <td>{{$sidangTesis->nilai_dosen_kelas_utama}}</td>
+                                            @if($sidangTesis->nilai_dosen_kelas_utama == 'L')
+                                                <td>B</td>
+                                            @elseif($sidangTesis->nilai_dosen_kelas_utama == 'M')
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_kelas_utama == 'K')
+                                                <td>K</td>
+                                            @else
+                                                <td></td>
+                                            @endif
                                             <td>-</td>
                                             <td>-</td>
                                             <td>
@@ -790,7 +881,7 @@
                                                 <div class="form-group row col-md-12">
                                                     <label for="semester-daftar" class="col-md-4 col-form-label text-md-right text-center">Terdaftar pada Semester<sup>*</sup></label>
                                                     <div class="display-flex align-items-center">
-                                                    {{$sidangTesis->semesterTerdaftar}}
+                                                    {{$sidangTesis->semester_terdaftar}}
                                                     </div>
                                                 </div>
                                                 <div class="form-group row col-md-12">

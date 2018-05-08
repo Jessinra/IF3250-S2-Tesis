@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'List Pengajuan Topik')
+@section('title', 'Detail Mahasiswa')
 
 
 @section('content')
@@ -88,7 +88,6 @@
                                     </div>
                                     <fieldset disabled="disabled">
                                 @endif
-                            @endif
                                 <div class="row justify-content-center">
 
                                     <form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
@@ -99,14 +98,14 @@
                                             <select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama"
                                             >
                                                 @if($sidangTesis->nilai_dosen_pembimbing_utama == "L")
-                                                    <option selected ="selected" value="L">L</option>
+                                                    <option selected ="selected" value="L">B</option>
                                                 @elseif ($sidangTesis->nilai_dosen_pembimbing_utama == "M")
-                                                    <option selected ="selected" value="M">M</option>
+                                                    <option selected ="selected" value="M">C</option>
                                                 @elseif ($sidangTesis->nilai_dosen_pembimbing_utama == "K")
                                                     <option selected ="selected" value="K">K</option>
                                                 @else
-                                                    <option value="L">L</option>
-                                                    <option value="M">M</option>
+                                                    <option value="L">B</option>
+                                                    <option value="M">C</option>
                                                     <option value="K">K</option>
                                                 @endif
                                             </select>
@@ -116,14 +115,14 @@
                                             <select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexPenting"
                                             >
                                                 @if($sidangTesis->nilai_dosen_pembimbing_penting == "L")
-                                                    <option selected ="selected" value="L">L</option>
+                                                    <option selected ="selected" value="L">B</option>
                                                 @elseif ($sidangTesis->nilai_dosen_pembimbing_penting == "M")
-                                                    <option selected ="selected" value="M">M</option>
+                                                    <option selected ="selected" value="M">C</option>
                                                 @elseif ($sidangTesis->nilai_dosen_pembimbing_penting == "K")
                                                     <option selected ="selected" value="K">K</option>
                                                 @else
-                                                    <option value="L">L</option>
-                                                    <option value="M">M</option>
+                                                    <option value="L">B</option>
+                                                    <option value="M">C</option>
                                                     <option value="K">K</option>
                                                 @endif
                                             </select>
@@ -133,14 +132,14 @@
                                             <select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexPendukung"
                                             >
                                                 @if($sidangTesis->nilai_dosen_pembimbing_pendukung == "L")
-                                                    <option selected ="selected" value="L">L</option>
+                                                    <option selected ="selected" value="L">B</option>
                                                 @elseif ($sidangTesis->nilai_dosen_pembimbing_pendukung == "M")
-                                                    <option selected ="selected" value="M">M</option>
+                                                    <option selected ="selected" value="M">C</option>
                                                 @elseif ($sidangTesis->nilai_dosen_pembimbing_pendukung == "K")
                                                     <option selected ="selected" value="K">K</option>
                                                 @else
-                                                    <option value="L">L</option>
-                                                    <option value="M">M</option>
+                                                    <option value="L">B</option>
+                                                    <option value="M">C</option>
                                                     <option value="K">K</option>
                                                 @endif
                                             </select>
@@ -153,8 +152,9 @@
                                     </form>
                                 </div>
                                 </fieldset>
+                            @endif
                     @endif
-                    @endif
+                @endif
                 @endif
                 @if($tesis->sidangTesis())
                     <div class="mb-2">
@@ -274,7 +274,8 @@
                     </fieldset>
                 @endif
                 @if($seminarTesis)
-                @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2))
+                @if($mahasiswa->status != \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
+                @if($seminarTesis->tesis->dosen_pembimbing1 == Auth::user()->id && $seminarTesis->approval_pembimbing1 && ($seminarTesis->approval_pembimbing2 || !$tesis->dosen_pembimbing2) && ($seminarTesis->draft_laporan))
                     <div class="mb-2">
                         <h3>
                             Penilaian Seminar Tesis
@@ -304,6 +305,7 @@
                         </div>
                     </div>
                     </fieldset>
+                @endif
                 @endif
                 @endif
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS)
@@ -457,7 +459,7 @@
                                                 <!-- Modal body -->
                                                 <div class="modal-body">
                                                     <h5>Dosen Pembimbing: </h5>
-                                                    <p>{{$item->name}}</p>
+                                                    <p>{{$item->dosen_pembimbing->user1()->name}}</p>
                                                     <h5>Waktu Bimbingan: </h5>
                                                     <p>{{$item->tanggal_waktu}}</p>
                                                     <h5>Hasil dan diskusi: </h5>

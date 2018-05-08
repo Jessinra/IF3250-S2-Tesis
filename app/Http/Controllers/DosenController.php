@@ -7,6 +7,7 @@ use App\User;
 use App\Dosen;
 use App\Thesis;
 use App\SeminarTesis;
+use App\KelasTesis;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +32,10 @@ class DosenController extends Controller
             $iddosen = Auth::user()->id;
             $idmahasiswabimbingan = Thesis::where('dosen_pembimbing1', $iddosen)->orWhere('dosen_pembimbing2', $iddosen)->pluck('mahasiswa_id');
             $mahasiswabimbingan = Mahasiswa::whereIn('id',$idmahasiswabimbingan)->get();
-
-            return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan]);
+            $mahasiswakelas = Mahasiswa::where('status','>=',14)->get();
+            //$kelas = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
+            $kelas = KelasTesis::where('id_dosen_kelas',$iddosen)->get();
+            return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan, 'mahasiswakelas' => $mahasiswakelas, 'kelas' =>$kelas]);
         } else {
             return abort(403);
         }
