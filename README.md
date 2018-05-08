@@ -27,7 +27,9 @@
 5. Run `composer install`
 6. Run `php artisan key:generate`
 7. Run `php artisan config:cache`
-8. Please make sure that your web server already configured to `public/` folder
+9. Run `php artisan migrate`
+10. Run `npm run production`
+11. Please make sure that your web server already configured to `public/` folder
 
 ### Developers:
 1. Kanisius Kenneth Halim (13515008)
