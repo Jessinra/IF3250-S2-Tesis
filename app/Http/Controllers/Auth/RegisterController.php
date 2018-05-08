@@ -87,7 +87,19 @@ class RegisterController extends Controller
         if(User::where('username',$username)->count()>0) {
             echo '<div class="alert alert-warning alert-dismissible fade show text-center">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Warning!</strong> This user already exist.
+                    This user <strong>already exist.</strong>
+                  </div>';
+            return view('auth.register');
+        } else if(strlen($data['username']) > 18){
+            echo '<div class="alert alert-warning alert-dismissible fade show text-center">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Username</strong> too long (maximum size: 18 characters).
+                  </div>';
+            return view('auth.register');
+        } else if(strlen($data['phone']) > 18){
+            echo '<div class="alert alert-warning alert-dismissible fade show text-center">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Invalid</strong> phone number.
                   </div>';
             return view('auth.register');
         } else {
