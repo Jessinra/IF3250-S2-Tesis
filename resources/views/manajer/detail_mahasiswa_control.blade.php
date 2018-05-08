@@ -689,24 +689,30 @@
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_penguji_1_utama == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_utama == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             @if($sidangTesis->nilai_dosen_penguji_1_penting == 'L')
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_penguji_1_penting == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_penting == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             @if($sidangTesis->nilai_dosen_penguji_1_pendukung == 'L')
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_penguji_1_pendukung == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_penguji_1_pendukung == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             <td> 
@@ -724,24 +730,30 @@
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_penguji_2_utama == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_utama == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             @if($sidangTesis->nilai_dosen_penguji_2_penting == 'L')
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_penguji_2_penting == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_penting == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             @if($sidangTesis->nilai_dosen_penguji_2_pendukung == 'L')
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_penguji_2_pendukung == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_penguji_2_pendukung == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             <td>
@@ -760,24 +772,30 @@
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_pembimbing_utama == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_utama == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             @if($sidangTesis->nilai_dosen_pembimbing_penting == 'L')
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_pembimbing_penting == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_penting == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             @if($sidangTesis->nilai_dosen_pembimbing_pendukung == 'L')
                                                 <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_pembimbing_pendukung == 'M')
                                                 <td>C</td>
-                                            @else
+                                            @elseif($sidangTesis->nilai_dosen_pembimbing_pendukung == 'K')
                                                 <td>K</td>
+                                            @else
+                                                <td></td>
                                             @endif
 
                                             <td>
@@ -793,11 +811,13 @@
                                         <tr>
                                             <th>Dosen Tesis</th>
                                             @if($sidangTesis->nilai_dosen_kelas_utama == 'L')
-                                            <td>B</td>
+                                                <td>B</td>
                                             @elseif($sidangTesis->nilai_dosen_kelas_utama == 'M')
-                                            <td>C</td>
+                                                <td>C</td>
+                                            @elseif($sidangTesis->nilai_dosen_kelas_utama == 'K')
+                                                <td>K</td>
                                             @else
-                                            <td>K</td>
+                                                <td></td>
                                             @endif
                                             <td>-</td>
                                             <td>-</td>
