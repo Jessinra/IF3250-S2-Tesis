@@ -29,10 +29,21 @@
                         {{csrf_field()}}
                     <tr>
                         <td>
-                            <input type="text" id="tahun" name="tahun" class="form-control col-md-8 " value="" required>
+                            <select type="text" id="tahun" class="form-control col-md-8" name="tahun">
+                                <option value=""> </option>
+                                @if(idate("m") > 6)
+                                    <option value="{{idate("Y")}}">{{idate("Y")}}/{{idate("Y")+1}}</option>
+                                @else
+                                    <option value="{{idate("Y")}}">{{idate("Y")-1}}/{{idate("Y")}}</option>
+                                @endif
+                            </select>
                         </td>
                         <td>
-                            <input type="text" id="semester" name="semester" class="form-control col-md-8 " value="" required>
+                            <select type="text" id="semester" class="form-control col-md-8" name="semester">
+                                <option value=""> </option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
                         </td>
                         <td>
                             <select type="text" id="dosen_id" class="form-control col-md-8" name="dosen_id">
@@ -81,7 +92,12 @@
                             {{$item->id}}
                         </td>
                         <td>
-                            {{$item->tahun}}
+                            @if($item->semester == 1)
+                                {{$item->tahun}}/{{$item->tahun+1}}
+                            @else
+                                {{$item->tahun-1}}/{{$item->tahun}}
+                            @endif
+
                         </td>
                         <td>
                             {{$item->semester}}

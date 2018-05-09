@@ -39,9 +39,22 @@ class KelasTesisController extends Controller
                 echo json_encode($validator->errors());
             } else {
                 $ok_count++;
-
+                $tahun = null;
+                if(idate("m") > 6){
+                    if($data['semester'] == 1){
+                        $tahun = idate("Y");
+                    }else{
+                        $tahun = idate("Y")+1;
+                    }
+                }else{
+                    if($data['semester'] == 1){
+                        $tahun = idate("Y")-1;
+                    }else{
+                        $tahun = idate("Y");
+                    }
+                }
                 $kelas_tesis = KelasTesis::create([
-                    'tahun' => $data['tahun'],
+                    'tahun' => $tahun,
                     'semester' => $data['semester'],
                     'id_dosen_kelas' => $data['dosen_id']
                 ]);
