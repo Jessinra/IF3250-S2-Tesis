@@ -1025,7 +1025,7 @@
 
                                                     </div>
 
-                                                    <div class="justify-content-center row" style="padding-bottom: 10px">
+                                                    <div class="justify-content-center row" style="padding-bottom: 20px">
                                                         <button class="btn btn-blue align-items-center display-flex">
                                                             <i class="material-icons pencil md-12 font-size-18-px">save</i>
                                                             Simpan
