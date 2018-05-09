@@ -38,4 +38,20 @@ class RekapDataController extends Controller
             return abort(303);
         }
     }
+
+    public function showHistoryMahasiswa(){
+        $manajer = Auth::user()->isManajer();
+        if($manajer) {
+            $mahasiswa = Mahasiswa::join('users','users.id','=','mahasiswas.id')
+                                    ->select('users.username','mahasiswas.*')
+                                    ->where('mahasiswas.status', '=', Mahasiswa::STATUS_NOT_ACTIVE)
+                                    ->orWhere('mahasiswas.status', '=', Mahasiswa::STATUS_LULUS)
+                                    ->orderBy('mahasiswas.status','desc')
+                                    ->orderBy('users.username','asc')
+                                    ->get();
+            return view('manajer.mahasiswa_history_control', ['mahasiswa' => $mahasiswa]);
+        } else {
+            abort(403);
+        }
+    }
 }

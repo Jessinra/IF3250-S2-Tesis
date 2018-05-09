@@ -29,6 +29,16 @@
             </div>
 
             <div class="col-xs-6 col-lg-3 text-center">
+                <a href="/mahasiswa/history" class="thumbnail">
+                    <div>
+                        <i class="material-icons icon-style">history</i>
+                    </div>
+
+                    History Mahasiswa
+                </a>
+            </div>
+
+            <div class="col-xs-6 col-lg-3 text-center">
                 <a href="/mahasiswa/control" class="thumbnail">
                     <div>
                         <i class="material-icons icon-style">group</i>
