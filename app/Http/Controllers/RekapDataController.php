@@ -18,7 +18,10 @@ class RekapDataController extends Controller
     public function showRekapMahasiswa(){
         $manajer = Auth::user()->isManajer();
         if($manajer){
-            $mahasiswa = Mahasiswa::get();
+            $mahasiswa = Mahasiswa::join('users','users.id','=','mahasiswas.id')
+                                    ->select('users.username','mahasiswas.*')
+                                    ->orderBy('users.username','asc')
+                                    ->get();
             return view('manajer.rekap_data_mahasiswa',['mahasiswa' => $mahasiswa]);
         }else{
             return abort(303);

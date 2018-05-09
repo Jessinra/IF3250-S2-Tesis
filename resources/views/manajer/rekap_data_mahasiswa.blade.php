@@ -7,6 +7,15 @@
 @section('content')
     <div class="container">
         <h1>Rekap Perkembangan Mahasiswa</h1>
+        <div class="btns">
+            <button class="advancer-btn btn-primary paddle hidden left-btn">
+                <
+            </button>
+            <button class="advancer-btn btn-primary paddle right-btn">
+                >
+            </button>
+        </div>
+
         <div class="row rekap-table">
             <div class="row justify-content-center left table-responsive">
                 <table class="rekap-name-table table table-hover">
@@ -35,18 +44,17 @@
                 </table>
             </div>
 
-
-            <div class="row justify-content-center table-responsive right">
-                <table class="mahasiswa-control-table table table-hover">
+            <div class="progress-mhs row justify-content-center table-responsive right">
+                <table class="mahasiswa-control-table table table-hover table-bordered">
                     <colgroup span="4"></colgroup>
                     <colgroup span="4"></colgroup>
-                    <colgroup span="3"></colgroup>
+                    <colgroup span="2"></colgroup>
                     <colgroup span="2"></colgroup>
 
                     <tr>
                         <th colspan="4" scope="colgroup">Seminar Topik</th>
                         <th colspan="4" scope="colgroup">Seminar Proposal</th>
-                        <th colspan="3" scope="colgroup">Seminar Tesis</th>
+                        <th colspan="2" scope="colgroup">Seminar Tesis</th>
                         <th colspan="2" scope="colgroup">Sidang Tesis</th>
                     </tr>
                     <tr>
@@ -60,7 +68,7 @@
                         <th scope="col">Siap Seminar Proposal</th>
                         <th scope="col">Lulus Seminar Proposal</th>
 
-                        <th scope="col">Masa Bimbingan</th>
+                        {{--<th scope="col">Masa Bimbingan</th>--}}
                         <th scope="col">Siap Seminar Tesis</th>
                         <th scope="col">Lulus Seminar Tesis</th>
 
@@ -160,19 +168,19 @@
                                 <td></td>
                             @endif
 
+                            {{--@if($item->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN ||--}}
+                                {{--$item->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)--}}
+                                {{--<td class="done"></td>--}}
+                            {{--@elseif($item->status == \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)--}}
+                                {{--<td class="doing"></td>--}}
+                            {{--@else--}}
+                                {{--<td></td>--}}
+                            {{--@endif--}}
+
                             @if($item->status >= \App\Mahasiswa::STATUS_MASA_BIMBINGAN ||
                                 $item->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
                                 <td class="done"></td>
                             @elseif($item->status == \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL)
-                                <td class="doing"></td>
-                            @else
-                                <td></td>
-                            @endif
-
-                            @if($item->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS ||
-                                $item->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS)
-                                <td class="done"></td>
-                            @elseif($item->status == \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
                                 <td class="doing"></td>
                             @else
                                 <td></td>
@@ -205,9 +213,32 @@
                         </tr>
                     @endforeach
                 </table>
+
             </div>
-
-
         </div>
     </div>
+@endsection
+
+@section('bottomjs')
+    <script>
+        var scrollDuration = 300;
+
+        var leftPaddle = document.getElementsByClassName('left-btn');
+        var rightPaddle = document.getElementsByClassName('right-btn');
+        var menuWrapperSize = 700;
+
+        var menuSize = 1100;
+        // get how much of menu is invisible
+        var menuInvisibleSize = menuSize - menuWrapperSize;
+
+        // scroll to left
+        $(rightPaddle).on('click', function() {
+            $('.progress-mhs').animate( { scrollLeft: menuInvisibleSize}, scrollDuration);
+        });
+
+        // scroll to right
+        $(leftPaddle).on('click', function() {
+            $('.progress-mhs').animate( { scrollLeft: '0' }, scrollDuration);
+        });
+    </script>
 @endsection
