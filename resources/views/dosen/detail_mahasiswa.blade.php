@@ -211,6 +211,7 @@
                                             Usulan Dosen Penguji
                                         </label>
                                         <select name="usulan_penguji1"  class="form-control col-md-8" id="">
+                                            <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
                                                 <option value="{{$item->id}}"
                                                         @if($sidangTesis->ajuan_penguji1 == $item->id)
@@ -229,6 +230,7 @@
                                             Usulan Dosen Penguji
                                         </label>
                                         <select name="usulan_penguji2"  class="form-control col-md-8" id="">
+                                            <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
                                                 <option value="{{$item->id}}"
                                                         @if($sidangTesis->ajuan_penguji2 == $item->id)
@@ -246,6 +248,7 @@
                                             Usulan Dosen Penguji
                                         </label>
                                         <select name="usulan_penguji3"  class="form-control col-md-8" id="">
+                                            <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
                                                 <option value="{{$item->id}}"
                                                         @if($sidangTesis->ajuan_penguji3 == $item->id)
