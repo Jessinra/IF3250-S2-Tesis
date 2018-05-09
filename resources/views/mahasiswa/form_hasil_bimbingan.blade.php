@@ -76,8 +76,8 @@
                         <textarea class="form-control col-md-8" name="rencana_tindak_lanjut" form="form-hsl-bimbingan" required>{{$rencana}}</textarea>
                     </div>
                     <div class="form-group row col-md-12">
-                        <label for="waktu_bimbingan_selanjutnya" class="col-md-4 col-form-label text-md-right text-center">Waktu Bimbingan Selanjutnya<sup>*</sup></label>
-                        <input type="datetime-local" id="waktu_bimbingan_selanjutnya" name="waktu_bimbingan_selanjutnya" class="form-control col-md-8 " value="{{$tgl}}" required>
+                        <label for="waktu_bimbingan_selanjutnya" class="col-md-4 col-form-label text-md-right text-center">Waktu Bimbingan Selanjutnya</label>
+                        <input type="datetime-local" id="waktu_bimbingan_selanjutnya" name="waktu_bimbingan_selanjutnya" class="form-control col-md-8 " value="{{$tgl}}">
                     </div>
                 </div>
 
