@@ -20,7 +20,7 @@ class KelasTesisController extends Controller
     public function showKelasTesis() {
         $manajer = Auth::user()->isManajer();
         if($manajer) {
-            $kelas_tesis = KelasTesis::get();
+            $kelas_tesis = KelasTesis::orderBy('created_at','desc')->get();
             $dosen = Dosen::get();
             return view('manajer.kelas_tesis',['kelas_tesis' => $kelas_tesis, 'dosen' => $dosen]);
         } else {

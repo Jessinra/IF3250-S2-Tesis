@@ -72,7 +72,7 @@
                 <thead>
                 <tr class="text-center">
                     <th>
-                        ID Kelas
+                        No
                     </th>
                     <th>
                         Tahun
@@ -89,7 +89,7 @@
                 @foreach($kelas_tesis as $item)
                     <tr class="text-center">
                         <td>
-                            {{$item->id}}
+                            {{$loop->iteration}}
                         </td>
                         <td>
                             @if($item->semester == 1)
