@@ -231,6 +231,15 @@ class SidangTesisController extends Controller
                         }
                     }
                     $sidangtesis->save();
+
+                    if(!is_null($tesis->sidangTesis()->nilai)) {
+                        if ($tesis->sidangTesis()->nilai != "E") {
+                            $mhs->status = Mahasiswa::STATUS_LULUS;
+                            $mhs->t_lulus = date("Y-m-d H:i:s");
+                            $mhs->save();
+                        }
+                    }
+
                     return back();
             } else {
                 return abort(403);
@@ -567,6 +576,7 @@ class SidangTesisController extends Controller
             $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');            
             $sidang->save();
             $mhs->status = Mahasiswa::STATUS_SIAP_SIDANG_TESIS;
+            $mhs->t_sidang = date("Y-m-d H:i:s");
             $mhs->save();
             return back();
         }  else{

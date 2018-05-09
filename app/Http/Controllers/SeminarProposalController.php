@@ -25,6 +25,7 @@ class SeminarProposalController extends Controller
                     ]
                 );
                 $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_PROPOSAL;
+                $mahasiswa->t_proposal3 = date("Y-m-d H:i:s");
                 $mahasiswa->save();
                 return redirect('/mahasiswa/control/'.$mahasiswa->user()->username);
             } else {
@@ -49,6 +50,7 @@ class SeminarProposalController extends Controller
             $sp->score = $score;
             if($sp->passed) {
                 $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL;
+                $mhs->t_proposal4 = date("Y-m-d H:i:s");
             } else {
                 $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL;
             }

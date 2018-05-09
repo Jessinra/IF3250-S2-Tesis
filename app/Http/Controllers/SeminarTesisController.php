@@ -57,6 +57,7 @@ class SeminarTesisController extends Controller
                   'approval_pembimbing2' => $db2,
               ]);
               $mhs->status = Mahasiswa::STATUS_SIAP_SEMINAR_TESIS;
+              $mhs->t_seminar1 = date("Y-m-d H:i:s");
               $mhs->save();
               return redirect('/dosen/mahasiswa-control/'.$id);
           } else {
@@ -128,6 +129,7 @@ class SeminarTesisController extends Controller
             $st->save();
             if($action == 1) {
                 $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_TESIS;
+                $mhs->t_seminar2 = date("Y-m-d H:i:s");
 
             } else {
                 $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS;
