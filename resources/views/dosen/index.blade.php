@@ -601,26 +601,28 @@
                         @foreach($mahasiswabimbingan as $item)
                             @php($user = $item->user())
                             @if($item->getHasilBimbingan()->count() > 0)
-                                @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
-                                @if($jadwalbimbingan >= $currenttime)
-                                    <div class="row">
-                                        <div class="col-md-4 text-center" style="border-right: 1px solid grey">
-                                            <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
-                                            <div>{{$jadwalbimbingan->format('d M Y')}}</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="row mb-4">
-                                                <div class="col">
-                                                    <h5><span class="badge badge-info">Bimbingan</span></h5>
-                                                    <h4>{{$user->name}} - {{$user->username}}</h4>
-                                                    <h5>
-                                                        <span class="badge badge-primary">Tempat: Ruang dosen</span>
-                                                        <span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
-                                                    </h5>
+								@if($item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya != null)
+                                    @php($jadwalbimbingan = \Carbon\Carbon::createFromFormat("Y-m-d H:i:s",$item->gethasilBimbingan()[0]->waktu_bimbingan_selanjutnya))
+                                    @if($jadwalbimbingan >= $currenttime)
+                                        <div class="row">
+                                            <div class="col-md-4 text-center" style="border-right: 1px solid grey">
+                                                <i class="fa fa-calendar-check-o mb-2" style="font-size:60px"></i>
+                                                <div>{{$jadwalbimbingan->format('d M Y')}}</div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row mb-4">
+                                                    <div class="col">
+                                                        <h5><span class="badge badge-info">Bimbingan</span></h5>
+                                                        <h4>{{$user->name}} - {{$user->username}}</h4>
+                                                        <h5>
+                                                            <span class="badge badge-primary">Tempat: Ruang dosen</span>
+                                                            <span class="badge badge-primary">Waktu: {{$jadwalbimbingan->format('g:i A')}}</span>
+                                                        </h5>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endif
                             @endif
                             @if(!is_null($item->tesis()))
