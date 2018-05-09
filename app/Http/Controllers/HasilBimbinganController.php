@@ -194,7 +194,7 @@ class HasilBimbinganController extends Controller
             'hasil_dan_diskusi' => 'required|string',
             'rencana_tindak_lanjut' => 'required|string',
             'dosen_id2' => 'nullable|integer',
-            'waktu_bimbingan_selanjutnya' => 'required|date'
+            'waktu_bimbingan_selanjutnya' => 'nullable|date'
         ]);
     }
 
