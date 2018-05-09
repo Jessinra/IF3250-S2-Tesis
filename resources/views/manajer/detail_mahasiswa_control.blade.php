@@ -986,45 +986,6 @@
                                                             </label>
                                                             <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$sidangTesis->tempat}}">
                                                         </div>
-                                                        <div class="row  offset-md-2 justify-content-center">
-                                                            <table width="300" class="table table-hover" style="width: 60%">
-                                                                <tr>
-                                                                    <th colspan="3">
-                                                                        Ajuan Dosen Penguji
-                                                                    </th>
-                                                                    <th>
-                                                                        Status
-                                                                    </th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="3">
-                                                                        {{$sidangTesis->ajuan_penguji_1->name}}
-                                                                    </td>
-                                                                    <td>
-                                                                        {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji1) !!}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="3">
-                                                                        {{$sidangTesis->ajuan_penguji_2->name}}
-                                                                    </td>
-                                                                    <td>
-                                                                        {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji2) !!}
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td colspan="3">
-                                                                        {{$sidangTesis->ajuan_penguji_3->name}}
-                                                                    </td>
-                                                                    <td>
-                                                                        {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji3) !!}
-                                                                    </td>
-                                                                </tr>
-
-                                                            </table>
-                                                        </div>
-
                                                         <div class="form-group row col-md-12">
                                                             <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                                                 Usulan Dosen Penguji
@@ -1064,12 +1025,50 @@
 
                                                     </div>
 
-                                                    <div class="justify-content-center row">
+                                                    <div class="justify-content-center row" style="padding-bottom: 10px">
                                                         <button class="btn btn-blue align-items-center display-flex">
                                                             <i class="material-icons pencil md-12 font-size-18-px">save</i>
                                                             Simpan
                                                         </button>
                                                     </div>
+
+                                                    @if($sidangTesis->ajuan_penguji_1 || $sidangTesis->ajuan_penguji_2 || $sidangTesis->ajuan_penguji_3)
+                                                        <div class="row  offset-md-2 justify-content-center">
+                                                            <table width="300" class="table table-hover" style="width: 60%">
+                                                                <tr>
+                                                                    <th colspan="3">
+                                                                        Ajuan Dosen Penguji
+                                                                    </th>
+                                                                    <th>
+                                                                        Status (Tidak harus disetujui)
+                                                                    </th>
+                                                                </tr>
+                                                                @if ($sidangTesis->ajuan_penguji_1)
+                                                                <tr>
+                                                                    
+                                                                    <td colspan="3">
+                                                                        
+                                                                            {{$sidangTesis->ajuan_penguji_1->name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji1) !!}
+                                                                    </td>
+                                                                </tr>
+                                                                @endif
+                                                                @if ($sidangTesis->ajuan_penguji_2)
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        {{$sidangTesis->ajuan_penguji_2->name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {!! $sidangTesis->approval_status_string($sidangTesis->approval_penguji2) !!}
+                                                                    </td>
+                                                                </tr>
+                                                                @endif
+                                                                
+                                                            </table>
+                                                        </div>
+                                                        @endif
                                                 </form>
                                             </div>
                                         </div>
