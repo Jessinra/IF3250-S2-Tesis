@@ -20,6 +20,8 @@ class RekapDataController extends Controller
         if($manajer){
             $mahasiswa = Mahasiswa::join('users','users.id','=','mahasiswas.id')
                                     ->select('users.username','mahasiswas.*')
+                                    ->where('mahasiswas.status', '!=', Mahasiswa::STATUS_NOT_ACTIVE)
+                                    ->where('mahasiswas.status', '!=', Mahasiswa::STATUS_LULUS)
                                     ->orderBy('users.username','asc')
                                     ->get();
             return view('manajer.rekap_data_mahasiswa',['mahasiswa' => $mahasiswa]);
