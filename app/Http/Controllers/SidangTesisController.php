@@ -443,6 +443,31 @@ class SidangTesisController extends Controller
 
     }
 
+    public function createUlang($id)
+    {
+        $dos =Auth::user()->isDosen();
+        $usr= User::where('username',$id)->first();
+        $mhs = $usr->isMahasiswa();
+        $tesis = $mhs->tesis();
+        $sidang = $tesis->sidangTesis();
+        if($dos && $mhs->tesis()->dosen_pembimbing1 == $dos->id) {
+            $sidang->tanggal  = NULL;
+            $sidang->jam  = NULL;
+            $sidang->tempat = NULL;
+            $sidang->dosen_penguji_1 = NULL;
+            $sidang->dosen_penguji_2 = NULL;
+            $sidang->ajuan_penguji1 = NULL;
+            $sidang->ajuan_penguji2 = NULL;
+            $sidang->approval_penguji1 = NULL;
+            $sidang->approval_penguji2 = NULL;
+            $sidang->save();
+            return back();
+        } else {
+            return abort(403);
+        }
+
+    }
+
     public function dosenEdit(Request $request, $id){
         $usr = User::where('username',$id)->first();
 //        echo $usr;
