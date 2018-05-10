@@ -430,10 +430,8 @@ class SidangTesisController extends Controller
             $sidang->tempat = $request->get('tempat');
             $sidang->ajuan_penguji1 = $request->get('usulan_penguji1');
             $sidang->ajuan_penguji2 = $request->get('usulan_penguji2');
-            $sidang->ajuan_penguji3 = $request->get('usulan_penguji3');
             $sidang->approval_penguji1 = false;
             $sidang->approval_penguji2 = false;
-            $sidang->approval_penguji3 = false;
             $sidang->save();
             return back();
         }  else{
