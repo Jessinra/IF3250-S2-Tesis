@@ -242,25 +242,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group row col-md-12">
-
-                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
-                                            Usulan Dosen Penguji
-                                        </label>
-                                        <select name="usulan_penguji3"  class="form-control col-md-8" id="">
-                                            <option></option>
-                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
-                                                <option value="{{$item->id}}"
-                                                        @if($sidangTesis->ajuan_penguji3 == $item->id)
-                                                        selected
-                                                        @endif
-                                                >
-                                                    {{$item->user->name}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
                                 </div>
 
                                 <div class="row justify-content-center">
