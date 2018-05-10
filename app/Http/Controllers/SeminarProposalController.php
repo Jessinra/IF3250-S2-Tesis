@@ -46,9 +46,10 @@ class SeminarProposalController extends Controller
         if($manajer) {
             $mahasiswa_id = $request->get('mahasiswa');
             $mhs = Mahasiswa::find($mahasiswa_id);
-
             $score = $request->get('score');
             $sp = $mhs->seminarProposal();
+            $sp->mark_dosen_pembimbing = $request->get('mark_dosen_pembimbing');
+            $sp->mark_dosen_penguji = $request->get('mark_dosen_penguji');
             $sp->passed = $score!='D' && $score != 'E';
             $sp->evaluator_id = $manajer->id;
             $sp->score = $score;
