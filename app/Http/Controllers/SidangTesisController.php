@@ -266,6 +266,7 @@ class SidangTesisController extends Controller
             $sidangtesis->nilai_dosen_penguji_1_utama = NULL;
             $sidangtesis->nilai_dosen_penguji_1_penting = NULL;
             $sidangtesis->nilai_dosen_penguji_1_pendukung = NULL;
+            $sidangtesis->nilai = NULL;
             $sidangtesis->save();
             return back();
         }
@@ -290,6 +291,7 @@ class SidangTesisController extends Controller
             $sidangtesis->nilai_dosen_penguji_2_utama = NULL;
             $sidangtesis->nilai_dosen_penguji_2_penting = NULL;
             $sidangtesis->nilai_dosen_penguji_2_pendukung = NULL;
+            $sidangtesis->nilai = NULL;
             $sidangtesis->save();
             return back();
         }
@@ -314,6 +316,7 @@ class SidangTesisController extends Controller
             $sidangtesis->nilai_dosen_pembimbing_utama = NULL;
             $sidangtesis->nilai_dosen_pembimbing_penting = NULL;
             $sidangtesis->nilai_dosen_pembimbing_pendukung = NULL;
+            $sidangtesis->nilai = NULL;
             $sidangtesis->save();
             return back();
         }
@@ -336,6 +339,7 @@ class SidangTesisController extends Controller
             return abort(400);
         else {
             $sidangtesis->nilai_dosen_kelas_utama = NULL;
+            $sidangtesis->nilai = NULL;
             $sidangtesis->save();
             return back();
         }
