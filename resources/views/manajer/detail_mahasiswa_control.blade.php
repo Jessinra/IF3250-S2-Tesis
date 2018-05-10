@@ -658,6 +658,14 @@
                                                         <div>
                                                             <form action="/seminartesis/edit/{{$user->username}}" method="post">
                                                                 {{csrf_field()}}
+
+                                                                <div class="form-group row col-md-12">
+                                                                    <label for="judul" class="col-md-4 col-form-label text-md-right text-center">
+                                                                        Judul Tesis
+                                                                    </label>
+                                                                    <input id="judul" name="judul" class="col-md-8 form-control" value="{{$tesis->judul_thesis}}" >
+                                                                </div>
+                                                                
                                                                 <div class="form-group row col-md-12">
                                                                     <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
                                                                         Tanggal
