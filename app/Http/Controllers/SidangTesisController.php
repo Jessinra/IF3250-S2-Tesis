@@ -428,10 +428,12 @@ class SidangTesisController extends Controller
             $sidang->tanggal  = $request->get('haritgl');
             $sidang->jam  = $request->get('waktu');
             $sidang->tempat = $request->get('tempat');
+            $tesis->judul_thesis = $request->get('judul');
             $sidang->ajuan_penguji1 = $request->get('usulan_penguji1');
             $sidang->ajuan_penguji2 = $request->get('usulan_penguji2');
             $sidang->approval_penguji1 = false;
             $sidang->approval_penguji2 = false;
+            $tesis->save();
             $sidang->save();
             return back();
         }  else{
