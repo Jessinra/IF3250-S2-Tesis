@@ -44,6 +44,7 @@ Route::get('/mahasiswa/control','ManajerController@controlMahasiswa');
 Route::get('/mahasiswa/control/{id}','ManajerController@detailControlMahasiswa');
 Route::get('/mahasiswa/rekap','RekapDataController@showRekapMahasiswa');
 Route::get('/mahasiswa/nilaiakhir','RekapDataController@showRekapNilaiAkhir');
+Route::get('/mahasiswa/history','RekapDataController@showHistoryMahasiswa');
 
 Route::get('/kelastesis','KelasTesisController@showKelasTesis');
 Route::post('/kelastesis/tambah','KelasTesisController@tambahKelasTesis');

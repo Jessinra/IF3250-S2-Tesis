@@ -180,7 +180,7 @@
 
                                     <div class="form-group row col-md-12">
                                         <label for="judul" class="col-md-4 col-form-label text-md-right text-center ">Judul Tesis<sup>*</sup></label>
-                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->topic}}" required disabled>
+                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->judul_thesis}}">
                                     </div>
 
 
@@ -211,6 +211,7 @@
                                             Usulan Dosen Penguji
                                         </label>
                                         <select name="usulan_penguji1"  class="form-control col-md-8" id="">
+                                            <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
                                                 <option value="{{$item->id}}"
                                                         @if($sidangTesis->ajuan_penguji1 == $item->id)
@@ -229,6 +230,7 @@
                                             Usulan Dosen Penguji
                                         </label>
                                         <select name="usulan_penguji2"  class="form-control col-md-8" id="">
+                                            <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
                                                 <option value="{{$item->id}}"
                                                         @if($sidangTesis->ajuan_penguji2 == $item->id)
@@ -240,24 +242,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group row col-md-12">
-
-                                    <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
-                                            Usulan Dosen Penguji
-                                        </label>
-                                        <select name="usulan_penguji3"  class="form-control col-md-8" id="">
-                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
-                                                <option value="{{$item->id}}"
-                                                        @if($sidangTesis->ajuan_penguji3 == $item->id)
-                                                        selected
-                                                        @endif
-                                                >
-                                                    {{$item->user->name}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
                                 </div>
 
                                 <div class="row justify-content-center">
@@ -328,6 +312,14 @@
                         <div>
                             <form action="/seminartesis/edit/{{$user->username}}" method="post">
                                 {{csrf_field()}}
+                            
+                            <div class="form-group row col-md-12">
+                                <label for="judul" class="col-md-4 col-form-label text-md-right text-center">
+                                    Judul Tesis
+                                </label>
+                                <input id="judul" name="judul" class="col-md-8 form-control" value="{{$tesis->judul_thesis}}" >
+                            </div>
+
                             <div class="form-group row col-md-12">
                                 <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
                                     Tanggal

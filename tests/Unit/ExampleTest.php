@@ -45,7 +45,7 @@ class ExampleTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
 
-        //register admin
+//        //register admin
 //        $response = $this->get('/register');
 //        $response->assertStatus(200);
 //

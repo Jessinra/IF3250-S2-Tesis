@@ -7,8 +7,9 @@
   width: 700px;
 }
 
-.rekap-table{
-  width: 1100px;
+.rekap-table {
+  margin-top: 20px;
+  width: 1400px;
 }
 
 .dummy{
@@ -21,10 +22,42 @@
   width: 500px;
 }
 
-.done{
-  background-color: #00bbe8;
+.done-rekap{
+  background-color: #2ec866;
 }
 
 .doing{
   background-color: #b8b8b8;
+}
+
+.advancer-btn{
+  margin-left: 10px;
+  height: 30px;
+  width: 30px;
+}
+
+.btns{
+  margin-left: 900px;
+  width: 150px;
+}
+
+@media only screen and (max-width: 1200px){
+  .btns{
+    margin-left: 820px;
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 990px){
+  .btns{
+    margin-left: 650px;
+    width: 150px;
+  }
+}
+
+@media only screen and (max-width: 770px){
+  .btns{
+    margin-left: 310px;
+    width: 150px;
+  }
 }

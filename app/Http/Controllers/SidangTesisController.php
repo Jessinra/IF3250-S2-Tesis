@@ -48,7 +48,7 @@ class SidangTesisController extends Controller
         if(!$sidangtesis)
             return abort(400);
         else {
-            if($tesis->dosen_pembimbing1 == $currentUser->id) {
+            if($tesis->dosen_pembimbing1 == $currentUser->id || $request->get('roledosen') == "pembimbing") {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
                 $scorependukung = $request->get('scorePendukung');
@@ -96,7 +96,7 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
-            } else if($sidangtesis->dosen_penguji_1 == $currentUser->id) {
+            } else if($sidangtesis->dosen_penguji_1 == $currentUser->id || $request->get('roledosen') == "penguji1") {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
                 $scorependukung = $request->get('scorePendukung');
@@ -142,7 +142,7 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
-            } else if($sidangtesis->dosen_penguji_2 == $currentUser->id) {
+            } else if($sidangtesis->dosen_penguji_2 == $currentUser->id || $request->get('roledosen') == "penguji2") {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
                 $scorependukung = $request->get('scorePendukung');
@@ -188,7 +188,7 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
-            }else if(count($kelas) > 0) {
+            }else if($request->get('roledosen') == "kelas" || count($kelas) > 0) {
                     $scoreutama = $request->get('scoreUtama');
 
                     $sidangtesis->nilai_dosen_kelas_utama = $scoreutama;
@@ -231,6 +231,15 @@ class SidangTesisController extends Controller
                         }
                     }
                     $sidangtesis->save();
+
+                    if(!is_null($tesis->sidangTesis()->nilai)) {
+                        if ($tesis->sidangTesis()->nilai != "E") {
+                            $mhs->status = Mahasiswa::STATUS_LULUS;
+                            $mhs->t_lulus = date("Y-m-d H:i:s");
+                            $mhs->save();
+                        }
+                    }
+
                     return back();
             } else {
                 return abort(403);
@@ -257,6 +266,7 @@ class SidangTesisController extends Controller
             $sidangtesis->nilai_dosen_penguji_1_utama = NULL;
             $sidangtesis->nilai_dosen_penguji_1_penting = NULL;
             $sidangtesis->nilai_dosen_penguji_1_pendukung = NULL;
+            $sidangtesis->nilai = NULL;
             $sidangtesis->save();
             return back();
         }
@@ -281,6 +291,7 @@ class SidangTesisController extends Controller
             $sidangtesis->nilai_dosen_penguji_2_utama = NULL;
             $sidangtesis->nilai_dosen_penguji_2_penting = NULL;
             $sidangtesis->nilai_dosen_penguji_2_pendukung = NULL;
+            $sidangtesis->nilai = NULL;
             $sidangtesis->save();
             return back();
         }
@@ -305,6 +316,30 @@ class SidangTesisController extends Controller
             $sidangtesis->nilai_dosen_pembimbing_utama = NULL;
             $sidangtesis->nilai_dosen_pembimbing_penting = NULL;
             $sidangtesis->nilai_dosen_pembimbing_pendukung = NULL;
+            $sidangtesis->nilai = NULL;
+            $sidangtesis->save();
+            return back();
+        }
+    }
+
+    public function resetNilaiKelas(Request $request, $id) {
+        $manajer = Auth::User()->isManajer();
+        $usr = User::where('username',$id)->first();
+        echo $usr;
+        if (!$manajer)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $sidangtesis = $tesis->sidangTesis();
+        if(!$sidangtesis)
+            return abort(400);
+        else {
+            $sidangtesis->nilai_dosen_kelas_utama = NULL;
+            $sidangtesis->nilai = NULL;
             $sidangtesis->save();
             return back();
         }
@@ -419,12 +454,12 @@ class SidangTesisController extends Controller
             $sidang->tanggal  = $request->get('haritgl');
             $sidang->jam  = $request->get('waktu');
             $sidang->tempat = $request->get('tempat');
+            $tesis->judul_thesis = $request->get('judul');
             $sidang->ajuan_penguji1 = $request->get('usulan_penguji1');
             $sidang->ajuan_penguji2 = $request->get('usulan_penguji2');
-            $sidang->ajuan_penguji3 = $request->get('usulan_penguji3');
             $sidang->approval_penguji1 = false;
             $sidang->approval_penguji2 = false;
-            $sidang->approval_penguji3 = false;
+            $tesis->save();
             $sidang->save();
             return back();
         }  else{
@@ -564,9 +599,12 @@ class SidangTesisController extends Controller
             $sidang->jam  = $request->get('waktu');
             $sidang->tempat = $request->get('tempat');
             $sidang->dosen_penguji_1 = $request->get('dosen_penguji1');
-            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');            
+            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');  
+            $tesis->judul_thesis = $request->get('judul');
+            $tesis->save();
             $sidang->save();
             $mhs->status = Mahasiswa::STATUS_SIAP_SIDANG_TESIS;
+            $mhs->t_sidang = date("Y-m-d H:i:s");
             $mhs->save();
             return back();
         }  else{

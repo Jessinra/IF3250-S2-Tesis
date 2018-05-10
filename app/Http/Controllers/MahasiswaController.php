@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mahasiswa;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class MahasiswaController extends Controller
@@ -72,7 +73,9 @@ class MahasiswaController extends Controller
             $usr = Mahasiswa::find($id);
             $usr->status = $request->get('status');
             $usr->save();
-            return back();
+
+            $user = User::where('username',$usr->user()->username)->first();
+            return view('edit_user',['user'=>$user,'success_status'=>true]);
         } else {
             return abort(403);
         }

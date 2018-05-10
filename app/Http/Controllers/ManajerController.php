@@ -46,17 +46,6 @@ class ManajerController extends Controller
         if($this->getManajer()) {
             $user = User::where('username', $username)->get()->first();
             $mahasiswa = $user->isMahasiswa();
-            if($mahasiswa->tesis()){
-                $tesis=$mahasiswa->tesis();
-                if($tesis->sidangTesis()){
-                    if(!is_null($tesis->sidangTesis()->nilai)) {
-                        if ($tesis->sidangTesis()->nilai != "E") {
-                            $mahasiswa->status = Mahasiswa::STATUS_LULUS;
-                            $mahasiswa->save();
-                        }
-                    }
-                }
-            }
 
             if ($mahasiswa) {
                 return view('manajer.detail_mahasiswa_control',

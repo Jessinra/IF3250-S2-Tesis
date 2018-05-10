@@ -81,6 +81,7 @@ class TopicController extends Controller
                 return abort(400);
             } else {
                 $mahasiswa->status = Mahasiswa::STATUS_TOPIK_TELAH_DIAJUKAN;
+                $mahasiswa->t_topik1 = date("Y-m-d H:i:s");
                 $mahasiswa->save();
                 return redirect('/dashboard/mahasiswa');
             }
@@ -131,7 +132,8 @@ class TopicController extends Controller
                         );
 
                         $mhs->status = Mahasiswa::STATUS_TOPIK_DITERIMA;
-                        $mhs->save();
+                        $mhs->t_topik2 = date("Y-m-d H:i:s");
+                    $mhs->save();
                 }
                 return redirect('/mahasiswa/control/'.$uname);
 

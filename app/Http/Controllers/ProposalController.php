@@ -31,6 +31,7 @@ class ProposalController extends Controller
                     "path" => $path
                 ]);
                 $mhs->status = Mahasiswa::STATUS_PROPOSAL_TELAH_DIAJUKAN;
+                $mhs->t_proposal1 = date("Y-m-d H:i:s");
                 $mhs->save();
                 return redirect("/");
             } else {
@@ -65,6 +66,7 @@ class ProposalController extends Controller
             if($mnj_action == Proposal::ACTION_PROPOSAL_DITERIMA) {
                 $prop_obj->status = Proposal::STATUS_PROPOSAL_DITERIMA;
                 $mhs_obj->status = Mahasiswa::STATUS_PROPOSAL_DITERIMA;
+                $mhs_obj->t_proposal2 = date("Y-m-d H:i:s");
             }
             else if ($mnj_action == Proposal::ACTION_PROPOSAL_DITOLAK) {
                 $prop_obj->status = Proposal::STATUS_PROPOSAL_DITOLAK;

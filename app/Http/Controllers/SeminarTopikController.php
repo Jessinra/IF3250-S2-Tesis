@@ -23,6 +23,7 @@ class SeminarTopikController extends Controller
                     ]
                 );
                 $mahasiswa->status = Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK;
+                $mahasiswa->t_topik3 = date("Y-m-d H:i:s");
                 $mahasiswa->save();
                 return redirect('/mahasiswa/control/'.$mahasiswa->user()->username);
             } else {
@@ -47,6 +48,7 @@ class SeminarTopikController extends Controller
             $st->evaluator_id = $manajer->id;
             if($action) {
                 $mhs->status = Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK;
+                $mhs->t_topik4 = date("Y-m-d H:i:s");
             } else {
                 $mhs->status = Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK;
 

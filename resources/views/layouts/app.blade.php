@@ -55,7 +55,7 @@
                                         @endif
                                         @if(Auth::user()->isMahasiswa())
                                             <a class="dropdown-item text-color-primary" href="/dashboard/mahasiswa">
-                                                Dashboard Manajer
+                                                Dashboard Mahasiswa
                                             </a>
                                         @endif
                                         <a class="dropdown-item text-color-primary" href="/user/control/{{Auth::user()->username}}">

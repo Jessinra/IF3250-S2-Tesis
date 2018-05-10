@@ -9,26 +9,6 @@
         <h1>Dashboard</h1>
         <div class="row">
             <div class="col-xs-6 col-lg-3 text-center">
-                <a href="/mahasiswa/control" class="thumbnail">
-                    <div>
-                        <i class="material-icons icon-style">group</i>
-                    </div>
-
-                    Kontrol Mahasiswa
-                </a>
-            </div>
-
-            <div class="col-xs-6 col-lg-3 text-center">
-                <a href="/register" class="thumbnail">
-                    <div>
-                        <i class="material-icons icon-style">person_add</i>
-                    </div>
-
-                    Register Akun
-                </a>
-            </div>
-
-            <div class="col-xs-6 col-lg-3 text-center">
                 <a href="/mahasiswa/nilaiakhir" class="thumbnail">
                     <div>
                         <i class="material-icons icon-style">school</i>
@@ -49,12 +29,42 @@
             </div>
 
             <div class="col-xs-6 col-lg-3 text-center">
+                <a href="/mahasiswa/history" class="thumbnail">
+                    <div>
+                        <i class="material-icons icon-style">history</i>
+                    </div>
+
+                    History Mahasiswa
+                </a>
+            </div>
+
+            <div class="col-xs-6 col-lg-3 text-center">
+                <a href="/mahasiswa/control" class="thumbnail">
+                    <div>
+                        <i class="material-icons icon-style">group</i>
+                    </div>
+
+                    Kontrol Mahasiswa
+                </a>
+            </div>
+
+            <div class="col-xs-6 col-lg-3 text-center">
                 <a href="/kelastesis" class="thumbnail">
                     <div>
                         <i class="material-icons icon-style">class</i>
                     </div>
 
                     Kelas Tesis
+                </a>
+            </div>
+
+            <div class="col-xs-6 col-lg-3 text-center">
+                <a href="/penjadwalan" class="thumbnail">
+                    <div>
+                        <i class="material-icons icon-style">schedule</i>
+                    </div>
+
+                    Pengaturan Jadwal Seminar dan Sidang
                 </a>
             </div>
 
@@ -69,12 +79,12 @@
             </div>
 
             <div class="col-xs-6 col-lg-3 text-center">
-                <a href="/penjadwalan" class="thumbnail">
+                <a href="/register" class="thumbnail">
                     <div>
-                        <i class="material-icons icon-style">schedule</i>
+                        <i class="material-icons icon-style">person_add</i>
                     </div>
 
-                    Pengaturan Jadwal Seminar dan Sidang
+                    Register Akun
                 </a>
             </div>
         </div>
