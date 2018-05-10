@@ -818,6 +818,8 @@
                                                         <th>Substansi</th>
                                                         <th>Buku Tesis</th>
                                                         <th>Presentasi dan Tanya Jawab</th>
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                     <tr>
                                                         <th>Penguji 1</th>
