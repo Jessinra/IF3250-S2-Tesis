@@ -46,27 +46,62 @@
             <div class="col-md-8">
 
                 <ul class="nav nav-tabs" role="tablist">
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#topik">Seminar Topik</a>
                     </li>
+                    @else
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#topik">Seminar Topik</a>
+                    </li>
+                    @endif
+
+                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL and $mahasiswa->status <  \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK) || ($mahasiswa->status <=  \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL))
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#proposal">Seminar Proposal</a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#proposal">Seminar Proposal</a>
                     </li>
+                    @endif
+                    
+                    @if($mahasiswa->status == \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#bimbingan">Bimbingan</a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#bimbingan">Bimbingan</a>
                     </li>
+                    @endif
+
+                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#seminartesis">Seminar Tesis</a>
+                    </li>
+
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#seminartesis">Seminar Tesis</a>
                     </li>
+                    @endif
+
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#sidangtesis">Sidang Tesis</a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#sidangtesis">Sidang Tesis</a>
                     </li>
+                    @endif
                 </ul>
 
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div id="topik" class="container tab-pane active"><br>
+                    <div id="topik" class="container tab-pane fade"><br>
                         @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TOPIK || $mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITOLAK)
                             <div class="control-seminar-topik mb-4">
                                 <h3>
@@ -817,13 +852,100 @@
                                                         @endif
 
                                                         <td>
-                                                            <form action="" method="post">
-                                                                {{csrf_field()}}
-                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                        <button class="btn btn-blue align-items-center display-flex" data-toggle="modal" data-target="#nilaipenguji1">
                                                                     <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
                                                                     Nilai
                                                                 </button>
-                                                            </form>
+
+                                                                <div class="modal fade" id="nilaipenguji1">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+
+																			<!-- Modal Header -->
+																			<div class="modal-header">
+																				<h4 class="modal-title">Penilaian Sidang (Sebagai Dosen Penguji 1) : {{$user->name}}</h4>
+																				<button type="button" class="close" data-dismiss="modal">&times;</button>
+																			</div>
+
+																			<!-- Modal body -->
+																			<div class="modal-body">
+																			<form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
+																			{{csrf_field()}}
+
+																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
+                                                                                <input type="hidden" value="penguji1" name="roledosen">
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_penguji_1_utama == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_1_utama == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_1_utama == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+                                                                                <div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_penguji_1_penting == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_1_penting == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_1_penting == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+                                                                                <div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_penguji_1_pendukung == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_1_pendukung == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_1_pendukung == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+																			<div class="form-group row width-full justify-content-center">
+																				<button  class="col-md-4 btn btn-blue ml-1 mr-1">
+																						Tetapkan
+																				</button>
+																			</div>
+                                                                            </form>
+
+																			</div>
+	
+
+
+
+																			<!-- Modal footer -->
+																			<div class="modal-footer">
+																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+																			</div>
                                                         </td>
 
                                                         <td>
@@ -868,14 +990,106 @@
                                                             <td></td>
                                                         @endif
                                                         
-                                                        <td>
-                                                            <form action="" method="post">
-                                                                {{csrf_field()}}
-                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                        <td>                                                
+                                                                <button class="btn btn-blue align-items-center display-flex" data-toggle="modal" data-target="#nilaipenguji2">
                                                                     <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
                                                                     Nilai
                                                                 </button>
-                                                            </form>
+
+                                                                <div class="modal fade" id="nilaipenguji2">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+
+																			<!-- Modal Header -->
+																			<div class="modal-header">
+																				<h4 class="modal-title">Penilaian Sidang (Sebagai Dosen Penguji 2) : {{$user->name}}</h4>
+																				<button type="button" class="close" data-dismiss="modal">&times;</button>
+																			</div>
+
+																			<!-- Modal body -->
+																			<div class="modal-body">
+																			<form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
+																			{{csrf_field()}}
+
+																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
+                                                                                <input type="hidden" value="penguji2" name="roledosen">
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_penguji_2_utama == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_2_utama == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_2_utama == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+                                                                                <div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_penguji_2_penting == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_2_penting == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_2_penting == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+                                                                                <div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_penguji_2_pendukung == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_2_pendukung == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_penguji_2_pendukung == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+																			<div class="form-group row width-full justify-content-center">
+																				<button  class="col-md-4 btn btn-blue ml-1 mr-1">
+																						Tetapkan
+																				</button>
+																			</div>
+                                                                            </form>
+
+																			</div>
+	
+
+
+
+																			<!-- Modal footer -->
+																			<div class="modal-footer">
+																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+																			</div>
+
+																		</div>
+																	</div>
+																</div>
                                                         </td>
 
                                                         <td>
@@ -920,13 +1134,99 @@
                                                             <td></td>
                                                         @endif
                                                         <td>
-                                                            <form action="" method="post">
-                                                                {{csrf_field()}}
-                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                        <button class="btn btn-blue align-items-center display-flex" data-toggle="modal" data-target="#nilaipembimbing">
                                                                     <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
                                                                     Nilai
                                                                 </button>
-                                                            </form>
+
+                                                                <div class="modal fade" id="nilaipembimbing">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+
+																			<!-- Modal Header -->
+																			<div class="modal-header">
+																				<h4 class="modal-title">Penilaian Sidang (Sebagai Dosen Pembimbing) : {{$user->name}}</h4>
+																				<button type="button" class="close" data-dismiss="modal">&times;</button>
+																			</div>
+
+																			<!-- Modal body -->
+																			<div class="modal-body">
+																			<form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
+																			{{csrf_field()}}
+
+																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
+                                                                                <input type="hidden" value="pembimbing" name="roledosen">
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_pembimbing_utama == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_pembimbing_utama == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_pembimbing_utama == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+                                                                                <div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_pembimbing_penting == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_pembimbing_penting == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_pembimbing_penting == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+                                                                                <div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexUtama">
+                                                                                        @if($sidangTesis->nilai_dosen_pembimbing_pendukung == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_pembimbing_pendukung == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_pembimbing_pendukung == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+																			<div class="form-group row width-full justify-content-center">
+																				<button  class="col-md-4 btn btn-blue ml-1 mr-1">
+																						Tetapkan
+																				</button>
+																			</div>
+                                                                            </form>
+
+																			</div>
+	
+
+
+																			<!-- Modal footer -->
+																			<div class="modal-footer">
+																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+																			</div>
                                                         </td>
 
                                                         <td>
@@ -953,13 +1253,63 @@
                                                         <td>-</td>
                                                         <td>-</td>
                                                         <td>
-                                                            <form action="" method="post">
-                                                                {{csrf_field()}}
-                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                        <button class="btn btn-blue align-items-center display-flex" data-toggle="modal" data-target="#nilaikelas">
                                                                     <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
                                                                     Nilai
                                                                 </button>
-                                                            </form>
+
+                                                                <div class="modal fade" id="nilaikelas">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+
+																			<!-- Modal Header -->
+																			<div class="modal-header">
+																				<h4 class="modal-title">Penilaian Sidang (Sebagai Dosen Kelas Thesis) : {{$user->name}}</h4>
+																				<button type="button" class="close" data-dismiss="modal">&times;</button>
+																			</div>
+
+																			<!-- Modal body -->
+																			<div class="modal-body">
+																			<form action="/sidangtesis/nilai/{{$user->username}}" method="post" class="width-full">
+																			{{csrf_field()}}
+
+																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
+                                                                                <input type="hidden" value="kelas" name="roledosen">
+																				<div class="form-group row width-full justify-content-center">
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
+																						@if($sidangTesis->nilai_dosen_kelas_utama == "L")
+																							<option selected ="selected" value="L">B</option>
+                                                                                            <option value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_kelas_utama == "M")
+                                                                                            <option value="L">B</option>
+                                                                                            <option selected ="selected" value="M">C</option>
+																							<option value="K">K</option>
+																						@elseif ($sidangTesis->nilai_dosen_kelas_utama == "K")
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option selected ="selected" value="K">K</option>
+																						@endif
+																					</select>
+																				</div>
+
+																			<div class="form-group row width-full justify-content-center">
+																				<button  class="col-md-4 btn btn-blue ml-1 mr-1">
+																						Tetapkan
+																				</button>
+																			</div>
+                                                                            </form>
+
+																			</div>
+	
+
+
+
+																			<!-- Modal footer -->
+																			<div class="modal-footer">
+																				<button type="submit" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+																			</div>
                                                         </td>
 
                                                         <td>
@@ -1218,6 +1568,38 @@
                     </div>
                 </div>
             </div>
+
+                @if($mahasiswa->status >= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                    <script>
+                     var temp = document.getElementById("topik");
+                     temp.classList.remove('fade');
+                     temp.classList.add('active');
+                    </script>
+                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL and $mahasiswa->status <  \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK) || ($mahasiswa->status <=  \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL))
+                    <script>
+                     var temp = document.getElementById("proposal");
+                     temp.classList.remove('fade');
+                     temp.classList.add('active');
+                    </script>
+                    @elseif($mahasiswa->status == \App\Mahasiswa::STATUS_MASA_BIMBINGAN)
+                    <script>
+                     var temp = document.getElementById("bimbingan");
+                     temp.classList.remove('fade');
+                     temp.classList.add('active');
+                    </script>
+                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    <script>
+                     var temp = document.getElementById("seminartesis");
+                     temp.classList.remove('fade');
+                     temp.classList.add('active');
+                    </script>
+                    @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    <script>
+                     var temp = document.getElementById("sidangtesis");
+                     temp.classList.remove('fade');
+                     temp.classList.add('active');
+                    </script>
+                @endif
 @endsection
 
 @section('bottomjs')
