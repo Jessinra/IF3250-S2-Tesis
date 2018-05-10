@@ -875,7 +875,7 @@
 																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
                                                                                 <input type="hidden" value="penguji1" name="roledosen">
 																				<div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Substansi</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_penguji_1_utama == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -889,12 +889,16 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
 
                                                                                 <div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Buku Tesis</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_penguji_1_penting == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -908,12 +912,16 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
 
                                                                                 <div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Presentasi dan Tanya Jawab</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_penguji_1_pendukung == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -927,6 +935,10 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
@@ -1014,7 +1026,7 @@
 																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
                                                                                 <input type="hidden" value="penguji2" name="roledosen">
 																				<div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Substansi</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_penguji_2_utama == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -1028,12 +1040,16 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
 
                                                                                 <div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Buku Tesis</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_penguji_2_penting == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -1047,12 +1063,16 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
 
                                                                                 <div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Presentasi dan Tanya Jawab</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_penguji_2_pendukung == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -1066,6 +1086,10 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
@@ -1157,7 +1181,7 @@
 																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
                                                                                 <input type="hidden" value="pembimbing" name="roledosen">
 																				<div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Substansi</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_pembimbing_utama == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -1171,12 +1195,16 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
 
                                                                                 <div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Buku Tesis</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePenting" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_pembimbing_penting == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -1190,12 +1218,16 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
 
                                                                                 <div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Presentasi dan Tanya Jawab</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scorePendukung" id="scoreIndexUtama">
                                                                                         @if($sidangTesis->nilai_dosen_pembimbing_pendukung == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -1209,6 +1241,10 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>
@@ -1276,7 +1312,7 @@
 																				<input type="hidden" value="{{$user->username}}" name="mahasiswa">
                                                                                 <input type="hidden" value="kelas" name="roledosen">
 																				<div class="form-group row width-full justify-content-center">
-																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Komponen Utama</label>
+																					<label for="scoreIndexUtama" class=" col-sm-4 text-center col-form-label mr-1 ml-1">Nilai Substansi</label>
 																					<select class="form-control col-sm-2 ml-1 mr-1" name="scoreUtama" id="scoreIndexUtama">
 																						@if($sidangTesis->nilai_dosen_kelas_utama == "L")
 																							<option selected ="selected" value="L">B</option>
@@ -1290,6 +1326,10 @@
                                                                                             <option value="L">B</option>
 																							<option value="M">C</option>
                                                                                             <option selected ="selected" value="K">K</option>
+                                                                                        @else 
+                                                                                            <option value="L">B</option>
+																							<option value="M">C</option>
+                                                                                            <option value="K">K</option>
 																						@endif
 																					</select>
 																				</div>

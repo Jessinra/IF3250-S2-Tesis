@@ -319,6 +319,28 @@ class SidangTesisController extends Controller
         }
     }
 
+    public function resetNilaiKelas(Request $request, $id) {
+        $manajer = Auth::User()->isManajer();
+        $usr = User::where('username',$id)->first();
+        echo $usr;
+        if (!$manajer)
+            return abort(400);
+        $mhs = $usr->isMahasiswa();
+        if(!$mhs)
+            return abort(400);
+        $tesis = $mhs->tesis();
+        if(!$tesis)
+            return abort(400);
+        $sidangtesis = $tesis->sidangTesis();
+        if(!$sidangtesis)
+            return abort(400);
+        else {
+            $sidangtesis->nilai_dosen_kelas_utama = NULL;
+            $sidangtesis->save();
+            return back();
+        }
+    }
+
     private function countRata($nilai1, $nilai2, $nilai3) {
         $countArray = array();
         $count_nilai_K = 0;
