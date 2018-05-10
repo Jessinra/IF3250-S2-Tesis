@@ -357,16 +357,36 @@
                                                 pada {{date("d M Y H:i:s", strtotime($seminarTopik->updated_at.'UTC'))}}
                                             </div>
                                         @endif
-                                        <div class="row justify-content-center">
-
+                                        <div class="row justify-content-center" id="penilaian-seminar-proposal">
                                             <form action=" {{route('seminarproposal-penilaian')}}" method="post" class="width-full">
                                                 {{csrf_field()}}
                                                 <input type="hidden" value="{{$mahasiswa->id}}" name="mahasiswa">
                                                 <input type="hidden" value="{{$seminarProposal->id}}" name="seminartopik">
                                                 <div class="form-group row width-full justify-content-center">
-                                                    <label for="scoreIndex" class=" col-sm-2 text-right col-form-label mr-1 ml-1">Nilai</label>
-                                                    <select class="form-control col-sm-2 ml-1 mr-1" name="score" id="scoreIndex"
+                                                    <label for="scoreDosenPembimbing" class=" col-sm-4 text-right col-form-label mr-1 ml-1">Nilai Dosen Pembimbing</label>
+                                                    <select name="score_dosen_pembimbing" id="scoreDosenPembimbing"
+                                                            class="form-control col-sm-4 ml-1 mr-1" v-model="pembimbing" v-on:change="recalculate">
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="K">K</option>
+                                                    </select>
 
+                                                </div>
+                                                <div class="form-group row width-full justify-content-center">
+                                                    <label for="scoreDosenPenguji" class=" col-sm-4 text-right col-form-label mr-1 ml-1">Nilai Dosen Penguji</label>
+                                                    <select name="score_dosen_penguji" id="scoreDosenPenguji"
+                                                            class="form-control col-sm-4 ml-1 mr-1" v-model="penguji" v-on:change="recalculate">
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="K">K</option>
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="form-group row width-full justify-content-center">
+                                                    <label for="scoreIndex" class=" col-sm-4 text-right col-form-label mr-1 ml-1">Nilai Akhir</label>
+                                                    <select class="form-control col-sm-4 ml-1 mr-1" name="score" id="scoreIndex"
+                                                            v-model="akhir"
                                                     >
                                                         <option value="A">A</option>
                                                         <option value="AB">AB</option>
@@ -376,10 +396,14 @@
                                                         <option value="D">D</option>
                                                         <option value="E">E</option>
                                                     </select>
-                                                    <button  class="col-md-2 btn btn-blue ml-1 mr-1">
-                                                        Tetapkan
-                                                    </button>
+
                                                 </div>
+                                                <div class="row justify-content-center">
+                                                <button  class="col-md-2 btn btn-blue ml-1 mr-1">
+                                                    Tetapkan
+                                                </button>
+                                                </div>
+
                                             </form>
 
                                         </div>
@@ -1194,4 +1218,36 @@
                     </div>
                 </div>
             </div>
+@endsection
+
+@section('bottomjs')
+                <script>
+    var penilaian = new Vue({
+        el: "#penilaian-seminar-proposal",
+        data: {
+            pembimbing:  @if($seminarProposal && $seminarProposal->mark_dosen_pembimbing) '{{$seminarProposal->mark_dosen_pembimbing}}' @else 'B' @endif,
+            penguji: @if($seminarProposal && $seminarProposal->mark_dosen_penguji) '{{$seminarProposal->mark_dosen_penguji}}' @else 'B' @endif,
+            akhir: @if($seminarProposal && $seminarProposal->score) '{{$seminarProposal->score}}' @else 'A' @endif
+        },
+        methods: {
+            recalculate: function() {
+                console.log('here');
+                if(this.pembimbing == 'B' && this.penguji == 'B')
+                    this.akhir = 'A';
+                else if((this.pembimbing =='C' && this.penguji == 'B')  || (this.pembimbing == 'B' && this.penguji == 'C'))
+                    this.akhir = 'AB';
+                else if(this.pembimbing == 'C' && this.penguji == 'C')
+                    this.akhir = 'B';
+                else if(this.pembimbing == 'C' && this.penguji == 'K')
+                    this.akhir = 'BC';
+                else if(this.pembimbing == 'K' && this.penguji == 'C')
+                    this.akhir = 'C';
+                else
+                    this.akhir = 'E';
+            }
+
+        }
+
+    })
+    </script>
 @endsection

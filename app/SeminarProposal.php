@@ -9,7 +9,7 @@ class SeminarProposal extends Model
     const ACTION_GAGAL = 0;
     protected $fillable = [
         "mahasiswa_id", "schedule", "creator_id", "passed", "evaluator_id", "proposal_id", "id_dosen_penguji", "id_dosen_pembimbing_1",
-        "id_dosen_pembimbing_2"
+        "id_dosen_pembimbing_2", "mark_dosen_pembimbing", "mark_dosen_penguji"
     ];
 
     public function creator()
