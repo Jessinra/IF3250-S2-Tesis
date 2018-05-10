@@ -48,7 +48,7 @@ class SidangTesisController extends Controller
         if(!$sidangtesis)
             return abort(400);
         else {
-            if($tesis->dosen_pembimbing1 == $currentUser->id) {
+            if($tesis->dosen_pembimbing1 == $currentUser->id || $request->get('roledosen') == "pembimbing") {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
                 $scorependukung = $request->get('scorePendukung');
@@ -96,7 +96,7 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
-            } else if($sidangtesis->dosen_penguji_1 == $currentUser->id) {
+            } else if($sidangtesis->dosen_penguji_1 == $currentUser->id || $request->get('roledosen') == "penguji1") {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
                 $scorependukung = $request->get('scorePendukung');
@@ -142,7 +142,7 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
-            } else if($sidangtesis->dosen_penguji_2 == $currentUser->id) {
+            } else if($sidangtesis->dosen_penguji_2 == $currentUser->id || $request->get('roledosen') == "penguji2") {
                 $scoreutama = $request->get('scoreUtama');
                 $scorepenting = $request->get('scorePenting');
                 $scorependukung = $request->get('scorePendukung');
@@ -188,7 +188,7 @@ class SidangTesisController extends Controller
                 }
                 $sidangtesis->save();
                 return back();
-            }else if(count($kelas) > 0) {
+            }else if($request->get('roledosen') == "kelas" || count($kelas) > 0) {
                     $scoreutama = $request->get('scoreUtama');
 
                     $sidangtesis->nilai_dosen_kelas_utama = $scoreutama;
@@ -573,7 +573,9 @@ class SidangTesisController extends Controller
             $sidang->jam  = $request->get('waktu');
             $sidang->tempat = $request->get('tempat');
             $sidang->dosen_penguji_1 = $request->get('dosen_penguji1');
-            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');            
+            $sidang->dosen_penguji_2 = $request->get('dosen_penguji2');  
+            $tesis->judul_thesis = $request->get('judul');
+            $tesis->save();
             $sidang->save();
             $mhs->status = Mahasiswa::STATUS_SIAP_SIDANG_TESIS;
             $mhs->t_sidang = date("Y-m-d H:i:s");
