@@ -41,26 +41,45 @@
                     </div>
                 </div>
                 <div class="row mt-3 justify-content-center ">
+                    
                     @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                         <fieldset disabled="disabled" class="mb-4">
                     @endif
+
                         <a href="/seminartesis/create/{{$mahasiswa->user()->username}}"class="mb-4">
                             <button class="btn btn-blue">
                                 Buat Pengajuan Seminar Tesis
                             </button>
                         </a>
+                        
                     </fieldset>
+
                     @if($mahasiswa->status == \App\Mahasiswa::STATUS_LULUS)
+
                     <fieldset disabled="disabled">
                     @endif
+
                     @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
-                        <a href="/sidangtesis/create/{{$mahasiswa->user()->username}}" class="mb-4">
-                            <button class="btn btn-blue">
-                                Buat Pengajuan Sidang Tesis
-                            </button>
-                        </a>
+
+                        @php($sidang_submitted = App\SidangTesis::where('thesis_id', $tesis->id)->first())
+
+                        @if (is_null($sidang_submitted))
+                            <a href="/sidangtesis/create/{{$mahasiswa->user()->username}}" class="mb-4">
+                                <button class="btn btn-blue">
+                                    Buat Pengajuan Sidang Tesis
+                                </button>
+                            </a>
+                        @else 
+                            <a href="/sidangtesis/createUlang/{{$mahasiswa->user()->username}}" class="mb-4">
+                                <button class="btn btn-blue">
+                                    Buat Pengajuan Sidang Tesis Ulang 
+                                </button>
+                            </a>
+                        @endif
+
                     </fieldset>
                     @endif
+
                 </div>
 
             </div>
