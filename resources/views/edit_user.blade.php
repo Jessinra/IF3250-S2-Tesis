@@ -114,6 +114,17 @@
                     @if($mhs = $user->isMahasiswa())
                         <form action="/mahasiswa/edit/{{$user->id}}" method="post">
                             {{csrf_field()}}
+                            @if(isset($success_status))
+                                @if($success_status)
+                                    <div class="alert alert-success">
+                                        Perubahan berhasil disimpan
+                                    </div>
+                                @else
+                                    <div class="alert alert-danger">
+                                        Perubahan gagal disimpan
+                                    </div>
+                                @endif
+                            @endif
                             <div class="form-group row">
                                 <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
                                 <select class="mr-4" name="status" id="status" >
