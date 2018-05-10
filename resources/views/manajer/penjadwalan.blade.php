@@ -73,24 +73,61 @@
                                 </tr>
                                 @php($count++)
                             @endforeach
+                            @php($prev = -1)
+                            @php($no = 1)
                             @foreach($seminar_topik as $item)
-                                <tr class="text-center">
-                                    <td>
-                                        {{$loop->iteration + $count}}
-                                    </td>
-                                    <td>
-                                        {{$item->topik->topic->mahasiswa->user()->username}}
-                                    </td>
-                                    <td>
-                                        {{$item->topik->topic->mahasiswa->user()->name}}
-                                    </td>
-                                    <td>
-                                        {{$item->topik->topic->judul}}
-                                    </td>
-                                    <td>
-                                        {{$item->schedule}}
-                                    </td>
-                                </tr>
+                                @php($tgl = $item->schedule)
+                                @php($tgl = substr(str_replace(" ","T",$tgl),0,16))
+                                @if($prev != $item->topik_id)
+                                    @if($item->topik->topic->mahasiswa->status == \App\Mahasiswa::STATUS_TOPIK_DITERIMA)
+                                        <tr class="text-center">
+                                            <td>
+                                                {{$no + $count}}
+                                            </td>
+                                            <td>
+                                                {{$item->topik->topic->mahasiswa->user()->username}}
+                                            </td>
+                                            <td>
+                                                {{$item->topik->topic->mahasiswa->user()->name}}
+                                            </td>
+                                            <td>
+                                                {{$item->topik->topic->judul}}
+                                            </td>
+                                            <td>
+                                                <input type="hidden" id="id{{$item->mahasiswa_id}}" name="id{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->mahasiswa_id}}">
+                                                <input type="hidden" id="tp{{$item->mahasiswa_id}}" name="tp{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->topik_id}}">
+                                                <input type="datetime-local" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="form-control col-lg-12 " value="{{$tgl}}" onkeyup="updateSaveButton()">
+                                            </td>
+                                        </tr>
+                                        @php($no++)
+                                    @endif
+                                @endif
+                                @php($prev = $item->topik_id)
+                            @endforeach
+                            @php($prev = -1)
+                            @foreach($seminar_topik as $item)
+                                @if($prev != $item->topik_id)
+                                    @if($item->topik->topic->mahasiswa->status > \App\Mahasiswa::STATUS_TOPIK_DITERIMA)
+                                        <tr class="text-center">
+                                            <td>
+                                                {{$loop->iteration + $count + $no - 1}}
+                                            </td>
+                                            <td>
+                                                {{$item->topik->topic->mahasiswa->user()->username}}
+                                            </td>
+                                            <td>
+                                                {{$item->topik->topic->mahasiswa->user()->name}}
+                                            </td>
+                                            <td>
+                                                {{$item->topik->topic->judul}}
+                                            </td>
+                                            <td>
+                                                {{$item->schedule}}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endif
+                                @php($prev = $item->topik_id)
                             @endforeach
                         </table>
                     </div>
@@ -144,21 +181,59 @@
                                 </tr>
                                 @php($count++)
                             @endforeach
+                            @php($prev = -1)
+                            @php($no = 1)
                             @foreach($seminar_proposal as $item)
-                                <tr class="text-center">
-                                    <td>
-                                        {{$loop->iteration + $count}}
-                                    </td>
-                                    <td>
-                                        {{$item->mahasiswa->user()->username}}
-                                    </td>
-                                    <td>
-                                        {{$item->mahasiswa->user()->name}}
-                                    </td>
-                                    <td>
-                                        {{$item->schedule}}
-                                    </td>
-                                </tr>
+                                @php($tgl = $item->schedule)
+                                @php($tgl = substr(str_replace(" ","T",$tgl),0,16))
+                                @if($prev != $item->proposal_id)
+                                    @if($item->mahasiswa->status == \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
+                                        <tr class="text-center">
+                                            <td>
+                                                {{$no + $count}}
+                                            </td>
+                                            <td>
+                                                {{$item->mahasiswa->user()->username}}
+                                            </td>
+                                            <td>
+                                                {{$item->mahasiswa->user()->name}}
+                                            </td>
+                                            <td>
+                                                <input type="hidden" id="id{{$item->mahasiswa_id}}" name="id{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->mahasiswa_id}}">
+                                                <input type="hidden" id="tp{{$item->mahasiswa_id}}" name="tp{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->proposal_id}}">
+                                                <input type="hidden" id="pa{{$item->mahasiswa_id}}" name="pa{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->id_dosen_pembimbing_1}}">
+                                                <input type="hidden" id="pb{{$item->mahasiswa_id}}" name="pb{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->id_dosen_pembimbing_2}}">
+                                                <input type="hidden" id="pg{{$item->mahasiswa_id}}" name="pg{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->id_dosen_penguji}}">
+                                                <input type="datetime-local" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="form-control col-lg-12 " value="{{$tgl}}" onkeyup="updateSaveButton2()">
+                                            </td>
+                                        </tr>
+                                        @php($no++)
+                                    @endif
+                                @endif
+                                @php($prev = $item->proposal_id)
+                            @endforeach
+
+                            @php($prev = -1)
+                            @foreach($seminar_proposal as $item)
+                                @if($prev != $item->proposal_id)
+                                    @if($item->mahasiswa->status > \App\Mahasiswa::STATUS_PROPOSAL_DITERIMA)
+                                        <tr class="text-center">
+                                            <td>
+                                                {{$loop->iteration + $count + $no - 1}}
+                                            </td>
+                                            <td>
+                                                {{$item->mahasiswa->user()->username}}
+                                            </td>
+                                            <td>
+                                                {{$item->mahasiswa->user()->name}}
+                                            </td>
+                                            <td>
+                                                {{$item->schedule}}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endif
+                                @php($prev = $item->proposal_id)
                             @endforeach
                         </table>
                     </div>
