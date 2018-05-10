@@ -793,6 +793,16 @@
                                                         @endif
 
                                                         <td>
+                                                            <form action="" method="post">
+                                                                {{csrf_field()}}
+                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                                    <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
+                                                                    Nilai
+                                                                </button>
+                                                            </form>
+                                                        </td>
+
+                                                        <td>
                                                             <form action="/sidangtesis/nilai/penguji1/reset/{{$user->username}}" method="post">
                                                                 {{csrf_field()}}
                                                                 <button class="btn btn-blue align-items-center display-flex">
@@ -800,6 +810,7 @@
                                                                     Reset
                                                                 </button>
                                                             </form>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Penguji 2</th>
@@ -832,6 +843,16 @@
                                                         @else
                                                             <td></td>
                                                         @endif
+                                                        
+                                                        <td>
+                                                            <form action="" method="post">
+                                                                {{csrf_field()}}
+                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                                    <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
+                                                                    Nilai
+                                                                </button>
+                                                            </form>
+                                                        </td>
 
                                                         <td>
                                                             <form action="/sidangtesis/nilai/penguji2/reset/{{$user->username}}" method="post">
@@ -874,6 +895,15 @@
                                                         @else
                                                             <td></td>
                                                         @endif
+                                                        <td>
+                                                            <form action="" method="post">
+                                                                {{csrf_field()}}
+                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                                    <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
+                                                                    Nilai
+                                                                </button>
+                                                            </form>
+                                                        </td>
 
                                                         <td>
                                                             <form action="/sidangtesis/nilai/pembimbing/reset/{{$user->username}}" method="post">
@@ -898,6 +928,16 @@
                                                         @endif
                                                         <td>-</td>
                                                         <td>-</td>
+                                                        <td>
+                                                            <form action="" method="post">
+                                                                {{csrf_field()}}
+                                                                <button class="btn btn-blue align-items-center display-flex">
+                                                                    <i class="material-icons pencil md-12 font-size-18-px">assignment</i>
+                                                                    Nilai
+                                                                </button>
+                                                            </form>
+                                                        </td>
+
                                                         <td>
                                                             <form action="/sidangtesis/nilai/kelas/reset/{{$user->username}}" method="post">
                                                                 {{csrf_field()}}
