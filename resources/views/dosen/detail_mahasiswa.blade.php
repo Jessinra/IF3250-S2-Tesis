@@ -232,6 +232,7 @@
                                         <select name="usulan_penguji1"  class="form-control col-md-8" id="">
                                             <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                            @if($item->id != $tesis->dosen_pembimbing1 and $item->id != $tesis->dosen_pembimbing2)
                                                 <option value="{{$item->id}}"
                                                         @if($sidangTesis->ajuan_penguji1 == $item->id)
                                                         selected
@@ -240,6 +241,7 @@
                                                     {{$item->user->name}}
 
                                                 </option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -250,7 +252,8 @@
                                         </label>
                                         <select name="usulan_penguji2"  class="form-control col-md-8" id="">
                                             <option></option>
-                                            @foreach(App\Dosen::getListDosenPenguji() as $item)
+                                            @foreach(App\Dosen::getListDosenPenguji() as $item)\
+                                            @if($item->id != $tesis->dosen_pembimbing1 and $item->id != $tesis->dosen_pembimbing2)
                                                 <option value="{{$item->id}}"
                                                         @if($sidangTesis->ajuan_penguji2 == $item->id)
                                                         selected
@@ -258,6 +261,7 @@
                                                 >
                                                     {{$item->user->name}}
                                                 </option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
