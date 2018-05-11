@@ -479,7 +479,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 1</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_1"  class="form-control" id="" required>
-                                                            @if($seminarProposal)
+                                                            
                                                                 @if($seminarProposal->dosen_pembimbing_1)
                                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                                     @php($user_item = $item->user)
@@ -499,7 +499,7 @@
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
                                                                 @endif
-                                                            @endif
+                                                            
                                                         </select>
                                                     </div>
                                                 </div>
@@ -507,7 +507,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_2"  class="form-control" id="">
-                                                            @if($seminarProposal)
+                                                        
                                                             @if($seminarProposal->dosen_pembimbing_2)
                                                                 <option value="">
                                                                 </option>
@@ -531,7 +531,7 @@
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
                                                             @endif
-                                                            @endif
+                                                        
                                                         </select>
                                                     </div>
                                                 </div>
@@ -541,7 +541,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Penguji</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_penguji"  class="form-control" id="">
-                                                            @if($seminarProposal)
+                                                        
                                                             @if($seminarProposal->dosen_penguji)
                                                                 @foreach(\App\Dosen::getListDosenPenguji() as $item)
                                                                     @php($user_item = $item->user)
@@ -558,7 +558,7 @@
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
                                                             @endif
-                                                            @endif
+                                                        
                                                         </select>
                                                     </div>
                                                 </div>
