@@ -479,7 +479,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 1</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_1"  class="form-control" id="" required>
-                                                            
+                                                            @if($seminarProposal)
                                                                 @if($seminarProposal->dosen_pembimbing_1)
                                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                                     @php($user_item = $item->user)
@@ -489,7 +489,8 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @else
+                                                                @endif
+                                                            @else
                                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                                     @php($user_item = $item->user)
                                                                     <option value="{{$user_item->id}}"
@@ -498,7 +499,7 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @endif
+                                                            @endif
                                                             
                                                         </select>
                                                     </div>
@@ -507,7 +508,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_2"  class="form-control" id="">
-                                                        
+                                                        @if($seminarProposal)
                                                             @if($seminarProposal->dosen_pembimbing_2)
                                                                 <option value="">
                                                                 </option>
@@ -519,7 +520,8 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @else
+                                                            @endif
+                                                        @else
                                                                 <option value="">
                                                                 </option>
                                                                 @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
@@ -530,7 +532,7 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                            @endif
+                                                        @endif
                                                         
                                                         </select>
                                                     </div>
@@ -541,7 +543,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Penguji</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_penguji"  class="form-control" id="">
-                                                        
+                                                        @if($seminarProposal)
                                                             @if($seminarProposal->dosen_penguji)
                                                                 @foreach(\App\Dosen::getListDosenPenguji() as $item)
                                                                     @php($user_item = $item->user)
@@ -551,13 +553,14 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @else
+                                                            @endif    
+                                                        @else
                                                                 @foreach(\App\Dosen::getListDosenPenguji() as $item)
                                                                     @php($user_item = $item->user)
                                                                     <option value="{{$user_item->id}}"
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                            @endif
+                                                        @endif
                                                         
                                                         </select>
                                                     </div>
