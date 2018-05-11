@@ -90,6 +90,7 @@ Route::post('/seminartesis/nilai/{id}', 'SeminarTesisController@nilaiSeminarTesi
 
 Route::get('/sidangtesis/daftar','SidangTesisController@showFormDaftarSidang');
 Route::get('/sidangtesis/create/{id}','SidangTesisController@create');
+Route::get('/sidangtesis/createUlang/{id}','SidangTesisController@createUlang');
 Route::post('/sidangtesis/dosen/edit/{id}','SidangTesisController@dosenEdit');
 Route::post('/sidangtesis/nilai/{id}','SidangTesisController@nilaiSidangTesis');
 

@@ -35,29 +35,31 @@
                 </thead>
 
                 @foreach($sidang_tesis as $item)
-                    <tr class="text-center">
-                        <td>
-                            {{$loop->iteration}}
-                        </td>
-                        <td>
-                            {{$item->tesis->mahasiswa->user()->username}}
-                        </td>
-                        <td>
-                            {{$item->tesis->mahasiswa->user()->name}}
-                        </td>
-                        <td>
-                            {{$item->nilai}}
-                        </td>
-                        <td>
-                            {{$item->tesis->topic}}
-                        </td>
-                        <td>
-                            {{$item->tesis->dosen_pembimbing_1->user->name}}
-                        </td>
-                        <td>
-                            {{$item->dosen_penguji1->name}}
-                        </td>
-                    </tr>
+                    @if(!is_null($item->dosen_penguji1))
+                        <tr class="text-center">
+                            <td>
+                                {{$loop->iteration}}
+                            </td>
+                            <td>
+                                {{$item->tesis->mahasiswa->user()->username}}
+                            </td>
+                            <td>
+                                {{$item->tesis->mahasiswa->user()->name}}
+                            </td>
+                            <td>
+                                {{$item->nilai}}
+                            </td>
+                            <td>
+                                {{$item->tesis->topic}}
+                            </td>
+                            <td>
+                                {{$item->tesis->dosen_pembimbing_1->user->name}}
+                            </td>
+                            <td>
+                                {{$item->dosen_penguji1->name}}
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </table>
         </div>

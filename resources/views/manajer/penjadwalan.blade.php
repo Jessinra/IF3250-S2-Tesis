@@ -11,6 +11,12 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#seminar-proposal">Seminar Proposal</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#seminar-tesis">Seminar Tesis</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#sidang-tesis">Sidang Tesis</a>
+            </li>
         </ul>
         <div class="tab-content">
             <div id="seminar-topik" class="container tab-pane active">
@@ -233,6 +239,109 @@
                     </div>
                 </form>
             </div>
+
+            <div id="seminar-tesis" class="container tab-pane">
+                <form action="/penjadwalan/seminarproposal" method="post">
+                    {{csrf_field()}}
+                    <div class="row justify-content-center">
+                    </div>
+                    <div class="row justify-content-center table-x">
+                        <table class="mahasiswa-control-table table table-hover">
+                            <thead>
+                            <tr class="text-center">
+                                <th>
+                                    No
+                                </th>
+                                <th>
+                                    NIM
+                                </th>
+                                <th>
+                                    Nama
+                                </th>
+                                <th>
+                                    Waktu
+                                </th>
+                                <th>
+                                    Tempat
+                                </th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            @foreach($seminar_tesis as $item)
+                                <tr class="text-center">
+                                    <td>
+                                        {{$loop->iteration}}
+                                    </td>
+                                    <td>
+                                        {{$item->tesis->mahasiswa->user()->username}}
+                                    </td>
+                                    <td>
+                                        {{$item->tesis->mahasiswa->user()->name}}
+                                    </td>
+                                    <td>
+                                        {{$item->hari}} {{$item->waktu}}
+                                    </td>
+                                    <td>
+                                        {{$item->tempat}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </form>
+            </div>
+
+            <div id="sidang-tesis" class="container tab-pane">
+                <form action="/penjadwalan/seminarproposal" method="post">
+                    {{csrf_field()}}
+                    <div class="row justify-content-center">
+                    </div>
+                    <div class="row justify-content-center table-x">
+                        <table class="mahasiswa-control-table table table-hover">
+                            <thead>
+                            <tr class="text-center">
+                                <th>
+                                    No
+                                </th>
+                                <th>
+                                    NIM
+                                </th>
+                                <th>
+                                    Nama
+                                </th>
+                                <th>
+                                    Waktu
+                                </th>
+                                <th>
+                                    Tempat
+                                </th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            @foreach($sidang_tesis as $item)
+                                <tr class="text-center">
+                                    <td>
+                                        {{$loop->iteration}}
+                                    </td>
+                                    <td>
+                                        {{$item->tesis->mahasiswa->user()->username}}
+                                    </td>
+                                    <td>
+                                        {{$item->tesis->mahasiswa->user()->name}}
+                                    </td>
+                                    <td>
+                                        {{$item->tanggal}} {{$item->jam}}
+                                    </td>
+                                    <td>
+                                        {{$item->tempat}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
         </div>
     </div>
 @endsection

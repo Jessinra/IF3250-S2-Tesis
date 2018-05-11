@@ -46,7 +46,7 @@
             <div class="col-md-8">
 
                 <ul class="nav nav-tabs" role="tablist">
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)
+                    @if($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK || $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK && $mahasiswa->status >= \App\Mahasiswa::STATUS_MENUNGGU_TOPIK)
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#topik">Seminar Topik</a>
                     </li>
@@ -56,7 +56,7 @@
                     </li>
                     @endif
 
-                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL and $mahasiswa->status <  \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK) || ($mahasiswa->status <=  \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL))
+                    @if(($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_PROPOSAL || $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_PROPOSAL) && ($mahasiswa->status >=  \App\Mahasiswa::STATUS_MENUNGGU_PROPOSAL))
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#proposal">Seminar Proposal</a>
                     </li>
