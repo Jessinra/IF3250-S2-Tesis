@@ -480,10 +480,16 @@
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_1"  class="form-control" id="" required>
                                                             @if($seminarProposal)
-                                                                <option value="{{$seminarProposal->id_dosen_pembimbing_1}}" selected>
-                                                                    {{$seminarProposal->dosen_pembimbing_1->user->name}}
-                                                                </option>
-                                                            @else
+                                                                @if($seminarProposal->dosen_pembimbing_1)
+                                                                @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                                    @php($user_item = $item->user)
+                                                                    <option value="{{$user_item->id}}"
+                                                                            @if($seminarProposal->id_dosen_pembimbing_1 == $item->id)
+                                                                            selected
+                                                                            @endif
+                                                                    >{{$user_item->name}}</option>
+                                                                @endforeach
+                                                                @else
                                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                                     @php($user_item = $item->user)
                                                                     <option value="{{$user_item->id}}"
@@ -492,6 +498,7 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
+                                                                @endif
                                                             @endif
                                                         </select>
                                                     </div>
@@ -501,20 +508,29 @@
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_2"  class="form-control" id="">
                                                             @if($seminarProposal)
-                                                                @if($seminarProposal->dosen_pembimbing_2)
-                                                                <option value="{{$seminarProposal->id_dosen_pembimbing_2}}" selected>
-                                                                    {{$seminarProposal->dosen_pembimbing_2->user->name}}
-                                                                </option>
-                                                                @endif
-                                                            @else
+                                                            @if($seminarProposal->dosen_pembimbing_2)
                                                                 <option value="">
-
                                                                 </option>
                                                                 @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
                                                                     @php($user_item = $item->user)
                                                                     <option value="{{$user_item->id}}"
+                                                                            @if($seminarProposal->id_dosen_pembimbing_2 == $item->id)
+                                                                            selected
+                                                                            @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
+                                                                @else
+                                                                <option value="">
+                                                                </option>
+                                                                @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
+                                                                    @php($user_item = $item->user)
+                                                                    <option value="{{$user_item->id}}"
+                                                                            @if($topik->calon_pembimbing2 == $item->id)
+                                                                            selected
+                                                                            @endif
+                                                                    >{{$user_item->name}}</option>
+                                                                @endforeach
+                                                            @endif
                                                             @endif
                                                         </select>
                                                     </div>
@@ -526,15 +542,22 @@
                                                     <div class="col-md-6">
                                                         <select name="dosen_penguji"  class="form-control" id="">
                                                             @if($seminarProposal)
-                                                                    <option value="{{$seminarProposal->id_dosen_penguji}}" selected>
-                                                                        {{$seminarProposal->dosen_penguji->user->name}}
-                                                                    </option>
-                                                            @else
+                                                            @if($seminarProposal->dosen_penguji)
+                                                                @foreach(\App\Dosen::getListDosenPenguji() as $item)
+                                                                    @php($user_item = $item->user)
+                                                                    <option value="{{$user_item->id}}"
+                                                                            @if($seminarProposal->id_dosen_penguji == $item->id)
+                                                                            selected
+                                                                            @endif
+                                                                    >{{$user_item->name}}</option>
+                                                                @endforeach
+                                                                @else
                                                                 @foreach(\App\Dosen::getListDosenPenguji() as $item)
                                                                     @php($user_item = $item->user)
                                                                     <option value="{{$user_item->id}}"
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
+                                                            @endif
                                                             @endif
                                                         </select>
                                                     </div>
