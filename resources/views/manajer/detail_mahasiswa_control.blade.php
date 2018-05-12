@@ -808,10 +808,8 @@
                                                                     </div>
 
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->seminar_dengan_teman) checked @endif>
-                                                                        <label for="cb2" class="form-check-label"
-
-                                                                        >
+                                                                        <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->sidang_dengan_teman) checked @endif>
+                                                                        <label for="cb2" class="form-check-label">
                                                                             Bukti (Fotokopi) telah seminar dengan teman diserahkan ke TU
                                                                         </label>
                                                                     </div>
