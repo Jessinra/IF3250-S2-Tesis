@@ -409,21 +409,29 @@
                                                 <input type="hidden" value="{{$seminarProposal->id}}" name="seminartopik">
                                                 <div class="form-group row width-full justify-content-center">
                                                     <label for="scoreDosenPembimbing" class=" col-sm-4 text-right col-form-label mr-1 ml-1">Nilai Dosen Pembimbing</label>
-                                                    <select name="score_dosen_pembimbing" id="scoreDosenPembimbing"
+                                                    <select name="mark_dosen_pembimbing" id="scoreDosenPembimbing"
                                                             class="form-control col-sm-4 ml-1 mr-1" v-model="pembimbing" v-on:change="recalculate">
+                                                        @if($seminarProposal->mark_dosen_pembimbing)
+                                                            <option>{{$seminarProposal->mark_dosen_pembimbing}}</option>
+                                                        @else
                                                         <option value="B">B</option>
                                                         <option value="C">C</option>
                                                         <option value="K">K</option>
+                                                        @endif
                                                     </select>
 
                                                 </div>
                                                 <div class="form-group row width-full justify-content-center">
                                                     <label for="scoreDosenPenguji" class=" col-sm-4 text-right col-form-label mr-1 ml-1">Nilai Dosen Penguji</label>
-                                                    <select name="score_dosen_penguji" id="scoreDosenPenguji"
+                                                    <select name="mark_dosen_penguji" id="scoreDosenPenguji"
                                                             class="form-control col-sm-4 ml-1 mr-1" v-model="penguji" v-on:change="recalculate">
-                                                        <option value="B">B</option>
-                                                        <option value="C">C</option>
-                                                        <option value="K">K</option>
+                                                        @if($seminarProposal->mark_dosen_penguji)
+                                                            <option>{{$seminarProposal->mark_dosen_penguji}}</option>
+                                                        @else
+                                                            <option value="B">B</option>
+                                                            <option value="C">C</option>
+                                                            <option value="K">K</option>
+                                                        @endif
                                                     </select>
 
                                                 </div>
@@ -1484,10 +1492,7 @@
                                                             <div class="form-group row col-md-12">
                                                                 <label for="tanggal_seminar_tesis" class="col-md-4 col-form-label text-md-right text-center">Waktu Seminar Tesis<sup>*</sup></label>
                                                                 <div class="display-flex align-items-center">
-
-                                                                    @if($sidangTesis->jadwal_seminar)
-                                                                        {{date("d-m-Y ", strtotime($sidangTesis->jadwal_seminar))}}
-                                                                    @endif
+                                                                        {{date("Y-m-d", strtotime($seminarTesis->hari))}} {{date("H:i", strtotime($seminarTesis->waktu))}}
                                                                 </div>
 
                                                             </div>
