@@ -1484,10 +1484,7 @@
                                                             <div class="form-group row col-md-12">
                                                                 <label for="tanggal_seminar_tesis" class="col-md-4 col-form-label text-md-right text-center">Waktu Seminar Tesis<sup>*</sup></label>
                                                                 <div class="display-flex align-items-center">
-
-                                                                    @if($sidangTesis->jadwal_seminar)
-                                                                        {{date("d-m-Y ", strtotime($sidangTesis->jadwal_seminar))}}
-                                                                    @endif
+                                                                        {{date("Y-m-d", strtotime($seminarTesis->hari))}} {{date("H:i", strtotime($seminarTesis->waktu))}}
                                                                 </div>
 
                                                             </div>
