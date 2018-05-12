@@ -76,7 +76,7 @@
                     </li>
                     @endif
 
-                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#seminartesis">Seminar Tesis</a>
                     </li>
@@ -87,7 +87,7 @@
                     </li>
                     @endif
 
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#sidangtesis">Sidang Tesis</a>
                     </li>
@@ -1659,13 +1659,13 @@
                      temp.classList.remove('fade');
                      temp.classList.add('active');
                     </script>
-                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
                     <script>
                      var temp = document.getElementById("seminartesis");
                      temp.classList.remove('fade');
                      temp.classList.add('active');
                     </script>
-                    @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                     <script>
                      var temp = document.getElementById("sidangtesis");
                      temp.classList.remove('fade');
