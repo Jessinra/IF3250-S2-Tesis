@@ -199,7 +199,7 @@
 
                                     <div class="form-group row col-md-12">
                                         <label for="judul" class="col-md-4 col-form-label text-md-right text-center ">Judul Tesis<sup>*</sup></label>
-                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->judul_thesis}}">
+                                        <input type="text" id="judul" name="judul" class="col-md-8 form-control new-input" value="{{$mahasiswa->tesis()->judul_thesis}}">
                                     </div>
 
 
@@ -208,28 +208,28 @@
                                         <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
                                             Tanggal
                                         </label>
-                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$sidangTesis->tanggal}}" >
+                                        <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control new-input" value="{{$sidangTesis->tanggal}}" >
                                     </div>
 
                                     <div class="form-group row col-md-12">
                                         <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
                                             Waktu
                                         </label>
-                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$sidangTesis->jam}}">
+                                        <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control new-input" value="{{$sidangTesis->jam}}">
                                     </div>
 
                                     <div class="form-group row col-md-12">
                                         <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                             Tempat
                                         </label>
-                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$sidangTesis->tempat}}">
+                                        <input type="string" id="tempat" name="tempat" class="col-md-8 form-control new-input" value="{{$sidangTesis->tempat}}">
                                     </div>
 
                                     <div class="form-group row col-md-12">
                                         <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                             Usulan Dosen Penguji
                                         </label>
-                                        <select name="usulan_penguji1"  class="form-control col-md-8" id="">
+                                        <select name="usulan_penguji1"  class="form-control col-md-8 new-input" id="">
                                             <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)
                                             @if($item->id != $tesis->dosen_pembimbing1 and $item->id != $tesis->dosen_pembimbing2)
@@ -250,7 +250,7 @@
                                     <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                             Usulan Dosen Penguji
                                         </label>
-                                        <select name="usulan_penguji2"  class="form-control col-md-8" id="">
+                                        <select name="usulan_penguji2"  class="form-control col-md-8 new-input" id="">
                                             <option></option>
                                             @foreach(App\Dosen::getListDosenPenguji() as $item)\
                                             @if($item->id != $tesis->dosen_pembimbing1 and $item->id != $tesis->dosen_pembimbing2)
@@ -268,11 +268,28 @@
                                 </div>
 
                                 <div class="row justify-content-center">
-                                <button class="btn btn-blue display-flex align-items-center ">
+                                <script type="text/javascript">
+                                    function enableAllNewInput() {
+                                        $(".new-input").removeAttr("disabled");
+                                        $("#edit-new-data").css("display", "none");
+                                        $("#save-new-data").css("display", "block");
+                                    }
+                                    window.onload = function() {
+                                        $(".new-input").attr("disabled",true);
+                                        $("#edit-new-data").click(enableAllNewInput);
+                                    };
+                                </script>
+                                <button type="button" id="edit-new-data" class="btn btn-blue align-items-center ">
                                     <i class="material-icons font-size-18-px">
                                         edit
                                     </i>
                                     Edit
+                                </button>
+                                <button style="display: none" type="submit" id="save-new-data" class="btn btn-blue align-items-center ">
+                                    <i class="material-icons font-size-18-px">
+                                        save
+                                    </i>
+                                    Save
                                 </button>
                                 </div>
                             </form>

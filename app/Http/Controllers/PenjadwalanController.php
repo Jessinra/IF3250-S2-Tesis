@@ -25,7 +25,11 @@ class PenjadwalanController extends Controller
     public function showPenjadwalanPage(){
         $manajer = Auth::user()->isManajer();
         if($manajer) {
-            $seminar_topik = SeminarTopik::orderBy('topik_id','asc')->orderBy('created_at','desc')->get();
+            $seminar_topik = SeminarTopik::join('users','users.id','=','seminar_topiks.mahasiswa_id')
+                                           ->select('users.username','seminar_topiks.*')
+                                           ->orderBy('users.username','asc')
+                                           ->orderBy('created_at','desc')
+                                           ->get();
             $topik = TopicApproval::where('action',1)->whereNotIn('topic_id', function($q){
                 $q->select('topik_id')->from('seminar_topiks');
             })->get();
@@ -38,9 +42,23 @@ class PenjadwalanController extends Controller
 //            })->get();
 
             //error_log(count($proposal));
-            $seminar_proposal = SeminarProposal::orderBy('proposal_id','asc')->orderBy('created_at','desc')->get();
-            $seminar_tesis = SeminarTesis::get();
-            $sidang_tesis = SidangTesis::get();
+            $seminar_proposal = SeminarProposal::join('users','users.id','=','seminar_proposals.mahasiswa_id')
+                                                 ->select('users.username','seminar_proposals.*')
+                                                 ->orderBy('users.username','asc')
+                                                 ->orderBy('created_at','desc')
+                                                 ->get();
+            $seminar_tesis = SeminarTesis::join('thesis','thesis.id','=','seminar_teses.tesis_id')
+                                           ->join('users','users.id','=','thesis.mahasiswa_id')
+                                           ->select('users.username','seminar_teses.*')
+                                           ->orderBy('users.username','asc')
+                                           ->orderBy('created_at','desc')
+                                           ->get();
+            $sidang_tesis = SidangTesis::join('thesis','thesis.id','=','sidang_tesis.thesis_id')
+                                         ->join('users','users.id','=','thesis.mahasiswa_id')
+                                         ->select('users.username','sidang_tesis.*')
+                                         ->orderBy('users.username','asc')
+                                         ->orderBy('created_at','desc')
+                                         ->get();
 
             return view('manajer.penjadwalan',['topik' => $topik,
                                                     'proposal' => $proposal,
