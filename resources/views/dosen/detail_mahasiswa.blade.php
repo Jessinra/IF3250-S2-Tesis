@@ -268,29 +268,29 @@
                                 </div>
 
                                 <div class="row justify-content-center">
-                                <script type="text/javascript">
-                                    function enableAllNewInput() {
-                                        $(".new-input").removeAttr("disabled");
-                                        $("#edit-new-data").css("display", "none");
-                                        $("#save-new-data").css("display", "block");
-                                    }
-                                    window.onload = function() {
-                                        $(".new-input").attr("disabled",true);
-                                        $("#edit-new-data").click(enableAllNewInput);
-                                    };
-                                </script>
-                                <button type="button" id="edit-new-data" class="btn btn-blue align-items-center ">
-                                    <i class="material-icons font-size-18-px">
-                                        edit
-                                    </i>
-                                    Edit
-                                </button>
-                                <button style="display: none" type="submit" id="save-new-data" class="btn btn-blue align-items-center ">
-                                    <i class="material-icons font-size-18-px">
-                                        save
-                                    </i>
-                                    Save
-                                </button>
+                                    <script type="text/javascript">
+                                        function enableAllNewInput() {
+                                            $(".new-input").removeAttr("disabled");
+                                            $("#edit-new-data").css("display", "none");
+                                            $("#save-new-data").css("display", "block");
+                                        }
+                                        // window.onload = function() {
+                                        //     $(".new-input").attr("disabled",true);
+                                        //     $("#edit-new-data").click(enableAllNewInput);
+                                        // };
+                                    </script>
+                                    <button type="button" id="edit-new-data" class="btn btn-primary align-items-center ">
+                                        <i class="material-icons font-size-18-px">
+                                            edit
+                                        </i>
+                                        Edit
+                                    </button>
+                                    <button style="display: none" type="submit" id="save-new-data" class="btn btn-blue align-items-center ">
+                                        <i class="material-icons font-size-18-px">
+                                            save
+                                        </i>
+                                        Save
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -357,28 +357,28 @@
                                 <label for="judul" class="col-md-4 col-form-label text-md-right text-center">
                                     Judul Tesis
                                 </label>
-                                <input id="judul" name="judul" class="col-md-8 form-control" value="{{$tesis->judul_thesis}}" >
+                                <input id="judul" name="judul" class="col-md-8 form-control new-input-seminar" value="{{$tesis->judul_thesis}}" >
                             </div>
 
                             <div class="form-group row col-md-12">
                                 <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
                                     Tanggal
                                 </label>
-                                <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$seminarTesis->hari}}" >
+                                <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control new-input-seminar" value="{{$seminarTesis->hari}}" >
                             </div>
 
                             <div class="form-group row col-md-12">
                                 <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
                                     Waktu
                                 </label>
-                                <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$seminarTesis->waktu}}">
+                                <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control new-input-seminar" value="{{$seminarTesis->waktu}}">
                             </div>
 
                             <div class="form-group row col-md-12">
                                 <label for="tempat" class="col-md-4 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
                                     Tempat
                                 </label>
-                                <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$seminarTesis->tempat}}">
+                                <input type="string" id="tempat" name="tempat" class="col-md-8 form-control new-input-seminar" value="{{$seminarTesis->tempat}}">
                             </div>
                                 <div class="form-group row col-md-12">
                                     @php($db1 = $seminarTesis->tesis->dosen_pembimbing_1)
@@ -417,14 +417,40 @@
 
                                 </div>
 
+                                <div class="row justify-content-center">
+                                    <script type="text/javascript">
+                                        function enableAllNewInputSmnr() {
+                                            $(".new-input-seminar").removeAttr("disabled");
+                                            $("#edit-new-data-smnr").css("display", "none");
+                                            $("#save-new-data-smnr").css("display", "block");
+                                        }
+                                        window.onload = function() {
+                                            $(".new-input-seminar").attr("disabled",true);
+                                            $("#edit-new-data-smnr").click(enableAllNewInputSmnr);
+                                            $(".new-input").attr("disabled",true);
+                                            $("#edit-new-data").click(enableAllNewInput);
+                                        };
+                                    </script>
+                                    <button type="button" id="edit-new-data-smnr" class="btn btn-primary align-items-center ">
+                                        <i class="material-icons font-size-18-px">
+                                            edit
+                                        </i>
+                                        Edit
+                                    </button>
+                                    <button style="display: none" type="submit" id="save-new-data-smnr" class="btn btn-blue align-items-center ">
+                                        <i class="material-icons font-size-18-px">
+                                            save
+                                        </i>
+                                        Save
+                                    </button>
+                                </div>
 
-
-                                <div class="justify-content-center row">
+                                <!-- <div class="justify-content-center row">
                                 <button class="btn btn-primary align-items-center display-flex">
                                     <i class="material-icons pencil md-12 font-size-18-px">save</i>
                                     Save
                                 </button>
-                                </div>
+                                </div> -->
                             </form>
                         </div>
                     </div>
