@@ -31,8 +31,14 @@ class DosenController extends Controller
         if(Auth::user()->isDosen()) {
             $iddosen = Auth::user()->id;
             $idmahasiswabimbingan = Thesis::where('dosen_pembimbing1', $iddosen)->orWhere('dosen_pembimbing2', $iddosen)->pluck('mahasiswa_id');
-            $mahasiswabimbingan = Mahasiswa::whereIn('id',$idmahasiswabimbingan)->get();
-            $mahasiswakelas = Mahasiswa::where('status','>=',14)->get();
+            $mahasiswabimbingan = Mahasiswa::join('users','users.id','=','mahasiswas.id')
+                                             ->whereIn('mahasiswas.id',$idmahasiswabimbingan)
+                                             ->orderBy('users.username','asc')
+                                             ->get();
+            $mahasiswakelas = Mahasiswa::join('users','users.id','=','mahasiswas.id')
+                                         ->where('status','>=',14)
+                                         ->orderBy('users.username','asc')
+                                         ->get();
             //$kelas = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
             $kelas = KelasTesis::where('id_dosen_kelas',$iddosen)->get();
             return view('dosen.index', ['mahasiswabimbingan' => $mahasiswabimbingan, 'mahasiswakelas' => $mahasiswakelas, 'kelas' =>$kelas]);
