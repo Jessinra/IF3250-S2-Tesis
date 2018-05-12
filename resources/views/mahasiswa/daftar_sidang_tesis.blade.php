@@ -26,7 +26,7 @@
                     <div class="form-group row col-md-12">
                         <label for="tanggal_seminar_tesis" class="col-md-4 col-form-label text-md-right text-center">Waktu Seminar Tesis</label>
                         <input type="datetime-local" id="tanggal_seminar_tesis" name="tanggal_seminar_tesis" class="form-control col-md-8 "
-                               value="{{date("Y-m-d H:i:s", strtotime("$seminarTesis->hari $seminarTesis->waktu"))}}"
+                               value="{{date("Y-m-d", strtotime($seminarTesis->hari))}}T{{date("H:i", strtotime($seminarTesis->waktu))}}"
                                required disabled>
                     </div>
                     <div class="form-group row col-md-12">
