@@ -35,7 +35,13 @@ class ManajerController extends Controller
     public function controlMahasiswa() {
         $manajer = $this->getManajer();
         if($manajer) {
-            $mahasiswa = Mahasiswa::where('status', '!=', Mahasiswa::STATUS_NOT_ACTIVE)->get();
+            $mahasiswa = Mahasiswa::join('users','users.id','=','mahasiswas.id')
+                                    ->select('users.username','mahasiswas.*')
+                                    ->where('status', '!=', Mahasiswa::STATUS_NOT_ACTIVE)
+                                    ->where('status', '!=', Mahasiswa::STATUS_LULUS)
+                                    ->orderBy('users.username','asc')
+                                    ->get();
+
             return view('manajer.mahasiswa_control', ['mahasiswa' => $mahasiswa]);
         } else {
             abort(403);

@@ -33,7 +33,11 @@ class RekapDataController extends Controller
     public function showRekapNilaiAkhir(){
         $manajer = Auth::user()->isManajer();
         if($manajer){
-            $sidang_tesis = SidangTesis::get();
+            $sidang_tesis = SidangTesis::join('thesis','thesis.id','=','sidang_tesis.thesis_id')
+                                         ->join('users','users.id','=','thesis.mahasiswa_id')
+                                         ->select('users.username','sidang_tesis.*')
+                                         ->orderBy('users.username','asc')
+                                         ->get();
             $mahasiswa = Mahasiswa::get();
             return view('manajer.nilai_akhir_mahasiswa',['sidang_tesis' => $sidang_tesis]);
         }else{

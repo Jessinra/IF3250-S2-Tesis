@@ -42,15 +42,15 @@ class KelasTesisController extends Controller
                 $tahun = null;
                 if(idate("m") > 6){
                     if($data['semester'] == 1){
-                        $tahun = idate("Y");
+                        $tahun = $data['tahun'];
                     }else{
-                        $tahun = idate("Y")+1;
+                        $tahun = $data['tahun']+1;
                     }
                 }else{
                     if($data['semester'] == 1){
-                        $tahun = idate("Y")-1;
+                        $tahun = $data['tahun']-1;
                     }else{
-                        $tahun = idate("Y");
+                        $tahun = $data['tahun'];
                     }
                 }
                 $kelas_tesis = KelasTesis::create([

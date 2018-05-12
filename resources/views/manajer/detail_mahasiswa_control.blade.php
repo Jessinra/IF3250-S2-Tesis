@@ -76,7 +76,7 @@
                     </li>
                     @endif
 
-                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#seminartesis">Seminar Tesis</a>
                     </li>
@@ -87,7 +87,7 @@
                     </li>
                     @endif
 
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#sidangtesis">Sidang Tesis</a>
                     </li>
@@ -466,8 +466,9 @@
                                             <form action="{{route('seminarproposal-penetapan')}}" method="post" class="col-md-12">
                                                 {{csrf_field()}}
                                                 <input type="hidden" name="mahasiswa" value="{{$mahasiswa->id}}">
-                                                <div class="row justify-content-center">
-                                                    <div>
+                                                <div class="form-group row mt-2">
+                                                    <label for="name" class="col-md-4 col-form-label text-md-right">Jadwal Seminar Proposal</label>
+                                                    <div class="col-md-6">
                                                         <input type="datetime-local" class="form-control" name="date"
                                                                @if($seminarProposal)
                                                                value="{{date("Y-m-d\TH:i:s", strtotime($seminarProposal->schedule))}}"
@@ -489,7 +490,8 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @else
+                                                                @endif
+                                                            @else
                                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                                     @php($user_item = $item->user)
                                                                     <option value="{{$user_item->id}}"
@@ -498,8 +500,8 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @endif
                                                             @endif
+                                                            
                                                         </select>
                                                     </div>
                                                 </div>
@@ -507,7 +509,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 2</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_2"  class="form-control" id="">
-                                                            @if($seminarProposal)
+                                                        @if($seminarProposal)
                                                             @if($seminarProposal->dosen_pembimbing_2)
                                                                 <option value="">
                                                                 </option>
@@ -519,7 +521,8 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @else
+                                                            @endif
+                                                        @else
                                                                 <option value="">
                                                                 </option>
                                                                 @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
@@ -530,8 +533,8 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                            @endif
-                                                            @endif
+                                                        @endif
+                                                        
                                                         </select>
                                                     </div>
                                                 </div>
@@ -541,7 +544,7 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Penguji</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_penguji"  class="form-control" id="">
-                                                            @if($seminarProposal)
+                                                        @if($seminarProposal)
                                                             @if($seminarProposal->dosen_penguji)
                                                                 @foreach(\App\Dosen::getListDosenPenguji() as $item)
                                                                     @php($user_item = $item->user)
@@ -551,19 +554,20 @@
                                                                             @endif
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                                @else
+                                                            @endif    
+                                                        @else
                                                                 @foreach(\App\Dosen::getListDosenPenguji() as $item)
                                                                     @php($user_item = $item->user)
                                                                     <option value="{{$user_item->id}}"
                                                                     >{{$user_item->name}}</option>
                                                                 @endforeach
-                                                            @endif
-                                                            @endif
+                                                        @endif
+                                                        
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
+                                                <div class="row justify-content-center">
                                                     <button class="btn btn-blue ml-4">
                                                         Tetapkan
                                                     </button>
@@ -805,10 +809,8 @@
                                                                     </div>
 
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->seminar_dengan_teman) checked @endif>
-                                                                        <label for="cb2" class="form-check-label"
-
-                                                                        >
+                                                                        <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->sidang_dengan_teman) checked @endif>
+                                                                        <label for="cb2" class="form-check-label">
                                                                             Bukti (Fotokopi) telah seminar dengan teman diserahkan ke TU
                                                                         </label>
                                                                     </div>
@@ -1656,13 +1658,13 @@
                      temp.classList.remove('fade');
                      temp.classList.add('active');
                     </script>
-                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
                     <script>
                      var temp = document.getElementById("seminartesis");
                      temp.classList.remove('fade');
                      temp.classList.add('active');
                     </script>
-                    @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                     <script>
                      var temp = document.getElementById("sidangtesis");
                      temp.classList.remove('fade');
