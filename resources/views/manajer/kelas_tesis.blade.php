@@ -33,9 +33,12 @@
                                 <option value=""> </option>
                                 @if(idate("m") > 6)
                                     <option value="{{idate("Y")}}">{{idate("Y")}}/{{idate("Y")+1}}</option>
+                                    <option value="{{idate("Y")+1}}">{{idate("Y")+1}}/{{idate("Y")+2}}</option>
                                 @else
                                     <option value="{{idate("Y")}}">{{idate("Y")-1}}/{{idate("Y")}}</option>
+                                    <option value="{{idate("Y")+1}}">{{idate("Y")}}/{{idate("Y")+1}}</option>
                                 @endif
+
                             </select>
                         </td>
                         <td>
