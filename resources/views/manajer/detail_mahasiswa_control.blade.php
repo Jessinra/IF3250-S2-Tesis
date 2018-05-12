@@ -466,8 +466,9 @@
                                             <form action="{{route('seminarproposal-penetapan')}}" method="post" class="col-md-12">
                                                 {{csrf_field()}}
                                                 <input type="hidden" name="mahasiswa" value="{{$mahasiswa->id}}">
-                                                <div class="row justify-content-center">
-                                                    <div>
+                                                <div class="form-group row mt-2">
+                                                    <label for="name" class="col-md-4 col-form-label text-md-right">Jadwal Seminar Proposal</label>
+                                                    <div class="col-md-6">
                                                         <input type="datetime-local" class="form-control" name="date"
                                                                @if($seminarProposal)
                                                                value="{{date("Y-m-d\TH:i:s", strtotime($seminarProposal->schedule))}}"
@@ -566,7 +567,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row">
+                                                <div class="row justify-content-center">
                                                     <button class="btn btn-blue ml-4">
                                                         Tetapkan
                                                     </button>
