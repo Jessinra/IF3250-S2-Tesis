@@ -320,10 +320,15 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 1</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_1"  class="form-control" id="">
-                                                            @if($tesis)
-                                                                <option value="{{$tesis->dosen_pembimbing1}}" selected>
-                                                                    {{$tesis->dosen_pembimbing_1->user->name}}
-                                                                </option>
+                                                            @if($tesis && $tesis->dosen_pembimbing1)
+                                                                @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                                    @php($user_item = $item->user)
+                                                                    <option value="{{$user_item->id}}"
+                                                                            @if($tesis->dosen_pembimbing1 == $item->id)
+                                                                            selected
+                                                                            @endif
+                                                                    >{{$user_item->name}}</option>
+                                                                @endforeach
                                                             @else
                                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                                     @php($user_item = $item->user)
@@ -343,9 +348,14 @@
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_2"  class="form-control" id="">
                                                             @if($tesis && $tesis->dosen_pembimbing_2)
-                                                                <option value="{{$tesis->dosen_pembimbing2}}" selected>
-                                                                    {{$tesis->dosen_pembimbing_2->user->name}}
-                                                                </option>
+                                                                @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
+                                                                    @php($user_item = $item->user)
+                                                                    <option value="{{$user_item->id}}"
+                                                                            @if($tesis->dosen_pembimbing2 == $item->id)
+                                                                            selected
+                                                                            @endif
+                                                                    >{{$user_item->name}}</option>
+                                                                @endforeach
                                                             @else
                                                                 <option value=""></option>
                                                                 @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
