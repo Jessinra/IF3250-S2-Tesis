@@ -76,7 +76,7 @@
                     </li>
                     @endif
 
-                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    @if(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#seminartesis">Seminar Tesis</a>
                     </li>
@@ -87,7 +87,7 @@
                     </li>
                     @endif
 
-                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    @if($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#sidangtesis">Sidang Tesis</a>
                     </li>
@@ -808,10 +808,8 @@
                                                                     </div>
 
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->seminar_dengan_teman) checked @endif>
-                                                                        <label for="cb2" class="form-check-label"
-
-                                                                        >
+                                                                        <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->sidang_dengan_teman) checked @endif>
+                                                                        <label for="cb2" class="form-check-label">
                                                                             Bukti (Fotokopi) telah seminar dengan teman diserahkan ke TU
                                                                         </label>
                                                                     </div>
@@ -1659,13 +1657,13 @@
                      temp.classList.remove('fade');
                      temp.classList.add('active');
                     </script>
-                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
+                    @elseif(($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SEMINAR_TESIS and $mahasiswa->status < \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS) || ($mahasiswa->status == \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TESIS))
                     <script>
                      var temp = document.getElementById("seminartesis");
                      temp.classList.remove('fade');
                      temp.classList.add('active');
                     </script>
-                    @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_SIAP_SIDANG_TESIS)
+                    @elseif($mahasiswa->status >= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TESIS)
                     <script>
                      var temp = document.getElementById("sidangtesis");
                      temp.classList.remove('fade');
