@@ -2,6 +2,7 @@
 @section('title','Pendaftaran Sidang Tesis')
 @php($user = Auth::user());
 @php($sidangTesis = $user->isMahasiswa()->tesis()->sidangTesis())
+@php($seminarTesis = $user->isMahasiswa()->tesis()->seminarTesis())
 @section('content')
     <div class="container">
         @if(isset($success))
@@ -23,12 +24,10 @@
                         <input type="text" id="semester_daftar" name="semester_daftar" class="form-control col-md-8 " value="{{$sidangTesis->semester_terdaftar}}" required>
                     </div>
                     <div class="form-group row col-md-12">
-                        <label for="tanggal_seminar_tesis" class="col-md-4 col-form-label text-md-right text-center">Waktu Seminar Tesis<sup>*</sup></label>
+                        <label for="tanggal_seminar_tesis" class="col-md-4 col-form-label text-md-right text-center">Waktu Seminar Tesis</label>
                         <input type="datetime-local" id="tanggal_seminar_tesis" name="tanggal_seminar_tesis" class="form-control col-md-8 "
-                               @if($sidangTesis->jadwal_seminar)
-                               value="{{date("Y-m-d\TH:i:s", strtotime($sidangTesis->jadwal_seminar))}}"
-                               @endif
-                               required>
+                               value="{{date("Y-m-d H:i:s", strtotime("$seminarTesis->hari $seminarTesis->waktu"))}}"
+                               required disabled>
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="" class="col-md-4 col-form-label text-md-right text-center">Dokumen Evaluasi Diri</label>
