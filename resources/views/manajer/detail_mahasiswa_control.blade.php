@@ -320,10 +320,15 @@
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Dosen Pembimbing 1</label>
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_1"  class="form-control" id="">
-                                                            @if($tesis)
-                                                                <option value="{{$tesis->dosen_pembimbing1}}" selected>
-                                                                    {{$tesis->dosen_pembimbing_1->user->name}}
-                                                                </option>
+                                                            @if($tesis && $tesis->dosen_pembimbing1)
+                                                                @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
+                                                                    @php($user_item = $item->user)
+                                                                    <option value="{{$user_item->id}}"
+                                                                            @if($tesis->dosen_pembimbing1 == $item->id)
+                                                                            selected
+                                                                            @endif
+                                                                    >{{$user_item->name}}</option>
+                                                                @endforeach
                                                             @else
                                                                 @foreach(\App\Dosen::getListDosenPembimbing1() as $item)
                                                                     @php($user_item = $item->user)
@@ -343,9 +348,14 @@
                                                     <div class="col-md-6">
                                                         <select name="dosen_pembimbing_2"  class="form-control" id="">
                                                             @if($tesis && $tesis->dosen_pembimbing_2)
-                                                                <option value="{{$tesis->dosen_pembimbing2}}" selected>
-                                                                    {{$tesis->dosen_pembimbing_2->user->name}}
-                                                                </option>
+                                                                @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
+                                                                    @php($user_item = $item->user)
+                                                                    <option value="{{$user_item->id}}"
+                                                                            @if($tesis->dosen_pembimbing2 == $item->id)
+                                                                            selected
+                                                                            @endif
+                                                                    >{{$user_item->name}}</option>
+                                                                @endforeach
                                                             @else
                                                                 <option value=""></option>
                                                                 @foreach(\App\Dosen::getListDosenPembimbing2() as $item)
@@ -749,28 +759,28 @@
                                                                     <label for="judul" class="col-md-4 col-form-label text-md-right text-center">
                                                                         Judul Tesis
                                                                     </label>
-                                                                    <input id="judul" name="judul" class="col-md-8 form-control" value="{{$tesis->judul_thesis}}" >
+                                                                    <input id="judul" name="judul" class="col-md-8 form-control new-input-seminar" value="{{$tesis->judul_thesis}}" >
                                                                 </div>
                                                                 
                                                                 <div class="form-group row col-md-12">
                                                                     <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
                                                                         Tanggal
                                                                     </label>
-                                                                    <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$seminarTesis->hari}}" >
+                                                                    <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control new-input-seminar" value="{{$seminarTesis->hari}}" >
                                                                 </div>
 
                                                                 <div class="form-group row col-md-12">
                                                                     <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
                                                                         Waktu
                                                                     </label>
-                                                                    <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$seminarTesis->waktu}}">
+                                                                    <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control new-input-seminar" value="{{$seminarTesis->waktu}}">
                                                                 </div>
 
                                                                 <div class="form-group row col-md-12">
                                                                     <label for="tempat" class="col-md-4 col-form-label text-md-right text-center" value="{{$seminarTesis->hari}}">
                                                                         Tempat
                                                                     </label>
-                                                                    <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$seminarTesis->tempat}}">
+                                                                    <input type="string" id="tempat" name="tempat" class="col-md-8 form-control new-input-seminar" value="{{$seminarTesis->tempat}}">
                                                                 </div>
                                                                 <div class="form-group row col-md-12">
                                                                     @php($db1 = $seminarTesis->tesis->dosen_pembimbing_1)
@@ -800,7 +810,7 @@
                                                                 </div>
                                                                 <div class="col-md-10 offset-md-1 mb-4">
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" class="form-check-input" id="cb1" name="check-draft-laporan"
+                                                                        <input type="checkbox" class="form-check-input new-input-seminar" id="cb1" name="check-draft-laporan"
                                                                                @if($seminarTesis->draft_laporan) checked @endif
                                                                         >
                                                                         <label for="cb1" class="form-check-label">
@@ -809,19 +819,48 @@
                                                                     </div>
 
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" class="form-check-input" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->sidang_dengan_teman) checked @endif>
+                                                                        <input type="checkbox" class="form-check-input new-input-seminar" id="cb2" name="check-seminar-dengan-teman" @if($seminarTesis->sidang_dengan_teman) checked @endif>
                                                                         <label for="cb2" class="form-check-label">
                                                                             Bukti (Fotokopi) telah seminar dengan teman diserahkan ke TU
                                                                         </label>
                                                                     </div>
 
                                                                 </div>
-                                                                <div class="justify-content-center row">
+
+                                                                <div class="row justify-content-center">
+                                                                    <script type="text/javascript">
+                                                                        function enableAllNewInputSmnr() {
+                                                                            $(".new-input-seminar").removeAttr("disabled");
+                                                                            $("#edit-new-data-smnr").css("display", "none");
+                                                                            $("#save-new-data-smnr").css("display", "block");
+                                                                        }
+                                                                        window.onload = function() {
+                                                                            $(".new-input-seminar").attr("disabled",true);
+                                                                            $("#edit-new-data-smnr").click(enableAllNewInputSmnr);
+                                                                            $(".new-input").attr("disabled",true);
+                                                                            $("#edit-new-data").click(enableAllNewInput);
+                                                                        };
+                                                                    </script>
+                                                                    <button type="button" id="edit-new-data-smnr" class="btn btn-primary align-items-center ">
+                                                                        <i class="material-icons font-size-18-px">
+                                                                            edit
+                                                                        </i>
+                                                                        Edit
+                                                                    </button>
+                                                                    <button style="display: none" type="submit" id="save-new-data-smnr" class="btn btn-blue align-items-center ">
+                                                                        <i class="material-icons font-size-18-px">
+                                                                            save
+                                                                        </i>
+                                                                        Save
+                                                                    </button>
+                                                                </div>
+
+                                                                <!-- <div class="justify-content-center row">
                                                                     <button class="btn btn-blue align-items-center display-flex">
                                                                         <i class="material-icons pencil md-12 font-size-18-px">save</i>
                                                                         Simpan
                                                                     </button>
-                                                                </div>
+                                                                </div> -->
                                                             </form>
                                                         </div>
                                             @endif
@@ -1432,12 +1471,12 @@
 
                                                         <div class="form-group row col-md-12">
                                                             <label for="judul" class="col-md-4 col-form-label text-md-right text-center ">Judul Tesis<sup>*</sup></label>
-                                                            <input type="text" id="judul" name="judul" class="col-md-8 form-control" value="{{$mahasiswa->tesis()->judul_thesis}}">
+                                                            <input type="text" id="judul" name="judul" class="col-md-8 form-control new-input" value="{{$mahasiswa->tesis()->judul_thesis}}">
                                                         </div>
 
                                                         <div class="form-group">
                                                             <div class="form-group row col-md-12">
-                                                                <label for="semester-daftar" class="col-md-4 col-form-label text-md-right text-center">Terdaftar pada Semester<sup>*</sup></label>
+                                                                <label for="semester-daftar" class="col-md-4 col-form-label text-md-right text-center ">Terdaftar pada Semester<sup>*</sup></label>
                                                                 <div class="display-flex align-items-center">
                                                                     {{$sidangTesis->semester_terdaftar}}
                                                                 </div>
@@ -1526,27 +1565,27 @@
                                                             <label for="haritgl" class="col-md-4 col-form-label text-md-right text-center">
                                                                 Tanggal
                                                             </label>
-                                                            <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control" value="{{$sidangTesis->tanggal}}" >
+                                                            <input type="date" id="haritgl" name="haritgl" class="col-md-8 form-control new-input" value="{{$sidangTesis->tanggal}}" >
                                                         </div>
 
                                                         <div class="form-group row col-md-12">
                                                             <label for="waktu" class="col-md-4 col-form-label text-md-right text-center">
                                                                 Waktu
                                                             </label>
-                                                            <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control" value="{{$sidangTesis->jam}}">
+                                                            <input type="time" id="haritgl" name="waktu" class="col-md-8 form-control new-input" value="{{$sidangTesis->jam}}">
                                                         </div>
 
                                                         <div class="form-group row col-md-12">
                                                             <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                                                 Tempat
                                                             </label>
-                                                            <input type="string" id="tempat" name="tempat" class="col-md-8 form-control" value="{{$sidangTesis->tempat}}">
+                                                            <input type="string" id="tempat" name="tempat" class="col-md-8 form-control new-input" value="{{$sidangTesis->tempat}}">
                                                         </div>
                                                         <div class="form-group row col-md-12">
                                                             <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                                                 Dosen Penguji 1
                                                             </label>
-                                                            <select name="dosen_penguji1"  class="form-control col-md-8" id="">
+                                                            <select name="dosen_penguji1"  class="form-control new-input col-md-8" id="">
                                                                 @foreach(App\Dosen::getListDosenPenguji() as $item)
                                                                     @if($item->id != $tesis->dosen_pembimbing1 and $item->id != $tesis->dosen_pembimbing2)
                                                                     <option value="{{$item->id}}"
@@ -1567,7 +1606,7 @@
                                                             <label for="tempat" class="col-md-4 col-form-label text-md-right text-center">
                                                                 Dosen Penguji 2
                                                             </label>
-                                                            <select name="dosen_penguji2"  class="form-control col-md-8" id="">
+                                                            <select name="dosen_penguji2"  class="form-control new-input col-md-8" id="">
                                                                 @foreach(App\Dosen::getListDosenPenguji() as $item)
                                                                 @if($item->id != $tesis->dosen_pembimbing1 and $item->id != $tesis->dosen_pembimbing2)
                                                                     <option value="{{$item->id}}"
@@ -1585,12 +1624,39 @@
 
                                                     </div>
 
-                                                    <div class="justify-content-center row" style="padding-bottom: 20px">
+                                                    <div class="row justify-content-center">
+                                                        <script type="text/javascript">
+                                                            function enableAllNewInput() {
+                                                                $(".new-input").removeAttr("disabled");
+                                                                $("#edit-new-data").css("display", "none");
+                                                                $("#save-new-data").css("display", "block");
+                                                            }
+                                                            // window.onload = function() {
+                                                            //     $(".new-input").attr("disabled",true);
+                                                            //     $("#edit-new-data").click(enableAllNewInput);
+                                                            // };
+                                                        </script>
+                                                        <button type="button" id="edit-new-data" class="btn btn-primary align-items-center ">
+                                                            <i class="material-icons font-size-18-px">
+                                                                edit
+                                                            </i>
+                                                            Edit
+                                                        </button>
+                                                        <button style="display: none" type="submit" id="save-new-data" class="btn btn-blue align-items-center ">
+                                                            <i class="material-icons font-size-18-px">
+                                                                save
+                                                            </i>
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                    <br>
+
+                                                    <!-- <div class="justify-content-center row" style="padding-bottom: 20px">
                                                         <button class="btn btn-blue align-items-center display-flex">
                                                             <i class="material-icons pencil md-12 font-size-18-px">save</i>
                                                             Simpan
                                                         </button>
-                                                    </div>
+                                                    </div> -->
 
                                                     @if($sidangTesis->ajuan_penguji_1 || $sidangTesis->ajuan_penguji_2 || $sidangTesis->ajuan_penguji_3)
                                                         <div class="row  offset-md-2 justify-content-center">
