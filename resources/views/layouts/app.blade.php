@@ -13,6 +13,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/DateTimePicker.min.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -90,6 +92,13 @@
         }
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $("#dtbox").DateTimePicker();
+            console.log("KELUAR");
+        });
+    </script>
     @yield('bottomjs')
 </body>
 </html>

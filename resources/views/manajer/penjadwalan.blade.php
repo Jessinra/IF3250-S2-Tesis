@@ -68,7 +68,8 @@
                                     <td>
                                         <input type="hidden" id="id{{$item->topic->mahasiswa_id}}" name="id{{$item->topic->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->topic->mahasiswa_id}}">
                                         <input type="hidden" id="tp{{$item->topic->mahasiswa_id}}" name="tp{{$item->topic->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->topic_id}}">
-                                        <input type="datetime-local" id="sch{{$item->topic->mahasiswa_id}}" name="sch{{$item->topic->mahasiswa_id}}" class="form-control col-lg-12 " value="" onkeyup="updateSaveButton()">
+                                        <input type="text" data-field="datetime" id="sch{{$item->topic->mahasiswa_id}}" name="sch{{$item->topic->mahasiswa_id}}" class="form-control col-lg-12 " value="" onkeyup="updateSaveButton()">
+                                        <div id="dtbox"></div>
                                     </td>
                                 </tr>
                                 @php($count++)
