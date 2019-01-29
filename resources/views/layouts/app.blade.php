@@ -96,7 +96,6 @@
         $(document).ready(function()
         {
             $("#dtbox").DateTimePicker();
-            console.log("KELUAR");
         });
     </script>
     @yield('bottomjs')

@@ -68,8 +68,7 @@
                                     <td>
                                         <input type="hidden" id="id{{$item->topic->mahasiswa_id}}" name="id{{$item->topic->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->topic->mahasiswa_id}}">
                                         <input type="hidden" id="tp{{$item->topic->mahasiswa_id}}" name="tp{{$item->topic->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->topic_id}}">
-                                        <input type="text" data-field="datetime" id="sch{{$item->topic->mahasiswa_id}}" name="sch{{$item->topic->mahasiswa_id}}" class="form-control col-lg-12 " value="" onkeyup="updateSaveButton()">
-                                        <div id="dtbox"></div>
+                                        <input type="text" data-field="datetime" id="sch{{$item->topic->mahasiswa_id}}" name="sch{{$item->topic->mahasiswa_id}}" class="datetime form-control col-lg-12 " value="">
                                     </td>
                                 </tr>
                                 @php($count++)
@@ -97,7 +96,7 @@
                                             <td>
                                                 <input type="hidden" id="id{{$item->mahasiswa_id}}" name="id{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->mahasiswa_id}}">
                                                 <input type="hidden" id="tp{{$item->mahasiswa_id}}" name="tp{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->topik_id}}">
-                                                <input type="datetime-local" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="form-control col-lg-12 " value="{{$tgl}}" onkeyup="updateSaveButton()">
+                                                <input type="text" data-filed="datetime" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="datetime form-control col-lg-12 " value="{{$tgl}}" onkeyup="updateSaveButton()">
                                             </td>
                                         </tr>
                                         @php($no++)
@@ -177,7 +176,7 @@
                                     <td>
                                         <input type="hidden" id="id{{$item->mahasiswa_id}}" name="id{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->mahasiswa_id}}">
                                         <input type="hidden" id="tp{{$item->mahasiswa_id}}" name="tp{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->id}}">
-                                        <input type="datetime-local" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="form-control col-lg-12 " value="" onkeyup="updateSaveButton2()">
+                                        <input type="text" data-field="datetime" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="datetime2 form-control col-lg-12 " value="" onkeyup="updateSaveButton2()">
                                     </td>
                                 </tr>
                                 @php($count++)
@@ -205,7 +204,7 @@
                                                 <input type="hidden" id="pa{{$item->mahasiswa_id}}" name="pa{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->id_dosen_pembimbing_1}}">
                                                 <input type="hidden" id="pb{{$item->mahasiswa_id}}" name="pb{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->id_dosen_pembimbing_2}}">
                                                 <input type="hidden" id="pg{{$item->mahasiswa_id}}" name="pg{{$item->mahasiswa_id}}" class="form-control col-md-8 " value="{{$item->id_dosen_penguji}}">
-                                                <input type="datetime-local" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="form-control col-lg-12 " value="{{$tgl}}" onkeyup="updateSaveButton2()">
+                                                <input type="text" data-field="datetime" id="sch{{$item->mahasiswa_id}}" name="sch{{$item->mahasiswa_id}}" class="datetime2 form-control col-lg-12 " value="{{$tgl}}" onkeyup="updateSaveButton2()">
                                             </td>
                                         </tr>
                                         @php($no++)
@@ -344,13 +343,21 @@
             </div>
         </div>
         </div>
+        <div id="dtbox"></div>
     </div>
 @endsection
 
 @section('bottomjs')
     <script>
+        $(".datetime").change(function(){
+            updateSaveButton();
+        });
+
+        $(".datetime2").change(function(){
+            updateSaveButton2();
+        });
         function updateSaveButton2() {
-            var inputs = document.getElementsByTagName('input');
+            var inputs = document.getElementsByClassName('datetime');
             var button = document.getElementById('save2');
             for(var i = 0; i < inputs.length; i++){
                 if(inputs[i].type.toLowerCase() === 'datetime-local'){
@@ -368,19 +375,17 @@
         }
 
         function updateSaveButton() {
-            var inputs = document.getElementsByTagName('input');
+            var inputs = document.getElementsByClassName('datetime');
             var button = document.getElementById('save');
             for(var i = 0; i < inputs.length; i++){
-                if(inputs[i].type.toLowerCase() === 'datetime-local'){
-                    if(inputs[i].value.toString() === ""){
-                        button.classList.add('disabled');
-                        button.disabled = true;
-                    }else{
-                        //alert(inputs[i].value.toString());
-                        button.classList.remove('disabled');
-                        button.disabled = false;
-                        break;
-                    }
+                if(inputs[i].value.toString() === ""){
+                    button.classList.add('disabled');
+                    button.disabled = true;
+                }else{
+                    //alert(inputs[i].value.toString());
+                    button.classList.remove('disabled');
+                    button.disabled = false;
+                    break;
                 }
             }
         }
