@@ -9,6 +9,7 @@ require('./bootstrap');
 require('material-design-icons');
 
 window.Vue = require('vue');
+window.datetimepicker = require('datetimepicker');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
