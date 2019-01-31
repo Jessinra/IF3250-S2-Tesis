@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\KelasTesis;
-use App\User;
-use App\Manajer;
 use App\Dosen;
-use App\Mahasiswa;
 use App\Http\Controllers\Controller;
+use App\KelasTesis;
+use App\Mahasiswa;
+use App\Manajer;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -25,7 +25,7 @@ class RegisterController extends Controller
     | validation and creation. By default this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
-    */
+     */
 
     use RegistersUsers;
 
@@ -72,56 +72,154 @@ class RegisterController extends Controller
         ]);
     }
 
-
-    public function showForm() {
-        if(Auth::user() && Auth::user()->isManajer()) {
+    public function showForm()
+    {
+        if (Auth::user() && Auth::user()->isManajer()) {
             return view('auth.register');
         } else {
             return abort(403);
         }
     }
 
-    public function registerUser(Request $request) {
+    public function registerUserUIHandler(Request $request)
+    // Handle registration coming form web-UI
+    {
         $data = $request->all();
-        $username = $data['username'];
-        if(User::where('username',$username)->count()>0) {
-            echo '<div class="alert alert-warning alert-dismissible fade show text-center">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    This user <strong>already exist.</strong>
-                  </div>';
-            return view('auth.register');
-        } else if(strlen($data['username']) > 18){
-            echo '<div class="alert alert-warning alert-dismissible fade show text-center">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Username</strong> too long (maximum size: 18 characters).
-                  </div>';
-            return view('auth.register');
-        } else if(strlen($data['phone']) > 18){
-            echo '<div class="alert alert-warning alert-dismissible fade show text-center">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Invalid</strong> phone number.
-                  </div>';
-            return view('auth.register');
-        } else {
-           $user = $this->create($data);
-           $role = $data['role'];
-           if($role == User::ROLE_DOSEN) {
-               Dosen::create(['id'=>$user->id]);
-           }else if($role == User::ROLE_MAHASISWA) {
-               $id_kelas_tesis = KelasTesis::orderByRaw('updated_at - created_at DESC')->first();
-               Mahasiswa::create(['id'=>$user->id, 'id_kelas_tesis'=>$id_kelas_tesis->id]);
-           } else if($role == User::ROLE_MANAJER) {
-               Manajer::create(['id'=>$user->id]);
-           }
-            echo '<div class="alert alert-success alert-dismissible fade show text-center">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Success !</strong> New user has successfully registered!
-                  </div>';
-           return view('auth.register');
+        $this->registerUser($data);
+        return view('auth.register');
+    }
+
+
+    public function registerBatchUserHandler(Request $request)
+    // Handle batch registration using csv --- NOT WORKING YET 
+    {
+        $data = $request->all();
+        $filename = $_SERVER['DOCUMENT_ROOT'] . $data['filename'];
+ 
+        $batchRegisterData = $this->parseBatchRegisterCSV($filename);
+        foreach ($batchRegisterData as $newUserData) {
+            $this->registerUser($data);
         }
-//        echo $id;
 
+        // TODO: Send the pass to where ?
+        // return view('auth.register');
+    }
 
+    private function parseBatchRegisterCSV($filename)
+    {
+        
+        $file = fopen($filename, "r");
+        if ($file) {
+
+            $batchRegisterData = array();
+            while ($entry = fgetcsv($file, 1000, ",")) {
+
+                $newUser['name'] = $entry[0];
+                $newUser['username'] = $entry[1];
+                $newUser['email'] = $entry[2];
+                $newUser['phone'] = $entry[3];
+                $newUser['role'] = $entry[4];
+                $newUser['password'] = str_random(20);
+                
+                array_push($batchRegisterData, $newUser);
+            }
+            fclose($file);
+        }
+        return $batchRegisterData;
+    }
+
+    private function registerUser($data)
+    {
+        if ($this->isDataValid($data)) {
+            $this->createUser($data);
+            $this->displayRegisterSuccess();
+        }
+    }
+
+    private function isDataValid($data)
+    {
+        $username = $data['username'];
+        $phone = $data['phone'];
+
+        if ($this->checkUsernameExist($username)) {
+            echo $this->errMsgUsernameExisted();
+            return false;
+        }
+
+        if (!$this->checkUsernameValid($username)) {
+            echo $this->errMsgInvalidUsername();
+            return false;
+        }
+
+        if (!$this->checkPhoneValid($phone)) {
+            echo $this->errMsgInvalidPhone();
+            return false;
+        }
+
+        return true;
+    }
+
+    private function checkUsernameExist($username)
+    {
+        return User::where('username', $username)->count() > 0;
+    }
+
+    private function checkUsernameValid($username)
+    {
+        return (strlen($username) <= 18);
+    }
+
+    private function checkPhoneValid($phone)
+    {
+        return (strlen($phone) <= 18);
+    }
+
+    private function createUser($data)
+    {
+        $user = $this->create($data);
+        $role = $data['role'];
+
+        if ($role == User::ROLE_DOSEN) {
+            Dosen::create(['id' => $user->id]);
+        } else if ($role == User::ROLE_MAHASISWA) {
+            $id_kelas_tesis = KelasTesis::orderByRaw('updated_at - created_at DESC')->first(); // DRANOTE: Kelas tesis harus ada dulu (?)
+            Mahasiswa::create(['id' => $user->id, 'id_kelas_tesis' => $id_kelas_tesis->id]);
+        } else if ($role == User::ROLE_MANAJER) {
+            Manajer::create(['id' => $user->id]);
+        }
+    }
+
+    private function errMsgUsernameExisted()
+    {
+        return '<div class="alert alert-warning alert-dismissible fade show text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        This user <strong>already exist.</strong>
+      </div>';
+    }
+
+    private function errMsgInvalidUsername()
+    {
+
+        return '<div class="alert alert-warning alert-dismissible fade show text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Username</strong> too long (maximum size: 18 characters).
+      </div>';
+    }
+
+    private function errMsgInvalidPhone()
+    {
+        return '<div class="alert alert-warning alert-dismissible fade show text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Invalid</strong> phone number.
+      </div>';
+    }
+
+    private function displayRegisterSuccess()
+    {
+        return '<div class="alert alert-success alert-dismissible fade show text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success !</strong> New user has successfully registered!
+      </div>';
     }
 
 }
