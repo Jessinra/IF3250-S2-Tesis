@@ -1,0 +1,9 @@
+3. phone & nim ga dicek validnya ? 
+4. registercontroller .... if($role == User::ROLE_DOSEN),, User:: hardcoded, while input depend on html
+    kenapa ngecek valuenya di RegisterController::registerUser
+
+
+    klo ad yg gagl dtgh jalan ?
+
+Manager:
+    page mahasiswa overflow

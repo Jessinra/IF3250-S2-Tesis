@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Register</div>
+                <div class="card-header">Register Individu</div>
 
                 <div class="card-body">
                     <form method="POST" action="/register">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="role" class="col-md-4 col-form-label text-md-right">Role</label>
-                            
+
                             <div class="col-md-6">
                                 <select type="text" id="role" name="role" class="form-control">
                                     <option value="Mahasiswa">Mahasiswa</option>
@@ -93,6 +93,11 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div>
+                            <input id="registerType" type="hidden" value="single" name="registerType" class="form-control">
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -100,6 +105,35 @@
                                 </button>
                             </div>
                         </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">Register Gabungan</div>
+                <div class="card-body">
+                    <form method="POST" action="/register" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="input-group col-md-6 offset-md-3">
+                            <span class="btn pt-3">
+                                <input id="batchRegisterCSV" type="file" name="batchRegisterCSV" single required accept=".csv">
+                            </span>
+                            <span class="pl-3"> Allowed extension:
+                                <span class="font-italic"> csv </span>
+                            </span>
+                        </div>
+
+                        <div>
+                            <input id="registerType" type="hidden" value="batch" name="registerType" class="form-control">
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-4 pt-3">
+                                <button type="submit" class="btn btn-primary"> Register </button>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
