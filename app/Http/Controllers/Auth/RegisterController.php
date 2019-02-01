@@ -96,6 +96,11 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
+    public function downloadUsernamePasswordCSV($filename)
+    {
+        return response()->download(storage_path('app') . "/public/batchRegisterCSV/" . $filename);
+    }
+
     private function registerUserHandler(Request $request)
     {
         $data = $request->all();
@@ -113,7 +118,8 @@ class RegisterController extends Controller
             $this->registerUser($newUserData);
         }
 
-        $this->displayBatchRegisterSuccess();
+        $this->generateUsernamePasswordCSV($batchRegisterData, $filename);
+        $this->displayBatchRegisterSuccess($filename);
     }
 
     private function saveAndReloadUploadedCSV(Request $request)
@@ -156,7 +162,6 @@ class RegisterController extends Controller
     {
         if ($this->isDataValid($data)) {
             $this->createUser($data);
-
         }
     }
 
@@ -215,6 +220,21 @@ class RegisterController extends Controller
         }
     }
 
+    private function generateUsernamePasswordCSV($batchRegisterData, $filename)
+    {
+        $file = fopen($filename, 'w');
+
+        $header = array("Role", "Name", "Username", "Password");
+        fputcsv($file, $header);
+
+        foreach ($batchRegisterData as $newUserData) {
+            $entry = array($newUserData['role'], $newUserData['name'], $newUserData['username'], $newUserData['password']);
+            fputcsv($file, $entry);
+        }
+
+        fclose($file);
+    }
+
     private function displayErrMsgUsernameExisted()
     {
         return '<div class="alert alert-warning alert-dismissible fade show text-center">
@@ -248,12 +268,15 @@ class RegisterController extends Controller
       </div>';
     }
 
-    private function displayBatchRegisterSuccess()
+    private function displayBatchRegisterSuccess($filename)
     {
+        $shortFilename = str_replace(storage_path('app') . "/public/batchRegisterCSV/", "", $filename);
+        $downloadLink = url('/') . "/register/downloadCSV/" . $shortFilename;
+
         echo '<div class="alert alert-success alert-dismissible fade show text-center">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Success !</strong> New users has successfully batch-registered!
+        <strong>Success !</strong> New users has successfully batch-registered!<br/>
+        Download new generated user data <strong><a href=' . $downloadLink . '>Here</a></strong>
       </div>';
     }
-
 }
