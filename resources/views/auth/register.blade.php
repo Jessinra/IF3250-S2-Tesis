@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Register</div>
+                <div class="card-header">Register Individu</div>
 
                 <div class="card-body">
                     <form method="POST" action="/register">
@@ -101,6 +101,25 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">Register Gabungan</div>
+                    <div class="input-group col-md-6 offset-md-3">
+                            <span class="btn pt-3">
+                                <input type="file" single  accept=".csv">
+                            </span>
+                            <span class="pl-3"> Allowed extension: 
+                                <span class="font-italic"> csv </span> 
+                            </span>
+                    </div>
+                     
+                    <div class="form-group row">
+                        <div class="col-md-6 offset-md-4 pt-3">
+                            <button type="submit" class="btn btn-primary"> Register </button>
+                        </div>
+                    </div>  
                 </div>
             </div>
         </div>
