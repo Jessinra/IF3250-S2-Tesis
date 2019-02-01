@@ -117,7 +117,7 @@
 
                         <div class="input-group col-md-6 offset-md-3">
                             <span class="btn pt-3">
-                                <input id="batchRegisterCSV" type="file" name="batchRegisterCSV" single  accept=".csv">
+                                <input id="batchRegisterCSV" type="file" name="batchRegisterCSV" single required accept=".csv">
                             </span>
                             <span class="pl-3"> Allowed extension:
                                 <span class="font-italic"> csv </span>
