@@ -105,6 +105,23 @@ class RegisterController extends Controller
         // return view('auth.register');
     }
 
+
+
+    // TESTING CODE
+    public function registerBatchUser($batchRegisterData)
+    // Handle batch registration using csv --- NOT WORKING YET 
+    {
+        foreach ($batchRegisterData as $newUserData) {
+            $this->registerUser($newUserData);
+        }
+
+        // TODO: Send the pass to where ?
+        // return view('auth.register');
+    }
+
+
+
+
     private function parseBatchRegisterCSV($filename)
     {
         
@@ -114,11 +131,11 @@ class RegisterController extends Controller
             $batchRegisterData = array();
             while ($entry = fgetcsv($file, 1000, ",")) {
 
-                $newUser['name'] = $entry[0];
-                $newUser['username'] = $entry[1];
-                $newUser['email'] = $entry[2];
-                $newUser['phone'] = $entry[3];
-                $newUser['role'] = $entry[4];
+                $newUser['name'] = trim($entry[0]);
+                $newUser['username'] = trim($entry[1]);
+                $newUser['email'] = trim($entry[2]);
+                $newUser['phone'] = trim($entry[3]);
+                $newUser['role'] = trim($entry[4]);
                 $newUser['password'] = str_random(20);
                 
                 array_push($batchRegisterData, $newUser);
@@ -186,6 +203,9 @@ class RegisterController extends Controller
             Mahasiswa::create(['id' => $user->id, 'id_kelas_tesis' => $id_kelas_tesis->id]);
         } else if ($role == User::ROLE_MANAJER) {
             Manajer::create(['id' => $user->id]);
+        }
+        else{
+            echo $data['role']; // RAISE ERROR
         }
     }
 

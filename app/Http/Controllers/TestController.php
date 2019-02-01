@@ -35,11 +35,11 @@ class TestController extends Controller
             $batchRegisterData = array();
             while ($entry = fgetcsv($file, 1000, ",")) {
 
-                $newUser['name'] = $entry[0];
-                $newUser['username'] = $entry[1];
-                $newUser['email'] = $entry[2];
-                $newUser['phone'] = $entry[3];
-                $newUser['role'] = $entry[4];
+                $newUser['name'] = trim($entry[0]);
+                $newUser['username'] = trim($entry[1]);
+                $newUser['email'] = trim($entry[2]);
+                $newUser['phone'] = trim($entry[3]);
+                $newUser['role'] = trim($entry[4]);
                 $newUser['password'] = str_random(20);
                 
                 array_push($batchRegisterData, $newUser);

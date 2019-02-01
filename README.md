@@ -39,23 +39,23 @@
 ## Error FAQ
 note: There might be ( **hopefully not** ) a lot of error you need to handle
 1. **Download & installing node**:<br/>
-    >If you need higher node and npm
+    If you need higher node and npm
 
-    Solution : [Manually specify & download node version](https://websiteforstudents.com/install-the-latest-node-js-and-nmp-packages-on-ubuntu-16-04-18-04-lts/)
+    >Solution : [Manually specify & download node version](https://websiteforstudents.com/install-the-latest-node-js-and-nmp-packages-on-ubuntu-16-04-18-04-lts/)
 
 2. **Step 9**:<br/>
-    >If npm install got stuck while downloading
+    If npm install got stuck while downloading
 
-    Try to check your connection, try different connection, check proxy setting. Some modules have sensitive issue to proxy.
+    >Try to check your connection, try different connection, check proxy setting. Some modules have sensitive issue to proxy.
 
-    >If theres some warning saying some dependencies is missing (even is warning only), try to install dependencies yourself<br/>
+    If there's some warning saying some dependencies is missing (even is warning only), try to install dependencies yourself<br/>
     i.e. error containing `requires a peer of <module>@^<version> but none is installed`<br/>
 
-    Try to `sudo npm install <module>@<version>` untill all warning gone (keep it at bare minimum)<br/>
+    >Try to `sudo npm install <module>@<version>` until all warning gone (keep it at bare minimum)<br/>
 
-    >`error in ./resource/assets/sass/app.scss`
+    If `error in ./resource/assets/sass/app.scss` show up
 
-    Solution : run `sudo npm install --save-dev  --unsafe-perm node-sass`
+    >Solution : run `sudo npm install --save-dev  --unsafe-perm node-sass`
 
 
 
