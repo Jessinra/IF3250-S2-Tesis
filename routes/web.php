@@ -35,7 +35,7 @@ Route::post('mahasiswa/edit/{id}', 'MahasiswaController@edit');
 
 
 Route::get('register','Auth\RegisterController@showForm')->name('register');
-Route::post('register','Auth\RegisterController@registerUserUIHandler')->name('registerPost');
+Route::post('register','Auth\RegisterController@registerHandler')->name('registerPost');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/generate/admin', 'Auth\RegisterController@generateAdmin');

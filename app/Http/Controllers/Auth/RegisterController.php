@@ -81,50 +81,57 @@ class RegisterController extends Controller
         }
     }
 
-    public function registerUserUIHandler(Request $request)
-    // Handle registration coming form web-UI
+    public function registerHandler(Request $request)
     {
-        $data = $request->all();
-        $this->registerUser($data);
+
+        $type = $request->all()['registerType'];
+
+        if ($type == 'single') {
+            $this->registerUserHandler($request);
+
+        } else if ($type == "batch") {
+            $this->registerBatchUserHandler($request);
+        }
+
         return view('auth.register');
     }
 
-
-    public function registerBatchUserHandler(Request $request)
-    // Handle batch registration using csv --- NOT WORKING YET 
+    private function registerUserHandler(Request $request)
     {
         $data = $request->all();
-        $filename = $_SERVER['DOCUMENT_ROOT'] . $data['filename'];
- 
-        $batchRegisterData = $this->parseBatchRegisterCSV($filename);
-        foreach ($batchRegisterData as $newUserData) {
-            $this->registerUser($newUserData);
-        }
-
-        // TODO: Send the pass to where ?
-        // return view('auth.register');
+        $this->registerUser($data);
+        $this->displayRegisterSuccess();
     }
 
-
-
-    // TESTING CODE
-    public function registerBatchUser($batchRegisterData)
-    // Handle batch registration using csv --- NOT WORKING YET 
+    private function registerBatchUserHandler(Request $request)
     {
+
+        $filename = $this->saveAndReloadUploadedCSV($request);
+        $batchRegisterData = $this->parseBatchRegisterCSV($filename);
+
         foreach ($batchRegisterData as $newUserData) {
             $this->registerUser($newUserData);
         }
 
-        // TODO: Send the pass to where ?
-        // return view('auth.register');
+        $this->displayBatchRegisterSuccess();
     }
 
+    private function saveAndReloadUploadedCSV(Request $request)
+    {
 
+        // Get the file
+        $data = $request->file('batchRegisterCSV');
 
+        // Generate filename and save to public storage under batchRegisterCSV folder
+        $filename = str_random(10) . "_" . $data->getClientOriginalName();
+        $data->storeAs('batchRegisterCSV', $filename, 'public');
+
+        return storage_path('app') . "/public/batchRegisterCSV/" . $filename;
+    }
 
     private function parseBatchRegisterCSV($filename)
     {
-        
+
         $file = fopen($filename, "r");
         if ($file) {
 
@@ -137,7 +144,7 @@ class RegisterController extends Controller
                 $newUser['phone'] = trim($entry[3]);
                 $newUser['role'] = trim($entry[4]);
                 $newUser['password'] = str_random(20);
-                
+
                 array_push($batchRegisterData, $newUser);
             }
             fclose($file);
@@ -149,7 +156,7 @@ class RegisterController extends Controller
     {
         if ($this->isDataValid($data)) {
             $this->createUser($data);
-            $this->displayRegisterSuccess();
+
         }
     }
 
@@ -159,17 +166,17 @@ class RegisterController extends Controller
         $phone = $data['phone'];
 
         if ($this->checkUsernameExist($username)) {
-            echo $this->errMsgUsernameExisted();
+            $this->displayErrMsgUsernameExisted();
             return false;
         }
 
         if (!$this->checkUsernameValid($username)) {
-            echo $this->errMsgInvalidUsername();
+            $this->displayErrMsgInvalidUsername();
             return false;
         }
 
         if (!$this->checkPhoneValid($phone)) {
-            echo $this->errMsgInvalidPhone();
+            $this->displayErrMsgInvalidPhone();
             return false;
         }
 
@@ -203,13 +210,12 @@ class RegisterController extends Controller
             Mahasiswa::create(['id' => $user->id, 'id_kelas_tesis' => $id_kelas_tesis->id]);
         } else if ($role == User::ROLE_MANAJER) {
             Manajer::create(['id' => $user->id]);
-        }
-        else{
+        } else {
             echo $data['role']; // RAISE ERROR
         }
     }
 
-    private function errMsgUsernameExisted()
+    private function displayErrMsgUsernameExisted()
     {
         return '<div class="alert alert-warning alert-dismissible fade show text-center">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -217,7 +223,7 @@ class RegisterController extends Controller
       </div>';
     }
 
-    private function errMsgInvalidUsername()
+    private function displayErrMsgInvalidUsername()
     {
 
         return '<div class="alert alert-warning alert-dismissible fade show text-center">
@@ -226,7 +232,7 @@ class RegisterController extends Controller
       </div>';
     }
 
-    private function errMsgInvalidPhone()
+    private function displayErrMsgInvalidPhone()
     {
         return '<div class="alert alert-warning alert-dismissible fade show text-center">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -236,9 +242,17 @@ class RegisterController extends Controller
 
     private function displayRegisterSuccess()
     {
-        return '<div class="alert alert-success alert-dismissible fade show text-center">
+        echo '<div class="alert alert-success alert-dismissible fade show text-center">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Success !</strong> New user has successfully registered!
+      </div>';
+    }
+
+    private function displayBatchRegisterSuccess()
+    {
+        echo '<div class="alert alert-success alert-dismissible fade show text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Success !</strong> New users has successfully batch-registered!
       </div>';
     }
 
