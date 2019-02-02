@@ -96,7 +96,28 @@
         $(document).ready(function()
         {
             $("#dtbox").DateTimePicker();
+
+            $(".datetime").change(function(){
+                for(i = 0; i < document.getElementsByClassName("datetime").length; i++){
+                    inp = document.getElementsByClassName("datetime")[i];
+                    if(inp != null && inp.value != "" && inp.value != null){
+                        inp.value = getFixedDateTimeString(inp.value);
+                    }
+                    console.log(i);
+                }
+            });
         });
+
+        function getFixedDateTimeString(datetime){
+            console.log(datetime);
+            datetime = datetime.split(" ");
+            if(datetime.length>1){
+                datetime[0] = datetime[0].split("-");
+                datetime[0] = datetime[0][2]+"-"+datetime[0][1]+"-"+datetime[0][0];
+                datetime = datetime[0] + "T" + datetime[1];
+            }
+            return datetime;
+        }
     </script>
     @yield('bottomjs')
 </body>

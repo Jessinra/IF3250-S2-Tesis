@@ -165,7 +165,7 @@
                                                 <input type="hidden" name="mahasiswa" value="{{$mahasiswa->id}}">
                                                 <div class="row justify-content-center">
                                                     <div>
-                                                        <input type="datetime-local" class="form-control" name="date"
+                                                        <input type="text" data-field="datetime" class="form-control" name="date"
                                                                @if($seminarTopik)
                                                                value="{{date("Y-m-d\TH:i:s", strtotime($seminarTopik->schedule))}}"
                                                                 @endif
@@ -487,7 +487,7 @@
                                                 <div class="form-group row mt-2">
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Jadwal Seminar Proposal</label>
                                                     <div class="col-md-6">
-                                                        <input type="datetime-local" class="form-control" name="date"
+                                                        <input type="text" data-field="datetime" class="form-control" name="date"
                                                                @if($seminarProposal)
                                                                value="{{date("Y-m-d\TH:i:s", strtotime($seminarProposal->schedule))}}"
                                                                 @endif
@@ -1709,6 +1709,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="dtbox"></div>
             </div>
 
                 @if($mahasiswa->status >= \App\Mahasiswa::STATUS_GAGAL_SEMINAR_TOPIK and $mahasiswa->status <= \App\Mahasiswa::STATUS_LULUS_SEMINAR_TOPIK)

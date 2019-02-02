@@ -360,16 +360,15 @@
             var inputs = document.getElementsByClassName('datetime');
             var button = document.getElementById('save2');
             for(var i = 0; i < inputs.length; i++){
-                if(inputs[i].type.toLowerCase() === 'datetime-local'){
-                    if(inputs[i].value.toString() === ""){
-                        button.classList.add('disabled');
-                        button.disabled = true;
-                    }else{
-                        //alert(inputs[i].value.toString());
-                        button.classList.remove('disabled');
-                        button.disabled = false;
-                        break;
-                    }
+                if(inputs[i].value.toString() === ""){
+                    button.classList.add('disabled');
+                    button.disabled = true;
+                }else{
+                    //alert(inputs[i].value.toString());
+                    // inputs[i].value = getFixedDateTimeString(inputs[i].value);
+                    button.classList.remove('disabled');
+                    button.disabled = false;
+                    break;
                 }
             }
         }
@@ -383,6 +382,7 @@
                     button.disabled = true;
                 }else{
                     //alert(inputs[i].value.toString());
+                    // inputs[i].value = getFixedDateTimeString(inputs[i].value);
                     button.classList.remove('disabled');
                     button.disabled = false;
                     break;
