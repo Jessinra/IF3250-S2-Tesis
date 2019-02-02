@@ -24,6 +24,7 @@
 @section('content')
     @php($tesis = Auth::user()->isMahasiswa()->tesis())
     <div class="container">
+        <div id="dtbox"></div>
         <h2  class="text-center">Formulir Jadwal Bimbingan</h2>
         <br>
         <div id="form-app">
@@ -66,7 +67,7 @@
                     @endif
                     <div class="form-group row col-md-12">
                         <label for="tanggal_waktu" class="col-md-4 col-form-label text-md-right text-center">Waktu Bimbingan<sup>*</sup></label>
-                        <input type="datetime-local" id="tanggal_waktu" name="tanggal_waktu" class="form-control col-md-8 " value="{{$tgl}}" required>
+                        <input type="text" data-field="datetime" id="tanggal_waktu" name="tanggal_waktu" class="datetime form-control col-md-8 " value="{{$tgl}}" required>
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="hasil_dan_diskusi" class="col-md-4 col-form-label text-md-right text-center ">Hasil dan Diskusi<sup>*</sup></label>
@@ -78,7 +79,7 @@
                     </div>
                     <div class="form-group row col-md-12">
                         <label for="waktu_bimbingan_selanjutnya" class="col-md-4 col-form-label text-md-right text-center">Waktu Bimbingan Selanjutnya</label>
-                        <input type="datetime-local" id="waktu_bimbingan_selanjutnya" name="waktu_bimbingan_selanjutnya" class="form-control col-md-8 " value="{{$tgl_selanjutnya}}">
+                        <input type="text" data-field="datetime" id="waktu_bimbingan_selanjutnya" name="waktu_bimbingan_selanjutnya" class="datetime form-control col-md-8 " value="{{$tgl_selanjutnya}}">
                     </div>
                 </div>
 
