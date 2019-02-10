@@ -2,82 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use App\Mahasiswa;
 use App\Dosen;
+use App\Mahasiswa;
 use App\Manajer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
-    //
-    public function index() {
+    public function index()
+    {
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotManager($auth);
+
         return view('manajer.user_management');
     }
 
-    public function show($uname) {
+    public function show($username)
+    {
         $auth = Auth::user();
-        $usr = User::where('username',$uname)->first();
-        if($auth->id  == $usr->id || $auth->isManajer())  {
-            return view('edit_user',['user'=>$usr]);
-        } else {
-            return abort(403);
-        }
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNoPermission($auth);
+
+        return view('edit_user', ['user' => $user]);
     }
 
-    public function save(Request $request, $uname) {
+    public function save(Request $request, $username)
+    {
         $auth = Auth::user();
-        $usr = User::where('username',$uname)->first();
-        if($auth->id  == $usr->id || $auth->isManajer())  {
-            $usr->name = $request->get('name');
-            $usr->phone = $request->get('phone');
-            $usr->email = $request->get('email');
-            $req_pass = $request->get('password');
-            if($req_pass) {
-                if($req_pass == $request->get('password_confirmation')) {
-                    $usr->password = Hash::make($req_pass);
-                }
-                else {
-                    return view('edit_user',['user'=>$usr,'success'=>false]);
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNoPermission($auth);
 
-                }
-            }
-            $usr->save();
-            return view('edit_user',['user'=>$usr,'success'=>true]);
-//            $usr->name = $request->get('name');
-//            $usr->name = $request->get('name');
-        } else {
-            return abort(403);
+        $user->name = $request->get('name');
+        $user->phone = $request->get('phone');
+        $user->email = $request->get('email');
+        
+        $req_pass = $request->get('password');
+        $conf_pass = $request->get('password_confirmation');
+
+        if (!$req_pass || !$conf_pass || $req_pass != $conf_pass) {
+            return view('edit_user', ['user' => $user, 'success' => false]);
         }
+
+        $user->password = Hash::make($req_pass);
+        $user->save();
+        
+        return view('edit_user', ['user' => $user, 'success' => true]);
     }
 
-    public function addDosenRole(Request $request, $id) {
-        if(Auth::user()->isManajer()) {
-            Dosen::create(['id'=>$id]);
-            return back();
+    public function addDosenRole(Request $request, $id)
+    {
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotManager($auth);
 
-        } else {
-            return abort(403);
-        }
-    }
-    public function addMahasiswaRole(Request $request, $id) {
-        if(Auth::user()->isManajer()) {
-            Mahasiswa::create(['id'=>$id]);
-            return back();
-        } else {
-            return abort(403);
-        }
-    }
-    public function addManajerRole(Request $request, $id) {
-        if(Auth::user()->isManajer()) {
-            Manajer::create(['id'=>$id]);
-            return back();
-
-        } else {
-            return abort(403);
-        }
+        Dosen::create(['id' => $id]);
+        return back();
     }
 
+    public function addMahasiswaRole(Request $request, $id)
+    {
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotManager($auth);
+        
+        Mahasiswa::create(['id' => $id]);
+        return back();
+    }
 
+    public function addManajerRole(Request $request, $id)
+    {
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotManager($auth);
+
+        Manajer::create(['id' => $id]);
+        return back();
+    }
 }

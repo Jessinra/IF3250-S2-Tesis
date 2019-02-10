@@ -67,7 +67,6 @@ Route::post('/proposal/upload', 'ProposalController@upload');
 Route::get('/proposal/download/{id}/{filename}', 'ProposalController@download');
 Route::post('/proposal/penerimaan', 'ProposalController@approval')->name('proposal-penerimaan');
 
-// Route::get('/dashboard/dosen','DosenController@showMahasiswa');
 Route::get('/hasilbimbingan/mahasiswa', 'HasilBimbinganController@showListHasilBimbingan');
 Route::post('/hasilbimbingan/mahasiswa', 'HasilBimbinganController@getBimbinganID');
 Route::get('/hasilbimbingan/tambah', 'HasilBimbinganController@showFormTambahHasilBimbingan');
@@ -108,5 +107,3 @@ Route::post('/sidangtesis/nilai/penguji2/reset/{id}', 'SidangTesisController@res
 Route::post('/sidangtesis/nilai/pembimbing/reset/{id}', 'SidangTesisController@resetNilaiPembimbing');
 Route::post('/sidangtesis/nilai/kelas/reset/{id}', 'SidangTesisController@resetNilaiKelas');
 Route::post('/sidangtesis/dosenuji/approve/{id}', 'SidangTesisController@dosenPengujiApprove');
-
-Route::get('/test', 'TestController@test');

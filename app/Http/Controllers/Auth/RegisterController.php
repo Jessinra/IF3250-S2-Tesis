@@ -74,15 +74,18 @@ class RegisterController extends Controller
 
     public function showForm()
     {
-        if (Auth::user() && Auth::user()->isManajer()) {
-            return view('auth.register');
-        } else {
-            return abort(403);
-        }
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotManager($auth);
+
+        return view('auth.register');
     }
 
     public function registerHandler(Request $request)
     {
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotManager($auth);
 
         $type = $request->all()['registerType'];
 
@@ -104,8 +107,11 @@ class RegisterController extends Controller
     private function registerUserHandler(Request $request)
     {
         $data = $request->all();
-        $this->registerUser($data);
-        $this->displayRegisterSuccess();
+        $success = $this->registerUser($data);
+
+        if ($success){
+            $this->displayRegisterSuccess();
+        }
     }
 
     private function registerBatchUserHandler(Request $request)
@@ -160,15 +166,19 @@ class RegisterController extends Controller
 
     private function registerUser($data)
     {
-        if ($this->isDataValid($data)) {
-            $this->createUser($data);
+        if (!($this->isDataValid($data))) {
+            return False;
         }
+
+        $this->createUser($data);
+        return True;
     }
 
     private function isDataValid($data)
     {
         $username = $data['username'];
         $phone = $data['phone'];
+        $email = $data['email'];
 
         if ($this->checkUsernameExist($username)) {
             $this->displayErrMsgUsernameExisted();
@@ -177,6 +187,11 @@ class RegisterController extends Controller
 
         if (!$this->checkUsernameValid($username)) {
             $this->displayErrMsgInvalidUsername();
+            return false;
+        }
+
+        if ($this->checkEmailExist($email)) {
+            $this->displayErrMsgEmailExisted();
             return false;
         }
 
@@ -198,6 +213,11 @@ class RegisterController extends Controller
         return (strlen($username) <= 18);
     }
 
+    private function checkEmailExist($email)
+    {
+        return User::where('email', $email)->count() > 0;
+    }
+
     private function checkPhoneValid($phone)
     {
         return (strlen($phone) <= 18);
@@ -210,13 +230,16 @@ class RegisterController extends Controller
 
         if ($role == User::ROLE_DOSEN) {
             Dosen::create(['id' => $user->id]);
+            
         } else if ($role == User::ROLE_MAHASISWA) {
             $id_kelas_tesis = KelasTesis::orderByRaw('updated_at - created_at DESC')->first(); // DRANOTE: Kelas tesis harus ada dulu (?)
             Mahasiswa::create(['id' => $user->id, 'id_kelas_tesis' => $id_kelas_tesis->id]);
+        
         } else if ($role == User::ROLE_MANAJER) {
             Manajer::create(['id' => $user->id]);
+        
         } else {
-            echo $data['role']; // RAISE ERROR
+            // 
         }
     }
 
@@ -237,7 +260,7 @@ class RegisterController extends Controller
 
     private function displayErrMsgUsernameExisted()
     {
-        return '<div class="alert alert-warning alert-dismissible fade show text-center">
+        echo '<div class="alert alert-warning alert-dismissible fade show text-center">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         This user <strong>already exist.</strong>
       </div>';
@@ -246,15 +269,23 @@ class RegisterController extends Controller
     private function displayErrMsgInvalidUsername()
     {
 
-        return '<div class="alert alert-warning alert-dismissible fade show text-center">
+        echo '<div class="alert alert-warning alert-dismissible fade show text-center">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Username</strong> too long (maximum size: 18 characters).
       </div>';
     }
 
+    private function displayErrMsgEmailExisted()
+    {
+        echo '<div class="alert alert-warning alert-dismissible fade show text-center">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        This email has <strong>already been used.</strong>
+      </div>';
+    }
+
     private function displayErrMsgInvalidPhone()
     {
-        return '<div class="alert alert-warning alert-dismissible fade show text-center">
+        echo '<div class="alert alert-warning alert-dismissible fade show text-center">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <strong>Invalid</strong> phone number.
       </div>';

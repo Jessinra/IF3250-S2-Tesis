@@ -24,19 +24,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Auth::user()) {
-            $user = Auth::user();
-            if($user->isManajer()) {
-                return redirect('/dashboard/manajer');
-            } else if($user->isDosen()){
-                return redirect('/dashboard/dosen');
-            } else if($user->isMahasiswa()) {
-                return redirect('/dashboard/mahasiswa');
-            } else {
-                return abort(404);
-            }
-        } else {
+        $auth = Auth::user();
+        if (!$auth){
             redirect('login');
+        }
+
+        if($auth->isManajer()) {
+            return redirect('/dashboard/manajer');
+
+        } else if($auth->isDosen()){
+            return redirect('/dashboard/dosen');
+
+        } else if($auth->isMahasiswa()) {
+            return redirect('/dashboard/mahasiswa');
+            
+        } else {
+            return abort(404);
         }
     }
 }
