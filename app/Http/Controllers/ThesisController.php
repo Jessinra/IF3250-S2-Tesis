@@ -16,31 +16,35 @@ class ThesisController extends Controller
     }
 
     public function handlePenetapanDosbing(Request $request) {
+        
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        
         $data = array();
         $data['judul'] = $request->get('judul');
         $data['keilmuan'] = $request->get('keilmuan');
         $data['dosen_pembimbing1'] = $request->get('dosen_pembimbing_1');
         $data['dosen_pembimbing2'] = $request->get('dosen_pembimbing_2');
         $data['mahasiswa_id'] = $request->get('mahasiswa_id');
-        if(!$this->validateTopik($data)->fails()) {
-            Thesis::create([
-                'topic'=>$data['judul'],
-                'keilmuan'=>$data['keilmuan'],
-                'dosen_pembimbing1'=>$data['dosen_pembimbing1'],
-                'dosen_pembimbing2'=>$data['dosen_pembimbing2'],
-                'mahasiswa_id'=>$data['mahasiswa_id'],
-                'creator'=>Auth::user()->id
-            ]);
-            $mhs = Mahasiswa::find($data['mahasiswa_id']);
-            $mhs->status = Mahasiswa::STATUS_MASA_BIMBINGAN;
-            $mhs->save();
-
-            return back();
-        } else {
-//            echo json_encode($data);
-//            echo json_encode($this->validateTopik($data)->errors());
+        
+        if($this->validateTopik($data)->fails()) {
             return abort(400);
         }
+
+        Thesis::create([
+            'topic'=>$data['judul'],
+            'keilmuan'=>$data['keilmuan'],
+            'dosen_pembimbing1'=>$data['dosen_pembimbing1'],
+            'dosen_pembimbing2'=>$data['dosen_pembimbing2'],
+            'mahasiswa_id'=>$data['mahasiswa_id'],
+            'creator'=>Auth::user()->id
+        ]);
+
+        $mhs = Mahasiswa::find($data['mahasiswa_id']);
+        $mhs->status = Mahasiswa::STATUS_MASA_BIMBINGAN;
+        $mhs->save();
+
+        return back();
     }
 
     private function validateTopik(array $topic) {

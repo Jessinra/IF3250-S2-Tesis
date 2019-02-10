@@ -21,12 +21,11 @@ class MahasiswaController extends Controller
 
     public function index()
     {
-        //
-        if(Auth::user()->isMahasiswa())
-            return view('mahasiswa.index');
-        else {
-            return abort(403);
-        }
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotMahasiswa($auth);
+
+        return view('mahasiswa.index');
     }
 
     /**
@@ -69,16 +68,16 @@ class MahasiswaController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        if(Auth::user()->isManajer()) {
-            $usr = Mahasiswa::find($id);
-            $usr->status = $request->get('status');
-            $usr->save();
+        $auth = Auth::user();
+        $this->redirectIfNotLoggedIn($auth);
+        $this->redirectIfNotManager($auth);
 
-            $user = User::where('username',$usr->user()->username)->first();
-            return view('edit_user',['user'=>$user,'success_status'=>true]);
-        } else {
-            return abort(403);
-        }
+        $usr = Mahasiswa::find($id);
+        $usr->status = $request->get('status');
+        $usr->save();
+
+        $user = User::where('username',$usr->user()->username)->first();
+        return view('edit_user',['user'=>$user,'success_status'=>true]);
     }
 
     /**

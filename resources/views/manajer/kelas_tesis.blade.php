@@ -29,8 +29,8 @@
                         {{csrf_field()}}
                     <tr>
                         <td>
-                            <select type="text" id="tahun" class="form-control col-md-8" name="tahun">
-                                <option value=""> </option>
+                            <select type="text" id="tahun" class="form-control col-md-8" name="tahun" required>
+                                <option disabled selected value> --- select --- </option>
                                 @if(idate("m") > 6)
                                     <option value="{{idate("Y")}}">{{idate("Y")}}/{{idate("Y")+1}}</option>
                                     <option value="{{idate("Y")+1}}">{{idate("Y")+1}}/{{idate("Y")+2}}</option>
@@ -42,16 +42,15 @@
                             </select>
                         </td>
                         <td>
-                            <select type="text" id="semester" class="form-control col-md-8" name="semester">
-                                <option value=""> </option>
+                            <select type="text" id="semester" class="form-control col-md-8" name="semester" required>
+                                <option disabled selected value> --- select --- </option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                             </select>
                         </td>
                         <td>
-                            <select type="text" id="dosen_id" class="form-control col-md-8" name="dosen_id">
-                                <option value=" ">
-
+                            <select type="text" id="dosen_id" class="form-control col-md-8" name="dosen_id" required>
+                                <option disabled selected value> --- select --- </option>
                                 </option>
                                 @foreach($dosen as $item)
                                     <option value="{{$item->id}}">
